@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="PSNA College of Engineering & Technology – B.E CSE AIML Department Official Website"/>
+  <title>PSNA CET | CSE AIML Department</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --gold: #F5C518;
+      --deep-blue: #0a0e27;
+      --mid-blue: #0d1b4b;
+      --accent: #00d4ff;
+      --glow: #3b82f6;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--deep-blue);
+      font-family: 'Inter', sans-serif;
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    /* === ANIMATED GRID BACKGROUND === */
+    .grid-bg {
+      position: fixed; inset: 0;
+      background-image:
+        linear-gradient(rgba(0,212,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,212,255,0.04) 1px, transparent 1px);
+      background-size: 50px 50px;
+      animation: gridMove 20s linear infinite;
+    }
+    @keyframes gridMove {
+      0% { background-position: 0 0; }
+      100% { background-position: 50px 50px; }
+    }
+
+    /* === NEURAL NETWORK CANVAS === */
+    #neuralCanvas {
+      position: fixed; inset: 0; z-index: 0;
+      pointer-events: none;
+    }
+
+    /* === PARTICLES === */
+    .particle {
+      position: fixed;
+      border-radius: 50%;
+      animation: floatParticle linear infinite;
+      pointer-events: none;
+      z-index: 1;
+    }
+    @keyframes floatParticle {
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-20px) rotate(720deg); opacity: 0; }
+    }
+
+    /* === SPLASH CONTENT === */
+    .splash-container {
+      position: relative; z-index: 10;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      height: 100vh; text-align: center;
+      padding: 2rem;
+    }
+
+    /* === ROBOT SVG ANIMATION === */
+    .robot-container {
+      position: relative; margin-bottom: 2rem;
+      animation: robotFloat 3s ease-in-out infinite;
+    }
+    @keyframes robotFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-15px); }
+    }
+    .robot-eye { animation: eyeBlink 3s ease-in-out infinite; }
+    @keyframes eyeBlink {
+      0%, 45%, 55%, 100% { transform: scaleY(1); }
+      50% { transform: scaleY(0.1); }
+    }
+    .robot-arm-left { animation: armSwayLeft 2s ease-in-out infinite; transform-origin: top center; }
+    .robot-arm-right { animation: armSwayRight 2s ease-in-out infinite; transform-origin: top center; }
+    @keyframes armSwayLeft {
+      0%, 100% { transform: rotate(-5deg); }
+      50% { transform: rotate(10deg); }
+    }
+    @keyframes armSwayRight {
+      0%, 100% { transform: rotate(5deg); }
+      50% { transform: rotate(-10deg); }
+    }
+
+    /* === GLOW RING === */
+    .glow-ring {
+      position: absolute; width: 200px; height: 200px;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      animation: ringPulse 2s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .glow-ring:nth-child(2) {
+      width: 260px; height: 260px;
+      animation-delay: 0.5s; opacity: 0.5;
+    }
+    .glow-ring:nth-child(3) {
+      width: 320px; height: 320px;
+      animation-delay: 1s; opacity: 0.25;
+    }
+    @keyframes ringPulse {
+      0%, 100% { box-shadow: 0 0 15px var(--accent); opacity: 1; transform: translate(-50%,-50%) scale(1); }
+      50% { box-shadow: 0 0 40px var(--accent), 0 0 80px rgba(0,212,255,0.3); opacity: 0.7; transform: translate(-50%,-50%) scale(1.05); }
+    }
+
+    /* === TITLE TEXT === */
+    .main-title {
+      font-family: 'Orbitron', monospace;
+      font-weight: 900;
+      font-size: clamp(1.8rem, 5vw, 3.5rem);
+      background: linear-gradient(135deg, #F5C518 0%, #ffffff 40%, #00d4ff 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: 2px;
+      text-shadow: none;
+      animation: titleGlow 2s ease-in-out infinite alternate;
+      line-height: 1.1;
+    }
+    @keyframes titleGlow {
+      from { filter: drop-shadow(0 0 5px rgba(245,197,24,0.4)); }
+      to   { filter: drop-shadow(0 0 20px rgba(0,212,255,0.8)); }
+    }
+    .sub-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: clamp(1rem, 2.5vw, 1.5rem);
+      color: #94a3b8;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-top: 0.5rem;
+    }
+    .dept-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, rgba(245,197,24,0.15), rgba(0,212,255,0.15));
+      border: 1px solid rgba(245,197,24,0.4);
+      border-radius: 50px;
+      padding: 0.5rem 1.5rem;
+      margin-top: 1rem;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1rem; font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 3px;
+      animation: badgePulse 2s ease-in-out infinite;
+    }
+    @keyframes badgePulse {
+      0%, 100% { box-shadow: 0 0 10px rgba(245,197,24,0.2); }
+      50% { box-shadow: 0 0 25px rgba(245,197,24,0.5), inset 0 0 15px rgba(245,197,24,0.05); }
+    }
+
+    /* === LOADING BAR === */
+    .loading-wrapper {
+      margin-top: 2.5rem; width: min(400px, 80vw);
+    }
+    .loading-label {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.7rem; color: var(--accent);
+      letter-spacing: 3px; margin-bottom: 0.5rem;
+      text-align: left;
+    }
+    .loading-bar-bg {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(0,212,255,0.2);
+      border-radius: 50px; height: 6px;
+      overflow: hidden;
+    }
+    .loading-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--glow), var(--accent), var(--gold));
+      border-radius: 50px;
+      width: 0%;
+      animation: loadFill 3s ease-in-out forwards;
+      box-shadow: 0 0 15px var(--accent);
+    }
+    @keyframes loadFill {
+      0% { width: 0%; }
+      60% { width: 75%; }
+      90% { width: 95%; }
+      100% { width: 100%; }
+    }
+    .loading-percent {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.8rem; color: #64748b;
+      text-align: right; margin-top: 0.4rem;
+    }
+
+    /* === ENTER BUTTON === */
+    .enter-btn {
+      margin-top: 2rem;
+      padding: 0.9rem 3rem;
+      font-family: 'Orbitron', monospace;
+      font-size: 1rem; font-weight: 700;
+      letter-spacing: 3px; text-transform: uppercase;
+      border: none; border-radius: 50px;
+      background: linear-gradient(135deg, #1e40af, #0891b2);
+      color: white; cursor: pointer;
+      position: relative; overflow: hidden;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 30px rgba(0,212,255,0.3);
+      opacity: 0;
+      animation: btnAppear 0.8s ease 3.2s forwards;
+      text-decoration: none;
+      display: inline-block;
+    }
+    @keyframes btnAppear {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .enter-btn::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(245,197,24,0.3), rgba(0,212,255,0.3));
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .enter-btn:hover::before { opacity: 1; }
+    .enter-btn:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 10px 40px rgba(0,212,255,0.5);
+    }
+    .enter-btn .btn-shine {
+      position: absolute; top: -50%; left: -100%;
+      width: 60%; height: 200%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+      transform: skewX(-25deg);
+      animation: btnShine 3s ease 4s infinite;
+    }
+    @keyframes btnShine {
+      0% { left: -100%; }
+      100% { left: 200%; }
+    }
+
+    /* === CORNER DECORATIONS === */
+    .corner {
+      position: fixed; width: 60px; height: 60px;
+      border-color: var(--gold); opacity: 0.4;
+    }
+    .corner-tl { top: 20px; left: 20px; border-top: 2px solid; border-left: 2px solid; }
+    .corner-tr { top: 20px; right: 20px; border-top: 2px solid; border-right: 2px solid; }
+    .corner-bl { bottom: 20px; left: 20px; border-bottom: 2px solid; border-left: 2px solid; }
+    .corner-br { bottom: 20px; right: 20px; border-bottom: 2px solid; border-right: 2px solid; }
+
+    /* === SCANNING LINE === */
+    .scan-line {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      animation: scanDown 4s linear infinite;
+      opacity: 0.3; z-index: 5;
+    }
+    @keyframes scanDown {
+      0% { top: 0; }
+      100% { top: 100vh; }
+    }
+
+    /* === TYPEWRITER TEXT === */
+    .typewriter {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.75rem;
+      color: rgba(0,212,255,0.6);
+      letter-spacing: 2px;
+      margin-top: 0.8rem;
+      min-height: 1.2em;
+    }
+
+    /* === 3D HEXAGON === */
+    .hex-grid {
+      position: fixed; top: 10%; right: 5%;
+      opacity: 0.06; z-index: 0; pointer-events: none;
+    }
+    .hex-grid-left {
+      position: fixed; top: 40%; left: 2%;
+      opacity: 0.06; z-index: 0; pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Elements -->
+  <div class="grid-bg"></div>
+  <canvas id="neuralCanvas"></canvas>
+  <div class="scan-line"></div>
+
+  <!-- Corner Decorations -->
+  <div class="corner corner-tl"></div>
+  <div class="corner corner-tr"></div>
+  <div class="corner corner-bl"></div>
+  <div class="corner corner-br"></div>
+
+  <!-- Hexagon Decorations -->
+  <svg class="hex-grid" width="300" height="400" viewBox="0 0 300 400">
+    <defs>
+      <polygon id="hex" points="50,0 100,25 100,75 50,100 0,75 0,25" fill="none" stroke="#00d4ff" stroke-width="1"/>
+    </defs>
+    <use href="#hex" x="0" y="0"/><use href="#hex" x="100" y="0"/><use href="#hex" x="200" y="0"/>
+    <use href="#hex" x="50" y="87"/><use href="#hex" x="150" y="87"/><use href="#hex" x="250" y="87"/>
+    <use href="#hex" x="0" y="174"/><use href="#hex" x="100" y="174"/><use href="#hex" x="200" y="174"/>
+    <use href="#hex" x="50" y="261"/><use href="#hex" x="150" y="261"/>
+  </svg>
+  <svg class="hex-grid-left" width="200" height="300" viewBox="0 0 200 300">
+    <defs>
+      <polygon id="hexL" points="40,0 80,20 80,60 40,80 0,60 0,20" fill="none" stroke="#F5C518" stroke-width="1"/>
+    </defs>
+    <use href="#hexL" x="0" y="0"/><use href="#hexL" x="80" y="0"/>
+    <use href="#hexL" x="40" y="69"/><use href="#hexL" x="120" y="69"/>
+    <use href="#hexL" x="0" y="138"/><use href="#hexL" x="80" y="138"/>
+    <use href="#hexL" x="40" y="207"/>
+  </svg>
+
+  <!-- MAIN SPLASH CONTENT -->
+  <div class="splash-container">
+
+    <!-- Robot Animation -->
+    <div class="robot-container" style="position:relative; width:160px; height:160px; margin-bottom:1.5rem;">
+      <!-- Glow rings behind robot -->
+      <div class="glow-ring"></div>
+      <div class="glow-ring"></div>
+      <div class="glow-ring"></div>
+      <!-- Inline SVG Robot -->
+      <svg viewBox="0 0 100 130" width="160" height="160" style="position:relative;z-index:2;" xmlns="http://www.w3.org/2000/svg">
+        <!-- Antenna -->
+        <line x1="50" y1="8" x2="50" y2="18" stroke="#00d4ff" stroke-width="2"/>
+        <circle cx="50" cy="6" r="3" fill="#F5C518">
+          <animate attributeName="opacity" values="1;0.2;1" dur="1.2s" repeatCount="indefinite"/>
+          <animate attributeName="r" values="3;5;3" dur="1.2s" repeatCount="indefinite"/>
+        </circle>
+        <!-- Head -->
+        <rect x="30" y="18" width="40" height="32" rx="8" fill="#1e3a5f" stroke="#00d4ff" stroke-width="1.5"/>
+        <!-- Eyes -->
+        <g class="robot-eye">
+          <ellipse cx="42" cy="32" rx="6" ry="6" fill="#00d4ff" opacity="0.9">
+            <animate attributeName="rx" values="6;6;0.5;6" dur="3s" repeatCount="indefinite"/>
+          </ellipse>
+          <ellipse cx="58" cy="32" rx="6" ry="6" fill="#00d4ff" opacity="0.9">
+            <animate attributeName="rx" values="6;6;0.5;6" dur="3s" repeatCount="indefinite"/>
+          </ellipse>
+          <circle cx="42" cy="32" r="3" fill="#0a0e27"/>
+          <circle cx="58" cy="32" r="3" fill="#0a0e27"/>
+          <circle cx="43.5" cy="30.5" r="1" fill="white" opacity="0.8"/>
+          <circle cx="59.5" cy="30.5" r="1" fill="white" opacity="0.8"/>
+        </g>
+        <!-- Mouth -->
+        <rect x="38" y="41" width="24" height="3" rx="1.5" fill="#F5C518" opacity="0.8">
+          <animate attributeName="width" values="24;28;24" dur="2s" repeatCount="indefinite"/>
+          <animate attributeName="x" values="38;36;38" dur="2s" repeatCount="indefinite"/>
+        </rect>
+        <!-- Neck -->
+        <rect x="45" y="50" width="10" height="6" fill="#152a47"/>
+        <!-- Body -->
+        <rect x="22" y="56" width="56" height="44" rx="8" fill="#152a47" stroke="#1e3a5f" stroke-width="1.5"/>
+        <!-- Chest Panel -->
+        <rect x="34" y="64" width="32" height="20" rx="4" fill="#0d1b4b"/>
+        <rect x="38" y="68" width="8" height="4" rx="2" fill="#00d4ff" opacity="0.7">
+          <animate attributeName="opacity" values="0.7;1;0.7" dur="0.8s" repeatCount="indefinite"/>
+        </rect>
+        <rect x="48" y="68" width="6" height="4" rx="2" fill="#F5C518" opacity="0.7">
+          <animate attributeName="opacity" values="0.7;0.3;0.7" dur="1.2s" repeatCount="indefinite"/>
+        </rect>
+        <rect x="55" y="68" width="7" height="4" rx="2" fill="#3b82f6" opacity="0.7">
+          <animate attributeName="opacity" values="0.3;1;0.3" dur="1.5s" repeatCount="indefinite"/>
+        </rect>
+        <rect x="38" y="75" width="23" height="3" rx="1.5" fill="rgba(0,212,255,0.3)"/>
+        <rect x="38" y="75" width="23" height="3" rx="1.5" fill="none" stroke="rgba(0,212,255,0.5)" stroke-width="0.5"/>
+        <!-- Left Arm -->
+        <g class="robot-arm-left">
+          <rect x="7" y="58" width="14" height="32" rx="7" fill="#1e3a5f" stroke="#00d4ff" stroke-width="1"/>
+          <rect x="9" y="88" width="10" height="10" rx="3" fill="#152a47" stroke="#F5C518" stroke-width="0.8"/>
+        </g>
+        <!-- Right Arm -->
+        <g class="robot-arm-right">
+          <rect x="79" y="58" width="14" height="32" rx="7" fill="#1e3a5f" stroke="#00d4ff" stroke-width="1"/>
+          <rect x="81" y="88" width="10" height="10" rx="3" fill="#152a47" stroke="#F5C518" stroke-width="0.8"/>
+        </g>
+        <!-- Legs -->
+        <rect x="30" y="100" width="16" height="24" rx="6" fill="#1e3a5f"/>
+        <rect x="54" y="100" width="16" height="24" rx="6" fill="#1e3a5f"/>
+        <rect x="28" y="120" width="20" height="8" rx="4" fill="#152a47"/>
+        <rect x="52" y="120" width="20" height="8" rx="4" fill="#152a47"/>
+        <!-- Circuit lines on body -->
+        <line x1="22" y1="75" x2="34" y2="75" stroke="#00d4ff" stroke-width="0.5" opacity="0.5"/>
+        <line x1="66" y1="75" x2="78" y2="75" stroke="#00d4ff" stroke-width="0.5" opacity="0.5"/>
+      </svg>
+    </div>
+
+    <!-- Title -->
+    <h1 class="main-title">PSNA CET</h1>
+    <p class="sub-title">B.E Computer Science & Engineering</p>
+    <span class="dept-badge">✦ ARTIFICIAL INTELLIGENCE & MACHINE LEARNING ✦</span>
+    <p style="color:#64748b; font-size:0.85rem; margin-top:0.6rem; letter-spacing:1px;">Dindigul, Tamil Nadu</p>
+
+    <!-- Typewriter -->
+    <p class="typewriter" id="typewriterText"></p>
+
+    <!-- Loading Bar -->
+    <div class="loading-wrapper">
+      <div class="loading-label">INITIALIZING SYSTEM<span id="dots"></span></div>
+      <div class="loading-bar-bg">
+        <div class="loading-bar-fill"></div>
+      </div>
+      <div class="loading-percent" id="loadPercent">0%</div>
+    </div>
+
+    <!-- Enter Button -->
+    <a href="index.html" class="enter-btn" id="enterBtn">
+      <span class="btn-shine"></span>
+      ⚡ ENTER PORTAL
+    </a>
+  </div>
+
+  <script>
+    // === NEURAL NETWORK CANVAS ===
+    const canvas = document.getElementById('neuralCanvas');
+    const ctx = canvas.getContext('2d');
+    let nodes = [];
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    function initNodes() {
+      nodes = [];
+      const count = Math.floor((window.innerWidth * window.innerHeight) / 15000);
+      for (let i = 0; i < count; i++) {
+        nodes.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          vx: (Math.random() - 0.5) * 0.5,
+          vy: (Math.random() - 0.5) * 0.5,
+          r: Math.random() * 2 + 1
+        });
+      }
+    }
+    initNodes();
+
+    function drawNeural() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      nodes.forEach(n => {
+        n.x += n.vx; n.y += n.vy;
+        if (n.x < 0 || n.x > canvas.width) n.vx *= -1;
+        if (n.y < 0 || n.y > canvas.height) n.vy *= -1;
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(0,212,255,0.5)';
+        ctx.fill();
+      });
+      nodes.forEach((a, i) => {
+        nodes.slice(i+1).forEach(b => {
+          const dist = Math.hypot(a.x - b.x, a.y - b.y);
+          if (dist < 120) {
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y);
+            ctx.strokeStyle = `rgba(0,212,255,${0.15 * (1 - dist/120)})`;
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        });
+      });
+      requestAnimationFrame(drawNeural);
+    }
+    drawNeural();
+
+    // === FLOAT PARTICLES ===
+    function createParticles() {
+      const colors = ['#00d4ff', '#F5C518', '#3b82f6', '#a855f7'];
+      for (let i = 0; i < 25; i++) {
+        const p = document.createElement('div');
+        p.classList.add('particle');
+        const size = Math.random() * 4 + 2;
+        p.style.cssText = `
+          width:${size}px; height:${size}px;
+          background:${colors[Math.floor(Math.random()*colors.length)]};
+          left:${Math.random()*100}%;
+          animation-duration:${6+Math.random()*10}s;
+          animation-delay:${Math.random()*5}s;
+          opacity:0.6;
+        `;
+        document.body.appendChild(p);
+      }
+    }
+    createParticles();
+
+    // === TYPEWRITER EFFECT ===
+    const phrases = [
+      'INITIALIZING AI CORE...',
+      'LOADING MACHINE LEARNING MODELS...',
+      'CONNECTING NEURAL NETWORKS...',
+      'CALIBRATING ROBOTIC SYSTEMS...',
+      'WELCOME TO THE FUTURE...'
+    ];
+    let phraseIdx = 0, charIdx = 0, typing = true;
+    const tw = document.getElementById('typewriterText');
+    function typewrite() {
+      if (typing) {
+        tw.textContent = phrases[phraseIdx].slice(0, charIdx++);
+        if (charIdx > phrases[phraseIdx].length) { typing = false; setTimeout(typewrite, 1200); return; }
+      } else {
+        tw.textContent = phrases[phraseIdx].slice(0, charIdx--);
+        if (charIdx < 0) { typing = true; charIdx = 0; phraseIdx = (phraseIdx+1) % phrases.length; }
+      }
+      setTimeout(typewrite, typing ? 60 : 30);
+    }
+    typewrite();
+
+    // === LOADING PERCENT ===
+    const percentEl = document.getElementById('loadPercent');
+    const dotsEl = document.getElementById('dots');
+    let pct = 0;
+    const pctInt = setInterval(() => {
+      pct = Math.min(pct + Math.floor(Math.random()*3+1), 100);
+      percentEl.textContent = pct + '%';
+      if (pct >= 100) { clearInterval(pctInt); percentEl.style.color = '#00d4ff'; }
+    }, 35);
+
+    // Dots animation
+    let dCnt = 0;
+    setInterval(() => { dotsEl.textContent = '.'.repeat((dCnt++%3)+1); }, 500);
+
+    // Auto-redirect after 4.5s (optional; user can also click button)
+    // setTimeout(() => { window.location.href = 'index.html'; }, 5000);
+  </script>
+</body>
+</html>
