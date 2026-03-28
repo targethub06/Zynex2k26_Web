@@ -1,0 +1,2720 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="PSNA College of Engineering and Technology – B.E CSE(A&IML) Department. Explore faculty, events, achievements, and our first symposium ZYNEX 2K26." />
+  <meta name="keywords"
+    content="PSNACET, CSE(A&IML), Dindigul, Engineering College, ZYNEX 2K26, Symposium, AI ML Department" />
+  <title>PSNA CET | Department of CSE – Artificial Intelligence & Machine Learning</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700&family=Rajdhani:wght@400;600;700&display=swap"
+    rel="stylesheet" />
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'brand-blue': '#0a0e27',
+            'brand-mid': '#0d1b4b',
+            'brand-accent': '#00d4ff',
+            'brand-gold': '#F5C518',
+          },
+          fontFamily: {
+            orbitron: ['Orbitron', 'monospace'],
+            rajdhani: ['Rajdhani', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="assets/css/style.css" />
+
+  <style>
+    /* Additional inline styles for components */
+    .news-ticker-bar {
+      background: linear-gradient(90deg, rgba(0, 212, 255, 0.1), rgba(13, 27, 75, 0.8), rgba(0, 212, 255, 0.1));
+      border-bottom: 1px solid rgba(0, 212, 255, 0.15);
+      padding: 0.5rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.82rem;
+      overflow: hidden;
+    }
+
+    .ticker-label {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.65rem;
+      color: var(--gold);
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      flex-shrink: 0;
+      background: rgba(245, 197, 24, 0.1);
+      padding: 0.25rem 0.75rem;
+      border-radius: 50px;
+      border: 1px solid rgba(245, 197, 24, 0.3);
+    }
+
+    .ticker-content {
+      overflow: hidden;
+      flex: 1;
+      height: 1.4em;
+    }
+
+    .ticker-item {
+      color: var(--text-secondary);
+      white-space: nowrap;
+      opacity: 0;
+      transition: opacity 0.5s;
+      height: 1.4em;
+    }
+
+    .ticker-item.active {
+      opacity: 1;
+    }
+
+    .ticker-item span {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* Glitch effect */
+    .glitch {
+      position: relative;
+    }
+
+    .glitch::before,
+    .glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: inherit;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .glitch::before {
+      color: #00d4ff;
+      clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+      animation: glitch1 3s infinite linear;
+    }
+
+    .glitch::after {
+      color: #F5C518;
+      clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+      animation: glitch2 3s infinite linear;
+    }
+
+    @keyframes glitch1 {
+
+      0%,
+      90%,
+      100% {
+        transform: translate(0);
+        opacity: 0;
+      }
+
+      92%,
+      96% {
+        transform: translate(-2px, 1px);
+        opacity: 0.7;
+      }
+
+      94%,
+      98% {
+        transform: translate(2px, -1px);
+        opacity: 0.7;
+      }
+    }
+
+    @keyframes glitch2 {
+
+      0%,
+      90%,
+      100% {
+        transform: translate(0);
+        opacity: 0;
+      }
+
+      91%,
+      95% {
+        transform: translate(2px, 2px);
+        opacity: 0.7;
+      }
+
+      93%,
+      97% {
+        transform: translate(-2px, -2px);
+        opacity: 0.7;
+      }
+    }
+
+    /* Program highlight cards */
+    .prog-card {
+      padding: 1.5rem;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(13, 27, 75, 0.7), rgba(5, 10, 31, 0.7));
+      border: 1px solid rgba(0, 212, 255, 0.1);
+      transition: all 0.3s;
+      cursor: default;
+    }
+
+    .prog-card:hover {
+      border-color: rgba(0, 212, 255, 0.3);
+      background: linear-gradient(135deg, rgba(13, 27, 75, 0.9), rgba(5, 10, 31, 0.9));
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0, 212, 255, 0.1);
+    }
+
+    .prog-icon {
+      font-size: 2rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .prog-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 0.4rem;
+    }
+
+    .prog-desc {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* Achievement badge */
+    .ach-card {
+      padding: 1.25rem;
+      border-left: 3px solid var(--gold);
+      background: linear-gradient(135deg, rgba(245, 197, 24, 0.05), rgba(0, 0, 0, 0));
+    }
+
+    .ach-year {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.7rem;
+      color: var(--gold);
+      letter-spacing: 2px;
+      margin-bottom: 0.3rem;
+    }
+
+    .ach-name {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: white;
+    }
+
+    .ach-detail {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+    }
+
+    /* Slide gradient BG (generated via CSS instead of images) */
+    .slide-bg-1 {
+      background: linear-gradient(135deg, #020817 0%, #0f172a 40%, #1e3a5f 100%);
+    }
+
+    .slide-bg-2 {
+      background: linear-gradient(135deg, #0a0014 0%, #1a0533 40%, #2d1b69 100%);
+    }
+
+    .slide-bg-3 {
+      background: linear-gradient(135deg, #001410 0%, #022c22 40%, #064e3b 100%);
+    }
+
+    /* Circuit decoration */
+    .circuit-line {
+      position: absolute;
+      background: rgba(0, 212, 255, 0.15);
+      pointer-events: none;
+    }
+
+    .h-line {
+      height: 1px;
+      width: 30%;
+      top: 50%;
+    }
+
+    .v-line {
+      width: 1px;
+      height: 30%;
+      left: 50%;
+    }
+
+    .circuit-dot {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      opacity: 0.3;
+    }
+
+    /* Tab indicator for mobile */
+    .mobile-nav-hint {
+      display: none;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-align: center;
+      padding: 0.5rem;
+    }
+
+    @media(max-width:768px) {
+      .mobile-nav-hint {
+        display: block;
+      }
+
+      .news-ticker-bar {
+        padding: 0.5rem 1rem;
+        gap: 0.5rem;
+      }
+
+      .ticker-label {
+        font-size: 0.55rem;
+        padding: 0.2rem 0.6rem;
+      }
+
+      .ticker-item {
+        font-size: 0.75rem;
+      }
+    }
+
+    /* Robotic arm decoration */
+    .robo-arm-deco {
+      position: absolute;
+      right: 80px;
+      top: 50%;
+      transform: translateY(-50%);
+      opacity: 0.12;
+      pointer-events: none;
+    }
+
+    @media(max-width:900px) {
+      .robo-arm-deco {
+        display: none;
+      }
+    }
+
+    /* section alt bg */
+    .section-alt {
+      background: rgba(13, 27, 75, 0.25);
+    }
+
+    /* Hologram card effect */
+    .holo-card {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .holo-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(45deg, transparent 40%, rgba(0, 212, 255, 0.04) 50%, transparent 60%);
+      background-size: 200% 200%;
+      animation: holoShimmer 4s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes holoShimmer {
+
+      0%,
+      100% {
+        background-position: 200% 200%;
+      }
+
+      50% {
+        background-position: 0% 0%;
+      }
+    }
+
+    /* ===== SPLASH OVERLAY (first-load) ===== */
+    #splashOverlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: #0a0e27;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      animation: splashFadeOut 0.7s ease 4s forwards;
+      pointer-events: all;
+    }
+
+    @keyframes splashFadeOut {
+      to {
+        opacity: 0;
+        pointer-events: none;
+        visibility: hidden;
+      }
+    }
+
+    .splash-grid-bg {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0, 212, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 212, 255, 0.04) 1px, transparent 1px);
+      background-size: 50px 50px;
+      animation: splashGridMove 20s linear infinite;
+    }
+
+    @keyframes splashGridMove {
+      0% {
+        background-position: 0 0;
+      }
+
+      100% {
+        background-position: 50px 50px;
+      }
+    }
+
+    .splash-scan {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #00d4ff, transparent);
+      animation: splashScan 4s linear infinite;
+      opacity: 0.4;
+    }
+
+    @keyframes splashScan {
+      0% {
+        top: 0;
+      }
+
+      100% {
+        top: 100vh;
+      }
+    }
+
+    .splash-corner {
+      position: absolute;
+      width: 55px;
+      height: 55px;
+      border-color: #F5C518;
+      opacity: 0.4;
+    }
+
+    .sp-tl {
+      top: 18px;
+      left: 18px;
+      border-top: 2px solid;
+      border-left: 2px solid;
+    }
+
+    .sp-tr {
+      top: 18px;
+      right: 18px;
+      border-top: 2px solid;
+      border-right: 2px solid;
+    }
+
+    .sp-bl {
+      bottom: 18px;
+      left: 18px;
+      border-bottom: 2px solid;
+      border-left: 2px solid;
+    }
+
+    .sp-br {
+      bottom: 18px;
+      right: 18px;
+      border-bottom: 2px solid;
+      border-right: 2px solid;
+    }
+
+    #splashOverlay .sp-robot {
+      position: relative;
+      z-index: 2;
+      animation: splashFloat 2.5s ease-in-out infinite;
+    }
+
+    @keyframes splashFloat {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-12px);
+      }
+    }
+
+    .sp-glow {
+      position: absolute;
+      border-radius: 50%;
+      border: 2px solid #00d4ff;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation: spRingPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes spRingPulse {
+
+      0%,
+      100% {
+        box-shadow: 0 0 12px #00d4ff;
+        transform: translate(-50%, -50%) scale(1);
+      }
+
+      50% {
+        box-shadow: 0 0 35px #00d4ff, 0 0 70px rgba(0, 212, 255, 0.3);
+        transform: translate(-50%, -50%) scale(1.06);
+      }
+    }
+
+    .sp-title {
+      font-family: 'Orbitron', monospace;
+      font-weight: 900;
+      font-size: clamp(1.6rem, 5vw, 3rem);
+      background: linear-gradient(135deg, #F5C518 0%, #fff 45%, #00d4ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: 2px;
+      animation: spTitlePulse 2s ease-in-out infinite alternate;
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+
+    @keyframes spTitlePulse {
+      from {
+        filter: drop-shadow(0 0 5px rgba(245, 197, 24, .4));
+      }
+
+      to {
+        filter: drop-shadow(0 0 18px rgba(0, 212, 255, .8));
+      }
+    }
+
+    .sp-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, rgba(245, 197, 24, .15), rgba(0, 212, 255, .15));
+      border: 1px solid rgba(245, 197, 24, .4);
+      border-radius: 50px;
+      padding: .45rem 1.4rem;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: .95rem;
+      font-weight: 700;
+      color: #F5C518;
+      letter-spacing: 3px;
+      animation: spBadgePulse 2s ease-in-out infinite;
+      position: relative;
+      z-index: 2;
+      white-space: nowrap;
+      max-width: 90vw;
+    }
+
+    @media (max-width: 480px) {
+      .sp-badge {
+        font-size: 0.75rem;
+        padding: 0.4rem 1rem;
+        letter-spacing: 1px;
+      }
+
+      .sp-title {
+        font-size: 2rem;
+      }
+    }
+
+    @keyframes spBadgePulse {
+
+      0%,
+      100% {
+        box-shadow: 0 0 10px rgba(245, 197, 24, .2);
+      }
+
+      50% {
+        box-shadow: 0 0 22px rgba(245, 197, 24, .5);
+      }
+    }
+
+    .sp-bar-wrap {
+      width: min(400px, 85vw);
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+
+    .sp-bar-header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .sp-bar-label {
+      font-family: 'Orbitron', monospace;
+      font-size: .65rem;
+      color: #00d4ff;
+      letter-spacing: 3px;
+    }
+
+    .sp-bar-bg {
+      background: rgba(255, 255, 255, .05);
+      border: 1px solid rgba(0, 212, 255, .2);
+      border-radius: 50px;
+      height: 6px;
+      overflow: hidden;
+    }
+
+    .sp-bar-fill {
+      height: 100%;
+      border-radius: 50px;
+      background: linear-gradient(90deg, #3b82f6, #00d4ff, #F5C518);
+      animation: spFill 3.8s ease-in-out forwards;
+      box-shadow: 0 0 12px #00d4ff;
+    }
+
+    @keyframes spFill {
+      0% {
+        width: 0%
+      }
+
+      60% {
+        width: 72%
+      }
+
+      90% {
+        width: 95%
+      }
+
+      100% {
+        width: 100%
+      }
+    }
+
+    .sp-pct {
+      font-family: 'Orbitron', monospace;
+      font-size: .75rem;
+      color: #64748b;
+      text-align: center;
+      margin-top: .5rem;
+    }
+
+    /* event register cards responsive overrides */
+    @media (max-width:768px) {
+      .event-col-title {
+        font-size: 0.95rem;
+        padding: 0.85rem 1rem;
+      }
+
+      .event-list-cards {
+        padding: 0 0.75rem 0.75rem;
+      }
+    }
+
+    .event-card {
+      padding: 0.85rem 1rem;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(0, 212, 255, 0.1);
+      transition: all 0.25s;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .event-card:hover {
+      border-color: rgba(0, 212, 255, 0.35);
+      background: rgba(0, 212, 255, 0.05);
+      transform: translateX(4px);
+      box-shadow: 0 4px 20px rgba(0, 212, 255, 0.08);
+    }
+
+    .event-nontech-col .event-card:hover {
+      border-color: rgba(168, 85, 247, 0.35);
+      background: rgba(168, 85, 247, 0.05);
+      box-shadow: 0 4px 20px rgba(168, 85, 247, 0.08);
+    }
+
+    .event-card-name {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #e2e8f0;
+    }
+
+    .event-card-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .event-price-tag {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.6rem;
+      color: #10b981;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      border-radius: 50px;
+      padding: 0.15rem 0.6rem;
+      letter-spacing: 1px;
+      flex-shrink: 0;
+    }
+
+    .btn-ev-about {
+      flex-shrink: 0;
+      padding: 0.28rem 0.75rem;
+      font-family: 'Orbitron', monospace;
+      font-size: 0.56rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      border: 1px solid rgba(245, 197, 24, 0.5);
+      border-radius: 50px;
+      background: rgba(245, 197, 24, 0.08);
+      color: #F5C518;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.25s;
+      white-space: nowrap;
+    }
+
+    .btn-ev-about:hover {
+      background: rgba(245, 197, 24, 0.2);
+      border-color: #F5C518;
+      box-shadow: 0 0 12px rgba(245, 197, 24, 0.3);
+    }
+
+    .btn-ev-register {
+      flex-shrink: 0;
+      padding: 0.28rem 0.85rem;
+      font-family: 'Orbitron', monospace;
+      font-size: 0.56rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      border: 1px solid #00d4ff;
+      border-radius: 50px;
+      background: rgba(0, 212, 255, 0.1);
+      color: #00d4ff;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.25s;
+      white-space: nowrap;
+    }
+
+    .btn-ev-register:hover {
+      background: #00d4ff;
+      color: #0a0e27;
+      box-shadow: 0 0 18px rgba(0, 212, 255, 0.5);
+    }
+
+    .event-nontech-col .btn-ev-register {
+      border-color: #a855f7;
+      background: rgba(168, 85, 247, 0.1);
+      color: #a855f7;
+    }
+
+    .event-nontech-col .btn-ev-register:hover {
+      background: #a855f7;
+      color: #fff;
+      box-shadow: 0 0 18px rgba(168, 85, 247, 0.5);
+    }
+
+    .event-list-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      margin-top: 0.75rem;
+    }
+
+    /* ===== EVENT MODAL ===== */
+    #eventModal {
+      position: fixed;
+      inset: 0;
+      z-index: 8000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      background: rgba(5, 10, 31, 0.85);
+      backdrop-filter: blur(8px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    #eventModal.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .event-modal-box {
+      background: linear-gradient(135deg, #0d1b4b 0%, #0a0e27 100%);
+      border: 1px solid rgba(0, 212, 255, 0.25);
+      border-radius: 20px;
+      padding: 2rem;
+      max-width: 560px;
+      width: 100%;
+      max-height: 88vh;
+      overflow-y: auto;
+      position: relative;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5), 0 0 40px rgba(0, 212, 255, 0.08);
+      transform: translateY(20px) scale(0.97);
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    #eventModal.open .event-modal-box {
+      transform: translateY(0) scale(1);
+    }
+
+    .event-modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      width: 34px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #94a3b8;
+      font-size: 1.1rem;
+      transition: all 0.2s;
+    }
+
+    .event-modal-close:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+    }
+
+    .modal-event-badge {
+      display: inline-block;
+      font-family: 'Orbitron', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 2px;
+      font-weight: 700;
+      padding: 0.3rem 0.9rem;
+      border-radius: 50px;
+      margin-bottom: 0.85rem;
+    }
+
+    .modal-event-badge.tech {
+      background: rgba(0, 212, 255, 0.12);
+      border: 1px solid rgba(0, 212, 255, 0.3);
+      color: #00d4ff;
+    }
+
+    .modal-event-badge.nontech {
+      background: rgba(168, 85, 247, 0.12);
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      color: #a855f7;
+    }
+
+    .modal-event-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.3rem;
+    }
+
+    .modal-divider {
+      height: 1px;
+      background: linear-gradient(90deg, rgba(0, 212, 255, 0.3), transparent);
+      margin: 1rem 0;
+    }
+
+    .modal-section-label {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 2px;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+    }
+
+    .modal-rules-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .modal-rules-list li {
+      display: flex;
+      gap: 0.6rem;
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .modal-rules-list li::before {
+      content: '▸';
+      color: var(--accent);
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+
+    .modal-info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .modal-info-chip {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 10px;
+      padding: 0.6rem 0.85rem;
+    }
+
+    .modal-info-chip .chip-label {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.52rem;
+      color: var(--text-muted);
+      letter-spacing: 1.5px;
+      margin-bottom: 0.2rem;
+    }
+
+    .modal-info-chip .chip-value {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .modal-register-btn {
+      display: block;
+      text-align: center;
+      width: 100%;
+      padding: 0.85rem 1rem;
+      font-family: 'Orbitron', monospace;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      border: none;
+      border-radius: 50px;
+      background: linear-gradient(135deg, #00d4ff, #3b82f6);
+      color: #0a0e27;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s;
+      margin-top: 1.5rem;
+      box-shadow: 0 0 24px rgba(0, 212, 255, 0.3);
+    }
+
+    .modal-register-btn:hover {
+      box-shadow: 0 0 40px rgba(0, 212, 255, 0.55);
+      transform: translateY(-2px);
+    }
+
+    .modal-register-btn.nontech {
+      background: linear-gradient(135deg, #a855f7, #7c3aed);
+      box-shadow: 0 0 24px rgba(168, 85, 247, 0.3);
+    }
+
+    .modal-register-btn.nontech:hover {
+      box-shadow: 0 0 40px rgba(168, 85, 247, 0.55);
+    }
+
+    .modal-price-note {
+      text-align: center;
+      font-size: 0.78rem;
+      color: #10b981;
+      margin-top: 0.6rem;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 600;
+    }
+
+    /* ===== EVENTS PAGE OB SECTION ===== */
+    .ev-ob-section {
+      margin-top: 3.5rem;
+    }
+
+    .ev-ob-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1.5rem;
+    }
+
+    .ev-ob-card {
+      background: linear-gradient(135deg, rgba(13, 27, 75, 0.7), rgba(5, 10, 31, 0.8));
+      border: 1px solid rgba(245, 197, 24, 0.18);
+      border-radius: 14px;
+      padding: 1.25rem 1rem;
+      text-align: center;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ev-ob-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(245, 197, 24, 0.04), transparent 60%);
+      pointer-events: none;
+    }
+
+    .ev-ob-card:hover {
+      border-color: rgba(245, 197, 24, 0.45);
+      transform: translateY(-5px);
+      box-shadow: 0 14px 36px rgba(245, 197, 24, 0.1);
+    }
+
+    .ev-ob-avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: rgba(13, 27, 75, 0.9);
+      border: 2px solid rgba(245, 197, 24, 0.4);
+      margin: 0 auto 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+    }
+
+    .ev-ob-role {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.52rem;
+      letter-spacing: 1.5px;
+      color: #F5C518;
+      background: rgba(245, 197, 24, 0.1);
+      border: 1px solid rgba(245, 197, 24, 0.25);
+      border-radius: 50px;
+      padding: 0.18rem 0.7rem;
+      display: inline-block;
+      margin-bottom: 0.5rem;
+    }
+
+    .ev-ob-name {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.25rem;
+    }
+
+    .ev-ob-meta {
+      font-size: 0.73rem;
+      color: var(--text-secondary);
+    }
+
+    /* Coordinator photo inside ev-ob-card */
+    .ev-coord-photo-wrap {
+      position: relative;
+      width: 84px;
+      height: 84px;
+      margin: 0 auto 0.85rem;
+    }
+
+    .ev-coord-photo-wrap img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid rgba(245, 197, 24, 0.45);
+      background: rgba(13, 27, 75, 0.6);
+    }
+
+    .ev-coord-placeholder {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: rgba(13, 27, 75, 0.8);
+      border: 2px dashed rgba(245, 197, 24, 0.35);
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+    }
+
+    .ev-coord-ring {
+      position: absolute;
+      inset: -5px;
+      border-radius: 50%;
+      border: 1px dashed rgba(245, 197, 24, 0.3);
+      animation: memberRingSpin 12s linear infinite;
+    }
+
+    .ev-coord-phone {
+      display: inline-block;
+      margin-top: 0.5rem;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-decoration: none;
+      background: rgba(0, 212, 255, 0.08);
+      border: 1px solid rgba(0, 212, 255, 0.2);
+      border-radius: 50px;
+      padding: 0.2rem 0.7rem;
+      transition: all 0.2s;
+    }
+
+    .ev-coord-phone:hover {
+      background: rgba(0, 212, 255, 0.18);
+      border-color: var(--accent);
+      box-shadow: 0 0 10px rgba(0, 212, 255, 0.25);
+    }
+
+    /* FLOATING LIVE NEWS */
+    .floating-live-news {
+      position: fixed;
+      top: calc(var(--nav-h) + 2rem);
+      right: 2rem;
+      z-index: 99;
+      background: rgba(13, 27, 75, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(245, 197, 24, 0.4);
+      border-radius: 12px;
+      padding: 0.8rem 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      cursor: pointer;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 15px rgba(245, 197, 24, 0.2);
+      transition: transform 0.3s, box-shadow 0.3s;
+      animation: floatNews 4s ease-in-out infinite;
+    }
+
+    .floating-live-news:hover {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(245, 197, 24, 0.4);
+      border-color: var(--gold);
+    }
+
+    .fln-pulse {
+      width: 40px;
+      height: 40px;
+      background: rgba(239, 68, 68, 0.1);
+      border-radius: 50%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .fln-pulse::after {
+      content: '🚀';
+      font-size: 1.2rem;
+      position: absolute;
+    }
+
+    .fln-content {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      background-color: #ef4444;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #ef4444;
+      animation: blink 1s infinite alternate;
+    }
+
+    @keyframes floatNews {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-8px);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .floating-live-news {
+        top: calc(var(--nav-h) + 1rem);
+        bottom: auto;
+        right: 1rem;
+        left: 1rem;
+        justify-content: center;
+      }
+
+      .ev-ob-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .modal-info-grid {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+      }
+
+      .nav-logo-text {
+        max-width: 140px;
+      }
+
+      .nav-logo-text .dept {
+        font-size: 0.62rem;
+        line-height: 1.2;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .nav-logo-text {
+        display: none;
+      }
+
+      .nav-logo img {
+        height: 40px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ========== SPLASH OVERLAY (first load) ========== -->
+  <div id="splashOverlay" role="dialog" aria-label="Loading PSNA CET AIML Website">
+    <div class="splash-grid-bg"></div>
+    <div class="splash-scan"></div>
+    <div class="splash-corner sp-tl"></div>
+    <div class="splash-corner sp-tr"></div>
+    <div class="splash-corner sp-bl"></div>
+    <div class="splash-corner sp-br"></div>
+    <!-- Robot -->
+    <div style="position:relative; width:150px; height:150px;">
+      <div class="sp-glow" style="width:180px;height:180px;"></div>
+      <div class="sp-glow" style="width:230px;height:230px;animation-delay:.5s;opacity:.5;"></div>
+      <div class="sp-robot">
+        <svg viewBox="0 0 100 130" width="150" height="150" xmlns="http://www.w3.org/2000/svg">
+          <line x1="50" y1="8" x2="50" y2="18" stroke="#00d4ff" stroke-width="2" />
+          <circle cx="50" cy="6" r="3" fill="#F5C518">
+            <animate attributeName="opacity" values="1;0.2;1" dur="1.2s" repeatCount="indefinite" />
+          </circle>
+          <rect x="30" y="18" width="40" height="32" rx="8" fill="#1e3a5f" stroke="#00d4ff" stroke-width="1.5" />
+          <ellipse cx="42" cy="32" rx="6" ry="6" fill="#00d4ff" opacity="0.9">
+            <animate attributeName="rx" values="6;6;0.5;6" dur="3s" repeatCount="indefinite" />
+          </ellipse>
+          <ellipse cx="58" cy="32" rx="6" ry="6" fill="#00d4ff" opacity="0.9">
+            <animate attributeName="rx" values="6;6;0.5;6" dur="3s" repeatCount="indefinite" />
+          </ellipse>
+          <circle cx="42" cy="32" r="3" fill="#0a0e27" />
+          <circle cx="58" cy="32" r="3" fill="#0a0e27" />
+          <rect x="38" y="41" width="24" height="3" rx="1.5" fill="#F5C518" opacity="0.8" />
+          <rect x="45" y="50" width="10" height="6" fill="#152a47" />
+          <rect x="22" y="56" width="56" height="44" rx="8" fill="#152a47" stroke="#1e3a5f" stroke-width="1.5" />
+          <rect x="34" y="64" width="32" height="20" rx="4" fill="#0d1b4b" />
+          <rect x="38" y="68" width="8" height="4" rx="2" fill="#00d4ff" opacity="0.7">
+            <animate attributeName="opacity" values="0.7;1;0.7" dur="0.8s" repeatCount="indefinite" />
+          </rect>
+          <rect x="48" y="68" width="6" height="4" rx="2" fill="#F5C518" opacity="0.7" />
+          <rect x="55" y="68" width="7" height="4" rx="2" fill="#3b82f6" opacity="0.7" />
+          <rect x="7" y="58" width="14" height="32" rx="7" fill="#1e3a5f" stroke="#00d4ff" stroke-width="1" />
+          <rect x="79" y="58" width="14" height="32" rx="7" fill="#1e3a5f" stroke="#00d4ff" stroke-width="1" />
+          <rect x="30" y="100" width="16" height="24" rx="6" fill="#1e3a5f" />
+          <rect x="54" y="100" width="16" height="24" rx="6" fill="#1e3a5f" />
+        </svg>
+      </div>
+    </div>
+    <!-- Text -->
+    <div class="sp-title">PSNA CET</div>
+    <div
+      style="font-family:'Rajdhani',sans-serif; font-size:1rem; color:#94a3b8; letter-spacing:3px; text-transform:uppercase; position:relative;z-index:2; text-align:center;">
+      Dept. of CSE • AI &amp; ML</div>
+    <div class="sp-badge">✦ ARTIFICIAL INTELLIGENCE &amp; MACHINE LEARNING ✦</div>
+    <!-- Loading bar -->
+    <div class="sp-bar-wrap">
+      <div class="sp-bar-header">
+        <div class="sp-bar-label">INITIALIZING SYSTEM<span id="spDots"></span></div>
+      </div>
+      <div class="sp-bar-bg">
+        <div class="sp-bar-fill"></div>
+      </div>
+      <div class="sp-pct" id="spPct">0%</div>
+    </div>
+  </div>
+
+  <!-- ========== BACKGROUND ========== -->
+  <div class="bg-grid"></div>
+  <canvas id="globalCanvas"></canvas>
+
+  <!-- ========== NAVBAR ========== -->
+  <nav class="navbar" id="navbar">
+    <!-- Logo -->
+    <a href="#" class="nav-logo" onclick="showPage('home'); return false;">
+      <img src="assets/images/logo.png" alt="PSNA CET Logo" id="navLogo"
+        style="height:54px; width:auto; max-width:130px; object-fit:contain; border-radius:6px; filter:drop-shadow(0 0 8px rgba(245,197,24,0.4));" />
+      <div class="nav-logo-text">
+        <div class="dept">DEPARTMENT OF CSE(AI&ML)</div>
+      </div>
+    </a>
+
+    <!-- Desktop Nav -->
+    <ul class="nav-links" id="navMenu">
+      <li><a href="#" data-page="home" id="nav-home">🏠 Home</a></li>
+      <li><a href="#" data-page="events" id="nav-events">🎯 Events</a></li>
+      <li><a href="#" data-page="news" id="nav-news">📰 News</a></li>
+      <li><a href="#" data-page="about" id="nav-about">ℹ️ About</a></li>
+    </ul>
+    <!-- Hamburger -->
+    <button class="nav-hamburger" id="hamburger" aria-label="Toggle Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- ========== NEWS TICKER ========== -->
+  <div class="news-ticker-bar" style="margin-top:var(--nav-h);">
+    <div class="ticker-label">📢 LIVE</div>
+    <div class="ticker-content" id="newsTicker">
+      <div class="ticker-item">🎉 <span>ZYNEX 2K26</span> — First-ever Symposium of CSE(AI&ML) Dept. coming soon!
+        Register now.</div>
+    </div>
+  </div>
+
+  <!-- ================================================================
+     PAGE: HOME
+     ================================================================ -->
+  <div class="page active" id="page-home">
+
+    <!-- FLOATING LIVE NEWS SECTION -->
+    <div class="floating-live-news" onclick="showPage('events')">
+      <div class="fln-pulse"></div>
+      <div class="fln-content">
+        <span
+          style="color:#ef4444; font-weight:bold; font-size:0.75rem; letter-spacing:1px; display:flex; align-items:center; gap:6px;">
+          <span class="live-dot"></span> LIVE NEWS
+        </span>
+        <span
+          style="font-family:'Orbitron',monospace; color:var(--gold); font-size:0.95rem; margin-top:2px; font-weight:700; letter-spacing:0.5px;">
+          ZYNEX 2K26 <span style="color:#fff;">COMING SOON</span>
+        </span>
+      </div>
+    </div>
+
+    <!-- 3D HERO SLIDESHOW -->
+    <section class="hero-section">
+      <div class="hero-slides">
+
+        <!-- Slide 1: AI Lab -->
+        <div class="hero-slide active">
+          <div class="hero-slide-bg">
+            <img src="assets/images/block.webp" alt="AI Machine Learning Lab" class="slide-img" />
+          </div>
+          <div class="hero-slide-overlay"
+            style="background: linear-gradient(135deg, rgba(5,10,31,0.6) 0%, rgba(13,27,75,0.3) 50%, rgba(5,10,31,0.1) 100%);">
+          </div>
+
+          <div class="hero-content">
+            <div class="hero-card-3d">
+              <div class="hero-badge"><span></span> PSNA College of Engineering</div>
+              <h1 class="hero-title glitch" data-text="Shaping the Future with AI & ML">Shaping the Future<br />with AI
+                & ML</h1>
+              <p class="hero-subtitle">B.E Computer Science Engineering (AI&ML)</p>
+              <p class="hero-desc">Join us at the cutting edge of Artificial Intelligence and Machine Learning. Train
+                with industry experts, build intelligent systems, and lead tomorrow's tech revolution.</p>
+              <div class="hero-btns">
+                <a href="#" class="btn-primary" data-nav-to="about">🔬 Explore Department</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 2: Symposium -->
+        <div class="hero-slide">
+          <div class="hero-slide-bg">
+            <img src="assets/images/event_poster.jpg" alt="ZYNEX 2K26 Symposium Event" class="slide-img" />
+          </div>
+          <div class="hero-slide-overlay"
+            style="background: linear-gradient(135deg, rgba(5,10,31,0.6) 0%, rgba(26,5,51,0.3) 50%, rgba(5,10,31,0.1) 100%);">
+          </div>
+
+          <div class="hero-content">
+            <div class="hero-card-3d">
+              <div class="hero-badge"><span></span> First-Ever Symposium</div>
+              <h1 class="hero-title">ZYNEX 2K26<br /><span style="font-size:0.55em; color:var(--gold);">Intelligence
+                  Redefined</span></h1>
+              <p class="hero-subtitle">Department of CSE (AI&ML) — Symposium</p>
+              <p class="hero-desc">Compete in technical & non-technical events, win exciting prizes, and connect with AI
+                enthusiasts at Dindigul's premier tech fest.</p>
+              <div class="hero-btns">
+                <a href="#" class="btn-primary" data-nav-to="events">🏆 View Events</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 3: Campus -->
+        <div class="hero-slide">
+          <div class="hero-slide-bg">
+            <img src="assets/images/clg.jpg" alt="PSNA CET Campus" class="slide-img" />
+          </div>
+          <div class="hero-slide-overlay"
+            style="background: linear-gradient(135deg, rgba(2,44,34,0.6) 0%, rgba(0,20,16,0.3) 50%, rgba(5,10,31,0.1) 100%);">
+          </div>
+
+          <div class="hero-content">
+            <div class="hero-card-3d">
+              <div class="hero-badge"><span></span> Excellence in Innovation</div>
+              <h1 class="hero-title">Where Humans<br />Meet Machines</h1>
+              <p class="hero-subtitle">Research · Innovation · Leadership</p>
+              <p class="hero-desc">Discover world-class education at PSNA CET. Our faculty bring cutting-edge research
+                from robotics, deep learning, NLP, and computer vision into the classroom.</p>
+              <div class="hero-btns">
+                <a href="#" class="btn-primary" data-nav-to="about">👨‍🏫 Meet Faculty</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /slides -->
+
+      <!-- Controls -->
+      <div class="slide-indicators">
+        <button class="slide-dot active" aria-label="Slide 1"></button>
+        <button class="slide-dot" aria-label="Slide 2"></button>
+        <button class="slide-dot" aria-label="Slide 3"></button>
+      </div>
+      <div class="slide-arrows">
+        <button class="slide-arr" id="slidePrev">◀</button>
+        <button class="slide-arr" id="slideNext">▶</button>
+      </div>
+    </section>
+    <section class="section" style="padding:3rem 2rem;">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-card fade-up">
+            <div class="stat-icon">🎓</div>
+            <div class="stat-num" data-target="2" data-suffix="+ Yrs">0</div>
+            <div class="stat-label">Department Est.</div>
+          </div>
+          <div class="stat-card fade-up">
+            <div class="stat-icon">👨‍🏫</div>
+            <div class="stat-num" data-target="4" data-suffix="+">0</div>
+            <div class="stat-label">Expert Faculty</div>
+          </div>
+          <div class="stat-card fade-up">
+            <div class="stat-icon">👩‍💻</div>
+            <div class="stat-num" data-target="100" data-suffix="+">0</div>
+            <div class="stat-label">Students Enrolled</div>
+          </div>
+          <div class="stat-card fade-up">
+            <div class="stat-icon">🔬</div>
+            <div class="stat-num" data-target="4" data-suffix="+">0</div>
+            <div class="stat-label">On Going Research Papers</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SPECIALIZATIONS / PROGRAMS -->
+    <section class="section section-alt">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">What We Study</div>
+          <h2 class="section-title">Department Specializations</h2>
+          <div class="section-line"></div>
+        </div>
+        <div class="responsive-grid"
+          style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1.25rem;">
+          <div class="prog-card fade-up">
+            <div class="prog-icon">🧠</div>
+            <div class="prog-title">Machine Learning</div>
+            <div class="prog-desc">Supervised, unsupervised & reinforcement learning with real-world datasets.</div>
+          </div>
+          <div class="prog-card fade-up">
+            <div class="prog-icon">🤖</div>
+            <div class="prog-title">Robotics & Automation</div>
+            <div class="prog-desc">Design autonomous robotic systems using AI-driven decision engines.</div>
+          </div>
+          <div class="prog-card fade-up">
+            <div class="prog-icon">👁️</div>
+            <div class="prog-title">Computer Vision</div>
+            <div class="prog-desc">Image recognition, object detection, and video analytics with CNNs.</div>
+          </div>
+          <div class="prog-card fade-up">
+            <div class="prog-icon">💬</div>
+            <div class="prog-title">Natural Language Processing</div>
+            <div class="prog-desc">Build chatbots, translators, and sentiment analysis engines with LLMs.</div>
+          </div>
+          <div class="prog-card fade-up">
+            <div class="prog-icon">📊</div>
+            <div class="prog-title">Data Science</div>
+            <div class="prog-desc">Extract insights from big data using statistical and ML methods.</div>
+          </div>
+          <div class="prog-card fade-up">
+            <div class="prog-icon">⚡</div>
+            <div class="prog-title">Deep Learning</div>
+            <div class="prog-desc">Neural networks, transformers, GANs, and advanced architectures.</div>
+          </div>
+          <div class="prog-card fade-up">
+            <div class="prog-icon">☁️</div>
+            <div class="prog-title">Cloud & MLOps</div>
+            <div class="prog-desc">Deploy AI models at scale using cloud platforms and DevOps pipelines.</div>
+          </div>
+          <div class="prog-card fade-up">
+            <div class="prog-icon">🔐</div>
+            <div class="prog-title">AI Ethics & Security</div>
+            <div class="prog-desc">Responsible AI design, bias mitigation, and cybersecurity principles.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STUDENT ACHIEVEMENTS -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">Student Success</div>
+          <h2 class="section-title">Student Achievements</h2>
+          <div class="section-line"></div>
+        </div>
+
+        <div class="responsive-grid"
+          style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.25rem;">
+          <div class="glass-card ach-card fade-up holo-card">
+            <div class="ach-year">2025 — Xplora Hackathon - Held at KCG College of Technology - Chennai</div>
+            <div class="ach-name">Finalist Among 70+ teams </div>
+            <div class="ach-detail">Team Real Aura developed an AI-powered Scan Analysis System ( Medical ).</div>
+          </div>
+
+          <div class="glass-card ach-card fade-up holo-card">
+            <div class="ach-year">INTELLEX 2K25 - State Level Symposium</div>
+            <div class="ach-year">Held at Alagappa Chettiyar Government College of Engineering and Technology -
+              Karaikudi</div>
+            <div class="ach-detail">Paper Presentation in Physics</div>
+          </div>
+
+          <div class="glass-card ach-card fade-up holo-card">
+            <div class="ach-year">THIRAN 2026 - Codeathon- Held at Shri Eshwar College of Engineering - Coimbatore
+            </div>
+            <div class="ach-name">Finalist Among 450+ teams</div>
+            <div class="ach-detail">Team Real Aura developed an AI-powered Dispatch System for a Courier Company.</div>
+          </div>
+
+          <div class="glass-card ach-card fade-up holo-card">
+            <div class="ach-year">IEF's E-Horyzon 2k26 — Pitch For Tomorrow</div>
+            <div class="ach-year">Held at Kongu Engineering College - Erode</div>
+            <div class="ach-name">Idea Presentation</div>
+            <div class="ach-detail">Team PhoneixAura Participated in the Pitch For Tomorrow with the idea of Autonomous
+              intelligence Accident Detection System using Surveillance Technology and Object Detection.</div>
+          </div>
+
+          <div class="glass-card ach-card fade-up holo-card">
+            <div class="ach-year">THIRAN 2026 - Cloudathon- Held at Shri Eshwar College of Engineering - Coimbatore
+            </div>
+            <div class="ach-name">Finalist Among 100+ teams</div>
+            <div class="ach-detail">Team Real Aura developed an Climate Risk Early Warning And Disaster Response System.
+            </div>
+          </div>
+
+          <div class="glass-card ach-card fade-up holo-card">
+            <div class="ach-year">THIRAN 2026 - AI AGENTATHON- Held at Shri Eshwar College of Engineering - Coimbatore.
+            </div>
+            <div class="ach-name">Finalist Among 250+ teams</div>
+            <div class="ach-detail">This Team developed a Smart Billing System using Agentic AI.</div>
+          </div>
+
+          <div class="glass-card ach-card fade-up holo-card">
+            <div class="ach-year">Innowah Hackathon 2026 - Conducted by IIT-PALS- Held at Nandha Engineering College -
+              Erode</div>
+            <div class="ach-name">Finalist Among different teams from different states.</div>
+            <div class="ach-detail">Team:PentaNova developed Civic Issue Reporting System.</div>
+          </div>
+
+          <div class="glass-card ach-card fade-up holo-card">
+            <div class="ach-year">=CBX'25 - Held at K.Ramakrishina College of Engineering - Trichy </div>
+            <div class="ach-name">Secured First Prize In Prompt Engineering </div>
+            <div class="ach-detail">On 8th May 2025</div>
+          </div>
+
+          <div class="glass-card ach-card fade-up holo-card">
+            <div class="ach-year">2026 — Online Internsips</div>
+            <div class="ach-name">From CodeAlpha</div>
+            <div class="ach-detail">Developed Many project.</div>
+          </div>
+        </div>
+      </div>
+  </div>
+  </section>
+
+  </div><!-- /page-home -->
+
+
+  <!-- ================================================================
+     PAGE: EVENTS — ZYNEX 2K26
+     ================================================================ -->
+  <div class="page" id="page-events">
+    <section class="section" style="padding-top:4rem;">
+      <div class="container">
+
+        <div class="section-header">
+          <div class="section-tag">PSNACET CSE(AI&ML)</div>
+          <h2 class="section-title">ZYNEX 2K26</h2>
+          <div class="section-line"></div>
+          <p style="color:var(--text-secondary); margin-top:1rem; font-size:0.95rem;">
+            The First-Ever National-Level Technical Symposium of B.E CSE (AI&ML) Department
+          </p>
+        </div>
+
+        <!-- SYMPOSIUM POSTER -->
+        <div class="poster-wrapper">
+          <!-- Replace assets/images/symposium_poster.png with your actual poster image -->
+          <img src="assets/images/event_poster.jpg" alt="ZYNEX 2K26 Symposium Poster"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'" />
+          <div class="poster-placeholder"
+            style="display:none; flex-direction:column; align-items:center; justify-content:center; min-height:320px; border:2px dashed rgba(0,212,255,0.3); border-radius:16px; gap:1rem; background:rgba(13,27,75,0.4);">
+            <div style="font-size:3rem;">🖼️</div>
+            <div style="font-family:'Orbitron',monospace; font-size:0.65rem; letter-spacing:2px; color:var(--accent);">
+              ADD SYMPOSIUM POSTER</div>
+            <div style="font-size:0.8rem; color:var(--text-muted); text-align:center;">Place your poster image
+              at:<br><code style="color:var(--gold);">assets/images/event_poster.jpg</code></div>
+          </div>
+          <div class="poster-glow"></div>
+        </div>
+
+
+        <!-- EVENT INTRO -->
+        <div class="events-intro fade-up">
+          <div class="symposium-badge">⚡ ZYNEX 2K26 ⚡</div>
+          <h3>Intelligence Redefined — Dindigul's Premier AI/ML Symposium</h3>
+          <p style="margin-top:0.75rem;">
+            PSNA College of Engineering and Technology proudly presents its first-ever departmental symposium
+            by the B.E CSE (Artificial Intelligence and Machine Learning) department.
+            Compete, collaborate, and celebrate the spirit of technology!
+          </p>
+          <div style="display:flex; flex-wrap:wrap; gap:1.5rem; justify-content:center; margin-top:1.5rem;">
+            <div style="text-align:center;">
+              <div style="font-family:'Orbitron',monospace; font-size:1.2rem; color:var(--gold);">📅 Date</div>
+              <div style="color:var(--text-secondary); font-size:0.9rem;">April 21, 2026</div>
+            </div>
+            <div style="text-align:center;">
+              <div style="font-family:'Orbitron',monospace; font-size:1.2rem; color:var(--accent);">📍 Venue</div>
+              <div style="color:var(--text-secondary); font-size:0.9rem;">CM AUDITORIUM,PSNACET, Dindigul</div>
+            </div>
+            <div style="text-align:center;">
+              <div style="font-family:'Orbitron',monospace; font-size:1.2rem; color:#a855f7;">⏰ Time</div>
+              <div style="color:var(--text-secondary); font-size:0.9rem;">9:00 AM Onwards</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- EVENT LIST -->
+        <div class="event-cols fade-up">
+
+          <!-- TECHNICAL EVENTS -->
+          <div class="event-tech">
+            <div class="event-col-title tech-title">
+              <span>⚙️</span>Events
+            </div>
+            <div class="event-list-cards">
+
+              <div class="event-card">
+                <span class="event-card-name">IntelliTalks(Paper Presentation)</span>
+                <div class="event-card-actions">
+                  <button class="btn-ev-about" onclick="openEventModal('tech','IntelliTalks(Paper Presentation)')">ℹ️
+                    Rules</button>
+                  <a href="https://forms.gle/nYhxc3pnHxyseCHGA" target="_blank" class="btn-ev-register"
+                    id="reg-tech-1">REGISTER</a>
+                </div>
+              </div>
+
+              <div class="event-card">
+                <span class="event-card-name">TransCodeX(Code Conversion)</span>
+                <div class="event-card-actions">
+                  <button class="btn-ev-about" onclick="openEventModal('tech','TranscodeX')">ℹ️ Rules</button>
+                  <a href="https://forms.google.com" target="_blank" class="btn-ev-register"
+                    id="reg-tech-2">REGISTER</a>
+                </div>
+              </div>
+
+              <div class="event-card">
+                <span class="event-card-name">Code Combat(Coding Competition)</span>
+                <div class="event-card-actions">
+                  <button class="btn-ev-about" onclick="openEventModal('tech','Code Combat')">ℹ️ Rules</button>
+                  <a href="https://forms.google.com" target="_blank" class="btn-ev-register"
+                    id="reg-tech-3">REGISTER</a>
+                </div>
+              </div>
+
+              <div class="event-card">
+                <span class="event-card-name">Vibe2Build(Prompting with Web development)</span>
+                <div class="event-card-actions">
+                  <button class="btn-ev-about" onclick="openEventModal('tech','Vibe2Build')">ℹ️
+                    About</button>
+                  <a href="https://forms.google.com" target="_blank" class="btn-ev-register"
+                    id="reg-tech-4">REGISTER</a>
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+
+          <!-- NON-TECHNICAL EVENTS -->
+          <div class="event-nontech event-nontech-col">
+            <div class="event-col-title nontech-title">
+              <span>🎭</span>Events
+            </div>
+            <div class="event-list-cards">
+
+              <div class="event-card">
+                <span class="event-card-name">Idea Ignition (Pitch to Business)</span>
+                <div class="event-card-actions">
+                  <button class="btn-ev-about" onclick="openEventModal('tech','Idea Ignition')">ℹ️ Rules</button>
+                  <a href="https://forms.google.com" target="_blank" class="btn-ev-register"
+                    id="reg-tech-5">REGISTER</a>
+                </div>
+              </div>
+
+              <div class="event-card">
+                <span class="event-card-name">Mock Interview</span>
+                <div class="event-card-actions">
+                  <button class="btn-ev-about" onclick="openEventModal('tech','Mock Interview')">ℹ️ Rules</button>
+                  <a href="https://forms.google.com" target="_blank" class="btn-ev-register"
+                    id="reg-tech-6">REGISTER</a>
+                </div>
+              </div>
+
+              <div class="event-card">
+                <span class="event-card-name">Mystery Matrix (Escape Room)</span>
+                <div class="event-card-actions">
+                  <button class="btn-ev-about" onclick="openEventModal('tech','Mystery Matrix')">ℹ️ Rules</button>
+                  <a href="https://forms.google.com" target="_blank" class="btn-ev-register"
+                    id="reg-tech-7">REGISTER</a>
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+
+        </div><!-- /event-cols -->
+
+        <!-- WHAT YOU WIN HIGHLIGHTS -->
+        <div class="fade-up" style="margin-top:2.5rem;">
+          <div class="section-header" style="margin-bottom:1.5rem;">
+            <div class="section-tag">Perks &amp; Rewards</div>
+            <h2 class="section-title" style="font-size:1.8rem;">What You Win</h2>
+            <div class="section-line"></div>
+          </div>
+          <div class="responsive-grid"
+            style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1.25rem;">
+
+            <!-- Cash Prizes -->
+            <div class="glass-card"
+              style="padding:2rem 1.5rem; text-align:center; border:1px solid rgba(245,197,24,0.35); background:linear-gradient(135deg,rgba(245,197,24,0.08),rgba(13,27,75,0.6)); position:relative; overflow:hidden; transition:transform 0.3s,box-shadow 0.3s;"
+              onmouseover="this.style.transform='translateY(-6px)';this.style.boxShadow='0 12px 40px rgba(245,197,24,0.25)'"
+              onmouseout="this.style.transform='';this.style.boxShadow=''">
+              <div style="font-size:3rem; margin-bottom:0.75rem; filter:drop-shadow(0 0 12px rgba(245,197,24,0.7));">💰
+              </div>
+              <div
+                style="font-family:'Orbitron',monospace; color:var(--gold); font-size:0.75rem; letter-spacing:2px; margin-bottom:0.5rem;">
+                FOR WINNERS</div>
+              <div style="color:#fff; font-size:1.25rem; font-weight:700; margin-bottom:0.4rem;">Exciting Cash Prizes
+              </div>
+              <div style="color:var(--text-muted); font-size:0.82rem; line-height:1.6;">Top performers take home <span
+                  style="color:var(--gold);font-weight:600;">exciting cash awards</span> distributed across all events.
+                Compete hard and claim your reward!</div>
+              <div
+                style="position:absolute;top:-20px;right:-20px;width:80px;height:80px;background:radial-gradient(circle,rgba(245,197,24,0.15),transparent 70%);border-radius:50%;">
+              </div>
+            </div>
+
+            <!-- Participation Certificate -->
+            <div class="glass-card"
+              style="padding:2rem 1.5rem; text-align:center; border:1px solid rgba(168,85,247,0.35); background:linear-gradient(135deg,rgba(168,85,247,0.08),rgba(13,27,75,0.6)); position:relative; overflow:hidden; transition:transform 0.3s,box-shadow 0.3s;"
+              onmouseover="this.style.transform='translateY(-6px)';this.style.boxShadow='0 12px 40px rgba(168,85,247,0.25)'"
+              onmouseout="this.style.transform='';this.style.boxShadow=''">
+              <div style="font-size:3rem; margin-bottom:0.75rem; filter:drop-shadow(0 0 12px rgba(168,85,247,0.7));">🎓
+              </div>
+              <div
+                style="font-family:'Orbitron',monospace; color:#a855f7; font-size:0.75rem; letter-spacing:2px; margin-bottom:0.5rem;">
+                FOR ALL PARTICIPANTS</div>
+              <div style="color:#fff; font-size:1.25rem; font-weight:700; margin-bottom:0.4rem;">Participation
+                Certificate</div>
+              <div style="color:var(--text-muted); font-size:0.82rem; line-height:1.6;"><span
+                  style="color:#a855f7;font-weight:600;">Every participant</span> receives an official certificate of
+                participation from PSNACET CSE (AI&amp;ML) Department — a valuable addition to your portfolio!</div>
+              <div
+                style="position:absolute;top:-20px;right:-20px;width:80px;height:80px;background:radial-gradient(circle,rgba(168,85,247,0.15),transparent 70%);border-radius:50%;">
+              </div>
+            </div>
+
+            <!-- Shield for Winners -->
+            <div class="glass-card"
+              style="padding:2rem 1.5rem; text-align:center; border:1px solid rgba(0,212,255,0.35); background:linear-gradient(135deg,rgba(0,212,255,0.08),rgba(13,27,75,0.6)); position:relative; overflow:hidden; transition:transform 0.3s,box-shadow 0.3s;"
+              onmouseover="this.style.transform='translateY(-6px)';this.style.boxShadow='0 12px 40px rgba(0,212,255,0.25)'"
+              onmouseout="this.style.transform='';this.style.boxShadow=''">
+              <div style="font-size:3rem; margin-bottom:0.75rem; filter:drop-shadow(0 0 12px rgba(0,212,255,0.7));">🏆
+              </div>
+              <div
+                style="font-family:'Orbitron',monospace; color:var(--accent); font-size:0.75rem; letter-spacing:2px; margin-bottom:0.5rem;">
+                FOR CHAMPIONS</div>
+              <div style="color:#fff; font-size:1.25rem; font-weight:700; margin-bottom:0.4rem;">Shield for Winners
+              </div>
+              <div style="color:var(--text-muted); font-size:0.82rem; line-height:1.6;">Event winners take home a
+                prestigious <span style="color:var(--accent);font-weight:600;">rolling shield</span> — a symbol of
+                excellence and the ultimate mark of a ZYNEX 2K26 champion!</div>
+              <div
+                style="position:absolute;top:-20px;right:-20px;width:80px;height:80px;background:radial-gradient(circle,rgba(0,212,255,0.15),transparent 70%);border-radius:50%;">
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!-- END WHAT YOU WIN HIGHLIGHTS -->
+
+        <!-- STUDENT COORDINATORS / OB ON EVENTS PAGE -->
+        <div class="ev-ob-section fade-up">
+          <div class="section-header" style="margin-bottom:0;">
+            <div class="section-tag">Event Organised By</div>
+            <h2 class="section-title" style="font-size:1.6rem;">Student Coordinators</h2>
+            <div class="section-line"></div>
+            <p style="color:var(--text-secondary); margin-top:0.6rem; font-size:0.88rem;">Reach out to our
+              coordinators for queries about ZYNEX 2K26</p>
+          </div>
+          <div class="ev-ob-grid">
+            <!-- Coordinator 1 — President -->
+            <div class="ev-ob-card">
+              <div class="ev-ob-role">President</div>
+              <div class="ev-ob-name">AFRIN FATHIMA M</div>
+              <div class="ev-ob-meta">CSE (AI&amp;ML)</div>
+              <a href="tel:+919843012345" class="ev-coord-phone">📞 Contact via Secretary</a>
+            </div>
+
+            <!-- Coordinator 2 — Vice President -->
+            <div class="ev-ob-card">
+              <div class="ev-ob-role">Vice President</div>
+              <div class="ev-ob-name">HARI HARAN K</div>
+              <div class="ev-ob-meta">CSE (AI&amp;ML)</div>
+              <a href="tel:+916374991745" class="ev-coord-phone">📞 +91 6374991745</a>
+            </div>
+
+            <!-- Coordinator 3 — Secretary -->
+            <div class="ev-ob-card">
+              <div class="ev-ob-role">Secretary</div>
+              <div class="ev-ob-name">RUTHRA VELAN M</div>
+              <div class="ev-ob-meta">CSE (AI&amp;ML)</div>
+              <a href="tel:+916381611575" class="ev-coord-phone">📞 +91 6381611575</a>
+            </div>
+
+            <!-- Coordinator 4 — Joint Secretary -->
+            <div class="ev-ob-card">
+              <div class="ev-ob-role">Joint Secretary</div>
+              <div class="ev-ob-name">AKSHAYA B</div>
+              <div class="ev-ob-meta">CSE (AI&amp;ML)</div>
+            </div>
+
+            <div class="ev-ob-card">
+              <div class="ev-ob-role">REGISTRATION COORDINATOR</div>
+              <div class="ev-ob-name">HARIJITH P</div>
+              <div class="ev-ob-meta">CSE (AI&amp;ML)</div>
+              <a href="tel:+919344886379" class="ev-coord-phone">📞 +91 9344886379</a>
+            </div>
+          </div>
+    </section>
+  </div><!-- /page-events -->
+
+  <!-- ===== EVENT DETAILS MODAL ===== -->
+  <div id="eventModal" role="dialog" aria-modal="true" aria-labelledby="modalEventTitle">
+    <div class="event-modal-box">
+      <button class="event-modal-close" onclick="closeEventModal()" aria-label="Close">✕</button>
+      <div id="modalBadge" class="modal-event-badge tech">TECHNICAL EVENT</div>
+      <div class="modal-event-title" id="modalEventTitle">Event Name</div>
+      <div class="modal-divider"></div>
+      <div class="modal-info-grid" id="modalInfoGrid"></div>
+      <div class="modal-section-label">📋 Event Description</div>
+      <p id="modalDescription"
+        style="font-size:0.88rem; color:var(--text-secondary); line-height:1.7; margin-bottom:1rem;"></p>
+      <div class="modal-section-label">📌 Rules &amp; Guidelines</div>
+      <ul class="modal-rules-list" id="modalRules"></ul>
+      <a href="https://forms.google.com" target="_blank" class="modal-register-btn" id="modalRegisterBtn"
+        style="display: none;">📋 REGISTER
+        FOR THIS EVENT</a>
+      <p class="modal-price-note" id="modalPriceNote">💰 Entry Fee: ₹250</p>
+    </div>
+  </div>
+
+  <script>
+    // ===== EVENT DATA =====
+    const eventData = {
+      tech: {
+        'IntelliTalks(Paper Presentation)': {
+          teamSize: '3 Members',
+          duration: '21.04.2026 | 2 Hours',
+          venue: 'G2 HALL, PSNACET INDIGUL',
+          description: 'Teams present innovative AI/ML projects that solve real-world problems. Judges evaluate novelty, technical depth, presentation quality, and practical impact. The project must be your own original work.',
+          rules: [
+            'Each team should consist of MAX 3 members.',
+            'Participants are free to choose any topic relevant to their domain under an open theme.',
+            'The presentation must be prepared using the prescribed template with well-structured and clear content.',
+            'Each team will be given 7 minutes for presentation, which includes a brief Q/A session.',
+            'The final PPT must be uploaded ',
+            'The file should be named as TeamName.pptx for easy identification.',
+            'Participants will be evaluated based on content quality, innovation, presentation skills, and response to questions.',
+            'The evaluation follows a structured marking scheme with a total of 40 marks.',
+            'Teams are expected to manage their time effectively during the presentation.',
+            'The decision of the judges will be final and binding.',
+            'CONTACT: Shivani K (+91 7010493745) | Abishek K B (+91 9363919332) | Priyanka R (+91 9487587756)'
+          ]
+        },
+        'TranscodeX': {
+          teamSize: '1 Member',
+          duration: '21.04.2026 | 1 hour',
+          venue: '303 CLASS ROOM , ATHENAEUM BLOCK , PSNA COLLEGE OF ENGINEERING AND TECHNOLOGY, DINDIGUL',
+          description: 'A timed coding competition where participants convert or write code. Any form of malpractice is strictly prohibited.',
+          rules: [
+            'This is an Individual (solo) event.',
+            'The contest consists of multiple rounds with increasing difficulty.',
+            'The Participants must bring their own individual laptops for the contest.',
+            'Final rounds will be conducted on the HackerRank platform.',
+            'Participants must use only the allowed programming languages.',
+            'Any form of malpractice, including use of external tools (ChatGPT, Gemini, etc.), is strictly prohibited.',
+            'Tab switching and suspicious activity may lead to disqualification.',
+            'Participants must submit solutions within the given time limit.',
+            'The decision of the organisers will be final and binding.',
+            'CONTACT: HARIHARAN K (+91 6374991745) | SHANMATHI V (+91 9677299697)'
+          ]
+        },
+        'Code Combat': {
+          emoji: '🧠',
+          teamSize: 'Individual',
+          duration: '21.04.2026 | 1 hour ',
+          venue: '303 CLASS ROOM , ATHENUM BLOCK , PSNACET',
+          description: 'A test of predicting output, debugging, and logic building. Compete smart, think logically, and give your best! All the very best!',
+          rules: [
+            'The event consists of three rounds: Output Prediction, Debugging, Logic Building',
+            'Each round will be conducted for 15 minutes.',
+            'Participants who reach the final round must bring a laptop.',
+            'No discussion or interaction with other participants is allowed during the event.',
+            'All answers must be clear and complete; unclear or incomplete answers will not be evaluated.',
+            'The decision of the judges/event coordinators will be final.',
+            'Any form of malpractice or misconduct will lead to immediate disqualification.',
+            'CONTACT: YOGESH S (+91 8610333923) | LUCKSHANYA S J (+91 9789119665)'
+
+          ]
+        },
+        'Vibe2Build': {
+          teamSize: '3 Members',
+          duration: '21.04.2026 | 1.5 hours',
+          venue: '304 CLASS ROOM , ATHENAEUM BLOCK , PSNACET-DINDIGUL',
+          description: 'Prompting in frontend development is the process of giving clear instructions to AI tools like ChatGPT and GitHub Copilot to generate UI designs and code. It helps developers build interfaces faster, reduce effort, and improve creativity using AI.',
+          rules: [
+            'Participants can compete individually or in teams (Max 3 members).',
+            'The event duration will be 1 hour and 30 mins.',
+            'All work must be created during the event time only.',
+            'Only frontend development is allowed (HTML, CSS, JavaScript, or frameworks).',
+            'Participants must build either single page or multi page website.',
+            'The project must run locally in a browser without errors.',
+            'Use of AI tools like ChatGPT, GitHub Copilot is allowed and encouraged. Participants must submit their prompts (text or screenshots).',
+            'Prompting will be part of evaluation, so use it wisely. Pre-built templates or complete UI kits are not allowed.',
+            'The design must be relevant to the given theme, and UI should be responsive (mobile-friendly preferred).',
+            'NOTE: On the spot problem statements will be given.',
+            'CONTACT: RUTHRA VELAN M (+91 6381611575) | SANTHI S (+91 9361369736)'
+          ]
+        },
+        'Idea Ignition': {
+          emoji: '💡',
+          teamSize: 'Max 3 Members',
+          duration: '21.04.2026 | 2 hours',
+          venue: 'CM AUDITORIUM, PSNACET',
+          description: 'The Business Pitch Competition is a dynamic platform where students bring their startup ideas to life. Participants will work in teams to solve real-world problems with innovative and practical solutions. Each team will present their idea through a creative and impactful PPT. The event highlights innovation, feasibility, and strong communication skills. It inspires participants to think big, act smart, and showcase their ideas with confidence. This competition builds entrepreneurial mindset, creativity, and teamwork.',
+          rules: [
+            'Each team can have a maximum of three members.',
+            'Participants are free to pitch any innovative startup idea under an open theme.',
+            'The presentation must be structured and clearly cover the problem, solution, target audience, and business model',
+            'Each team will be given 10 minutes to present their idea.',
+            'Participants must submit a PPT with a maximum of 7 slides in the prescribed format',
+            'The evaluation will focus on innovation, feasibility, and real-world impact of the idea',
+            'The event provides an opportunity to demonstrate entrepreneurial thinking and creativity.',
+            'Presenting a prototype or working model will add significant value during evaluation.',
+            'The final judgment will be based on a well-defined marking scheme.',
+            'An interactive Q/A session with the judges will be conducted after the presentation.',
+            'CONTACT: MUHAMMED IMRAN A (+91 8807404774) | MAHATHI KARTHIKEYAN K (+91 7418205016) | SHIVANI K (+91 7010493745)'
+          ]
+        },
+        'Debugging Dungeon': {
+          emoji: '🎯',
+          teamSize: '2 Members',
+          duration: '1.5 Hours',
+          venue: 'Computer Lab A',
+          description: 'Find and fix intentionally broken code snippets across multiple languages and difficulty levels. The team that correctly fixes the most bugs within the time limit wins.',
+          rules: [
+            'Team of exactly 2 members.',
+            'Languages: C, Python, Java, and SQL.',
+            'Each bug fixed earns points based on difficulty (Easy=5, Medium=10, Hard=20).',
+            'No internet access. Bring your debugging skills!',
+            'Time limit strictly enforced; submit before buzzer.',
+            'Partial fixes may earn partial credit at judge discretion.'
+          ]
+        },
+        'Mystery Matrix': {
+          emoji: '🕵️',
+          teamSize: '2–3 Members',
+          duration: '21.04.2026 | 12:30 PM - 1:30 PM',
+          venue: '303 CLASS ROOM , ATHENUM BLOCK , PSNACET',
+          description: 'Step into a world of puzzles, clues, and excitement with Mystery Matrix! Challenge your mind and race through thrilling rounds of tech trivia, quests, and mystery cases.',
+          rules: [
+            'Round 1: Tech Trivia Rush - Elimination round with tech questions, logical aptitude, and puzzles.',
+            'Round 2: Quest & Conquer - Move across stations, complete tasks, and solve puzzles for clues.',
+            'Round 3: The Case Breakers - Act as a detective and solve a mysterious case using logical reasoning.',
+            'Participants can take part individually or in teams (2 - 3 persons).',
+            'All rounds are time-bound and must be completed within the given limit.',
+            'Only participants who qualify each round will move to the next stage.',
+            'Teamwork and fair play are expected. Any malpractice will lead to immediate disqualification.',
+            'CONTACT: PONNADIAN S A (+91 9025413198) | AKSHAYA B (+91 8220733309) | NISHAR MOHAMED (+91 9344896248)'
+          ]
+        },
+      },
+    };
+
+    function openEventModal(type, eventKey) {
+      const data = eventData[type] && eventData[type][eventKey];
+      if (!data) return;
+      const modal = document.getElementById('eventModal');
+      const badge = document.getElementById('modalBadge');
+      const title = document.getElementById('modalEventTitle');
+      const infoGrid = document.getElementById('modalInfoGrid');
+      const desc = document.getElementById('modalDescription');
+      const rulesList = document.getElementById('modalRules');
+      const regBtn = document.getElementById('modalRegisterBtn');
+      const priceNote = document.getElementById('modalPriceNote');
+
+      badge.textContent = type === 'tech' ? '⚙️ TECHNICAL EVENT' : '🎭 NON-TECHNICAL EVENT';
+      badge.className = 'modal-event-badge ' + (type === 'tech' ? 'tech' : 'nontech');
+      title.textContent = (data.emoji ? data.emoji + ' ' : '') + eventKey;
+      infoGrid.innerHTML =
+        '<div class="modal-info-chip"><div class="chip-label">👥 TEAM SIZE</div><div class="chip-value">' + data.teamSize + '</div></div>' +
+        '<div class="modal-info-chip"><div class="chip-label">⏱ DURATION</div><div class="chip-value">' + data.duration + '</div></div>' +
+        '<div class="modal-info-chip"><div class="chip-label">📍 VENUE</div><div class="chip-value">' + data.venue + '</div></div>' +
+        '<div class="modal-info-chip"><div class="chip-label">💰 ENTRY FEE</div><div class="chip-value" style="color:#10b981;">₹250</div></div>';
+      desc.textContent = data.description;
+      rulesList.innerHTML = data.rules.map(function (r) { return '<li>' + r + '</li>'; }).join('');
+      regBtn.className = 'modal-register-btn ' + (type === 'nontech' ? 'nontech' : '');
+      priceNote.textContent = '💰 Entry Fee: ₹250';
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeEventModal() {
+      document.getElementById('eventModal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('eventModal').addEventListener('click', function (e) {
+      if (e.target === this) closeEventModal();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeEventModal();
+    });
+
+    window.openEventModal = openEventModal;
+    window.closeEventModal = closeEventModal;
+  </script>
+
+
+
+
+  <!-- ================================================================
+     PAGE: NEWS
+     ================================================================ -->
+  <div class="page" id="page-news">
+    <section class="section" style="padding-top:4rem;">
+      <div class="container">
+
+        <div class="section-header">
+          <div class="section-tag">Latest Updates</div>
+          <h2 class="section-title">Department News & Announcements</h2>
+          <div class="section-line"></div>
+        </div>
+
+        <!-- ANNOUNCEMENTS BANNER -->
+        <div
+          style="background:linear-gradient(135deg,rgba(245,197,24,0.1),rgba(0,212,255,0.05)); border:1px solid rgba(245,197,24,0.25); border-radius:var(--radius); padding:1.5rem; margin-bottom:2.5rem; display:flex; gap:1rem; align-items:flex-start; flex-wrap:wrap;">
+          <div style="font-size:2rem;">📢</div>
+          <div>
+            <h3 style="font-family:'Orbitron',monospace; color:var(--gold); font-size:1rem; margin-bottom:0.5rem;">
+              IMPORTANT ANNOUNCEMENT</h3>
+            <p style="color:var(--text-secondary); font-size:0.9rem; line-height:1.7;">
+              ZYNEX 2K26 registration comming soon! All students from PSNACET OF AIML DEPARTMENT
+              are invited to participate.
+              The event will be held on <strong style="color:white;">APRIL 21, 2026</strong> at PSNA College of
+              Engineering and Technology, Dindigul.
+              Registration fee: <strong style="color:var(--gold);">₹250/-</strong>
+            </p>
+          </div>
+        </div>
+
+        <!-- TIMELINE NEWS -->
+        <div class="timeline">
+
+          <div class="glass-card timeline-item fade-up">
+            <div class="timeline-date">MARCH 2025</div>
+            <div class="timeline-title">🎉 ZYNEX 2K26 — Registration Opens!</div>
+            <div class="timeline-text">The Department of CSE (AIML) is proud to announce the registration for our
+              first-ever national-level symposium. Events include technical competitions and cultural programs. All
+              engineering students are welcome!</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div><!-- /page-news -->
+
+
+  <!-- ================================================================
+     PAGE: ABOUT
+     ================================================================ -->
+  <div class="page" id="page-about">
+    <section class="section" style="padding-top:4rem;">
+      <div class="container">
+
+        <!-- DEPT INTRO -->
+        <div class="section-header">
+          <div class="section-tag">Who We Are</div>
+          <h2 class="section-title">About the Department</h2>
+          <div class="section-line"></div>
+        </div>
+
+        <div class="about-grid fade-up" style="margin-bottom:4rem;">
+          <div class="about-text">
+            <p>The <strong>Department of Computer Science and Engineering (Artificial Intelligence and Machine
+                Learning)</strong> at PSNA College of Engineering and Technology, Dindigul is at the forefront of
+              computing innovation in Tamil Nadu.</p>
+            <p>Established with a vision to produce skilled AI engineers, the department offers a comprehensive B.E
+              program that blends theoretical foundations with hands-on project experience in cutting-edge AI/ML
+              technologies.</p>
+            <p>Our state-of-the-art labs, dedicated faculty, and strong industry partnerships create an environment
+              where students don't just learn technology — they create it.</p>
+            <div class="about-vision">
+              <div class="vision-item">
+                <h4>🎯 VISION</h4>
+                <p>To be a globally recognized centre of excellence in AI & ML education, inspiring ethical and
+                  innovative technologists.</p>
+              </div>
+              <div class="vision-item">
+                <h4>🚀 MISSION</h4>
+                <p>Empower students with cutting-edge AI skills, foster research, and build leaders who solve real-world
+                  challenges through intelligent systems.</p>
+              </div>
+            </div>
+          </div>
+          <div class="about-visual">
+            <div class="about-visual-item glass-card">
+              <div class="about-visual-icon">🏛️</div>
+              <div class="about-visual-text">
+                <h4>PSNA College of Engg. & Tech.</h4>
+                <p>Accredited by NAAC, NBA. Est. 1997. Dindigul, Tamil Nadu.</p>
+              </div>
+            </div>
+            <div class="about-visual-item glass-card">
+              <div class="about-visual-icon">💻</div>
+              <div class="about-visual-text">
+                <h4>AI Research Lab</h4>
+                <p>GPU-powered lab with NVIDIA hardware for deep learning experiments.</p>
+              </div>
+            </div>
+            <div class="about-visual-item glass-card">
+              <div class="about-visual-icon">📡</div>
+              <div class="about-visual-text">
+                <h4>Industry Partnerships</h4>
+                <p>MoUs with TCS, Microsoft, Infosys, AWS & NVIDIA DLI for student training.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- HOD -->
+        <div class="section-header">
+          <div class="section-tag" style="margin-bottom:1.5rem;">Head of Department</div>
+        </div>
+        <div class="hod-card fade-up">
+          <div class="hod-info">
+            <div class="hod-tag">✦ Head of Department</div>
+            <div class="hod-name">Dr. J.BENADICT RAJA</div>
+            <div class="hod-title">Professor &amp; HoD — CSE(AI&amp;ML) Department</div>
+            <p class="hod-msg">"Artificial Intelligence is not just a technology — it is the new language of the future.
+              At PSNA CET's CSE AIML department, we strive to equip every student with the ability to speak this
+              language fluently, with both skill and responsibility. Together, we are building the next generation of
+              intelligent leaders."</p>
+            <div style="margin-top:1rem; display:flex; gap:0.75rem; flex-wrap:wrap;">
+              <span
+                style="background:rgba(0,212,255,0.1); border:1px solid rgba(0,212,255,0.2); border-radius:50px; padding:0.25rem 0.75rem; font-size:0.75rem; color:var(--accent);">Deep
+                Learning</span>
+              <span
+                style="background:rgba(245,197,24,0.1); border:1px solid rgba(245,197,24,0.2); border-radius:50px; padding:0.25rem 0.75rem; font-size:0.75rem; color:var(--gold);">Neural
+                Networks</span>
+              <span
+                style="background:rgba(168,85,247,0.1); border:1px solid rgba(168,85,247,0.2); border-radius:50px; padding:0.25rem 0.75rem; font-size:0.75rem; color:#a855f7;">Computer
+                Vision</span>
+              <span
+                style="background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.2); border-radius:50px; padding:0.25rem 0.75rem; font-size:0.75rem; color:#10b981;">NLP
+                Research</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- FACULTY -->
+        <div class="section-header" style="margin-top:3.5rem;">
+          <div class="section-tag">Our Educators</div>
+          <h2 class="section-title">Meet Our Faculty</h2>
+          <div class="section-line"></div>
+        </div>
+        <div class="faculty-grid"
+          style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; text-align: center;">
+          <div class="glass-card faculty-card fade-up holo-card" style="width: 280px;">
+            <div class="faculty-name">Mrs. M. Santhanalakshmi</div>
+            <div class="faculty-role">Assistant Professor</div>
+            <div class="faculty-qual">AP/CSE(AI &amp; ML)<br />Faculty Coordinator</div>
+          </div>
+          <div class="glass-card faculty-card fade-up holo-card" style="width: 280px;">
+            <div class="faculty-name">Mrs. C. Premalatha</div>
+            <div class="faculty-role">Assistant Professor</div>
+            <div class="faculty-qual">AP/CSE(AI &amp; ML)<br />Faculty Coordinator</div>
+          </div>
+          <div class="glass-card faculty-card fade-up holo-card" style="width: 280px;">
+            <div class="faculty-name">Mr. N. Vignesh Kumaran</div>
+            <div class="faculty-role">Assistant Professor</div>
+            <div class="faculty-qual">AP/CSE(AI &amp; ML)<br />Faculty Coordinator (Ph: 8946017808)</div>
+          </div>
+        </div>
+
+        <!-- ASSOCIATIONS -->
+        <div class="section-header" style="margin-top:4rem;">
+          <div class="section-tag">Student Bodies</div>
+          <h2 class="section-title">Department Associations</h2>
+          <div class="section-line"></div>
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:1.25rem;">
+
+          <div class="glass-card assoc-card fade-up">
+            <div class="assoc-item">
+              <div class="assoc-icon">⚙️</div>
+              <div>
+                <div class="assoc-title">AIML Association (AIML)</div>
+                <div class="assoc-desc">The official student association of the department. Organizes technical
+                  workshops, hackathons, seminars, and the annual symposium ZYNEX 2K26.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-card assoc-card fade-up">
+            <div class="assoc-item">
+              <div class="assoc-icon">🤖</div>
+              <div>
+                <div class="assoc-title">Robotics Club — ROBO-PSNA</div>
+                <div class="assoc-desc">Student-led robotics club that builds and competes with autonomous and
+                  semi-autonomous robots at state and national level competitions.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-card assoc-card fade-up">
+            <div class="assoc-item">
+              <div class="assoc-icon">📊</div>
+              <div>
+                <div class="assoc-title">Data Science Society</div>
+                <div class="assoc-desc">Focus group for data analytics, Kaggle competitions, and collaborative data
+                  projects with industry mentors and Kaggle grandmasters.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-card assoc-card fade-up">
+            <div class="assoc-item">
+              <div class="assoc-icon">💻</div>
+              <div>
+                <div class="assoc-title">Coding Club — BinaryMinds</div>
+                <div class="assoc-desc">Weekly competitive programming sessions, LeetCode contests, and
+                  placement-oriented coding practice for all students.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-card assoc-card fade-up">
+            <div class="assoc-item">
+              <div class="assoc-icon">🌐</div>
+              <div>
+                <div class="assoc-title">IEEE Student Branch — CS Chapter</div>
+                <div class="assoc-desc">Affiliated IEEE chapter hosting conferences, expert talks, and paper
+                  presentation competitions at the department level.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-card assoc-card fade-up">
+            <div class="assoc-item">
+              <div class="assoc-icon">🎤</div>
+              <div>
+                <div class="assoc-title">Cultural & Soft Skills Club</div>
+                <div class="assoc-desc">Develops students' communication, leadership, and presentation skills through
+                  debates, workshops, and industry interaction programs.</div>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /associations grid -->
+
+        <!-- ===== AIMLSA OFFICE BEARERS ===== -->
+        <div class="section-header" style="margin-top:4rem;">
+          <div class="section-tag">AIML Leadership</div>
+          <h2 class="section-title">Office Bearers</h2>
+          <div class="section-line"></div>
+          <p style="color:var(--text-secondary); margin-top:0.75rem; font-size:0.9rem;">
+            The elected leaders who drive the vision of the AIML Student Association
+          </p>
+        </div>
+
+        <style>
+          /* ===== MEMBER PHOTO CARD ===== */
+          .member-photo-card {
+            background: linear-gradient(135deg, rgba(13, 27, 75, 0.7), rgba(5, 10, 31, 0.8));
+            border: 1px solid rgba(0, 212, 255, 0.15);
+            border-radius: 16px;
+            padding: 1.5rem 1rem 1.25rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+          }
+
+          .member-photo-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.04), transparent 60%);
+            pointer-events: none;
+          }
+
+          .member-photo-card:hover {
+            border-color: rgba(0, 212, 255, 0.4);
+            transform: translateY(-6px);
+            box-shadow: 0 16px 40px rgba(0, 212, 255, 0.12);
+          }
+
+          .officer-card {
+            border-color: rgba(245, 197, 24, 0.2);
+          }
+
+          .officer-card:hover {
+            border-color: rgba(245, 197, 24, 0.5);
+            box-shadow: 0 16px 40px rgba(245, 197, 24, 0.12);
+          }
+
+          .member-photo-wrap {
+            position: relative;
+            width: 110px;
+            height: 110px;
+            margin: 0 auto 1rem;
+          }
+
+          .officer-card .member-photo-wrap {
+            width: 130px;
+            height: 130px;
+          }
+
+          .member-photo-wrap img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            background: rgba(13, 27, 75, 0.5);
+          }
+
+          .officer-card .member-photo-wrap img {
+            border-color: rgba(245, 197, 24, 0.5);
+            border-width: 3px;
+          }
+
+          .member-photo-ring {
+            position: absolute;
+            inset: -5px;
+            border-radius: 50%;
+            border: 1px dashed rgba(0, 212, 255, 0.25);
+            animation: memberRingSpin 12s linear infinite;
+          }
+
+          .officer-card .member-photo-ring {
+            border-color: rgba(245, 197, 24, 0.3);
+          }
+
+          @keyframes memberRingSpin {
+            to {
+              transform: rotate(360deg);
+            }
+          }
+
+          .member-role-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.15), rgba(0, 212, 255, 0.05));
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 50px;
+            padding: 0.2rem 0.85rem;
+            font-family: 'Orbitron', monospace;
+            font-size: 0.55rem;
+            font-weight: 700;
+            color: #00d4ff;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 0.6rem;
+          }
+
+          .officer-card .member-role-badge {
+            background: linear-gradient(135deg, rgba(245, 197, 24, 0.18), rgba(245, 197, 24, 0.05));
+            border-color: rgba(245, 197, 24, 0.4);
+            color: #F5C518;
+          }
+
+          .member-name {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.25rem;
+          }
+
+          .officer-card .member-name {
+            font-size: 1.1rem;
+          }
+
+          .member-meta {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+          }
+
+          .member-meta span {
+            display: block;
+          }
+
+          .member-upload-hint {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: rgba(10, 14, 39, 0.75);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.25s;
+            cursor: pointer;
+            font-size: 1.3rem;
+          }
+
+          .member-photo-wrap:hover .member-upload-hint {
+            opacity: 1;
+          }
+
+          /* photo placeholder SVG background */
+          .member-photo-wrap img[src=""],
+          .member-photo-wrap img:not([src]) {
+            visibility: hidden;
+          }
+        </style>
+
+        <!-- Officer Bearers grid: 4 key positions -->
+        <div
+          style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1.5rem; margin-top:1.5rem;"
+          class="fade-up">
+
+          <!-- President -->
+          <div class="member-photo-card officer-card">
+            <div class="member-photo-wrap" title="Replace assets/images/members/president.jpg with actual photo">
+              <img src="assets/images/members/president.jpg" alt="President"
+                onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Ccircle cx=\'50\' cy=\'35\' r=\'22\' fill=\'%230d1b4b\'/%3E%3Ccircle cx=\'50\' cy=\'35\' r=\'16\' fill=\'%231e3a5f\'/%3E%3Cellipse cx=\'50\' cy=\'85\' rx=\'32\' ry=\'22\' fill=\'%230d1b4b\'/%3E%3C/svg%3E'" />
+              <div class="member-photo-ring"></div>
+              <div class="member-upload-hint" title="Place president.jpg in assets/images/members/">📷</div>
+            </div>
+            <div class="member-role-badge">👑 President</div>
+            <div class="member-name">AFRIN FATHIMA M</div>
+            <div class="member-meta">
+              <span>B.E CSE (AI&amp;ML)</span>
+            </div>
+          </div>
+
+          <!-- Secretary -->
+          <div class="member-photo-card officer-card">
+            <div class="member-photo-wrap" title="Replace assets/images/members/secretary.jpg with actual photo">
+              <img src="assets/images/members/secretary.jpg" alt="Secretary"
+                onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Ccircle cx=\'50\' cy=\'35\' r=\'22\' fill=\'%230d1b4b\'/%3E%3Ccircle cx=\'50\' cy=\'35\' r=\'16\' fill=\'%231e3a5f\'/%3E%3Cellipse cx=\'50\' cy=\'85\' rx=\'32\' ry=\'22\' fill=\'%230d1b4b\'/%3E%3C/svg%3E'" />
+              <div class="member-photo-ring"></div>
+              <div class="member-upload-hint">📷</div>
+            </div>
+            <div class="member-role-badge">📋 Secretary</div>
+            <div class="member-name">RUTHRA VELAN M</div>
+            <div class="member-meta">
+              <span>B.E CSE (AI&amp;ML)</span>
+              <span><a href="tel:+916381611575" style="color:var(--accent); text-decoration:none;">📞 +91
+                  6381611575</a></span>
+            </div>
+          </div>
+
+          <!-- Vice President -->
+          <div class="member-photo-card officer-card">
+            <div class="member-photo-wrap" title="Replace assets/images/members/vice_president.jpg with actual photo">
+              <img src="assets/images/members/vice_president.jpg" alt="Vice President"
+                onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Ccircle cx=\'50\' cy=\'35\' r=\'22\' fill=\'%230d1b4b\'/%3E%3Ccircle cx=\'50\' cy=\'35\' r=\'16\' fill=\'%231e3a5f\'/%3E%3Cellipse cx=\'50\' cy=\'85\' rx=\'32\' ry=\'22\' fill=\'%230d1b4b\'/%3E%3C/svg%3E'" />
+              <div class="member-photo-ring"></div>
+              <div class="member-upload-hint">📷</div>
+            </div>
+            <div class="member-role-badge">⭐ Vice President</div>
+            <div class="member-name">HARI HARAN K</div>
+            <div class="member-meta">
+              <span>B.E CSE (AI&amp;ML)</span>
+              <span><a href="tel:+916374991745" style="color:var(--accent); text-decoration:none;">📞 +91
+                  6374991745</a></span>
+            </div>
+          </div>
+
+          <!-- Joint Secretary -->
+          <div class="member-photo-card officer-card">
+            <div class="member-photo-wrap" title="Replace assets/images/members/joint_secretary.jpg with actual photo">
+              <img src="assets/images/members/joint_secretary.jpg" alt="Joint Secretary"
+                onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Ccircle cx=\'50\' cy=\'35\' r=\'22\' fill=\'%230d1b4b\'/%3E%3Ccircle cx=\'50\' cy=\'35\' r=\'16\' fill=\'%231e3a5f\'/%3E%3Cellipse cx=\'50\' cy=\'85\' rx=\'32\' ry=\'22\' fill=\'%230d1b4b\'/%3E%3C/svg%3E'" />
+              <div class="member-photo-ring"></div>
+              <div class="member-upload-hint">📷</div>
+            </div>
+            <div class="member-role-badge">🤝 Joint Secretary</div>
+            <div class="member-name">AKSHAYA B</div>
+            <div class="member-meta">
+              <span>B.E CSE (AI&amp;ML)</span>
+              <span><a href="tel:+918220733309" style="color:var(--accent); text-decoration:none;">📞 +91
+                  8220733309</a></span>
+            </div>
+          </div>
+
+        </div><!-- /office bearers -->
+
+        <!-- ===== ASSOCIATION MEMBERS ===== -->
+        <div class="section-header" style="margin-top:3.5rem;">
+          <div class="section-tag">The Team</div>
+          <h2 class="section-title">Association Members <span
+              style="font-family:'Rajdhani',sans-serif; font-size:1rem; color:var(--text-secondary); font-weight:400;">(10
+              Members)</span></h2>
+          <div class="section-line"></div>
+        </div>
+
+        <div
+          style="display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:1rem; margin-top:1.25rem;"
+          class="fade-up">
+
+          <!-- Member 1 -->
+          <div class="member-photo-card"
+            style="padding:1rem 1.25rem; display:flex; flex-direction:column; align-items:center; gap:0.4rem;">
+            <div class="member-role-badge" style="font-size:0.5rem; letter-spacing:1px;">⚡ Coding &amp; Hackathon</div>
+            <div class="member-name">YOGESH S</div>
+            <div class="member-meta"><span>CSE (AI&amp;ML)</span></div>
+          </div>
+
+          <!-- Member 2 -->
+          <div class="member-photo-card"
+            style="padding:1rem 1.25rem; display:flex; flex-direction:column; align-items:center; gap:0.4rem;">
+            <div class="member-role-badge" style="font-size:0.5rem; letter-spacing:1px;">🗣️ Communication &amp;
+              Aptitude</div>
+            <div class="member-name">MUHAMMED IMRAN A</div>
+            <div class="member-meta"><span>CSE (AI&amp;ML)</span></div>
+          </div>
+
+          <!-- Member 3 -->
+          <div class="member-photo-card"
+            style="padding:1rem 1.25rem; display:flex; flex-direction:column; align-items:center; gap:0.4rem;">
+            <div class="member-role-badge" style="font-size:0.5rem; letter-spacing:1px;">💼 Technical Skills for
+              Interview</div>
+            <div class="member-name">NAVISH MURIJI C</div>
+            <div class="member-meta"><span>CSE (AI&amp;ML)</span></div>
+          </div>
+
+          <!-- Member 4 -->
+          <div class="member-photo-card"
+            style="padding:1rem 1.25rem; display:flex; flex-direction:column; align-items:center; gap:0.4rem;">
+            <div class="member-role-badge" style="font-size:0.5rem; letter-spacing:1px;">🚀 Entrepreneur &amp; Higher
+              Studies</div>
+            <div class="member-name">MUHAMMED THOUFIQ</div>
+            <div class="member-meta"><span>CSE (AI&amp;ML)</span></div>
+          </div>
+
+          <!-- Member 5 -->
+          <div class="member-photo-card"
+            style="padding:1rem 1.25rem; display:flex; flex-direction:column; align-items:center; gap:0.4rem;">
+            <div class="member-role-badge" style="font-size:0.5rem; letter-spacing:1px;">🏭 Industry Connect &amp;
+              Internship</div>
+            <div class="member-name">NISHAR MOHAMMED</div>
+            <div class="member-meta"><span>CSE (AI&amp;ML)</span></div>
+          </div>
+
+          <!-- Member 6 -->
+          <div class="member-photo-card"
+            style="padding:1rem 1.25rem; display:flex; flex-direction:column; align-items:center; gap:0.4rem;">
+            <div class="member-role-badge" style="font-size:0.5rem; letter-spacing:1px;">⚡ Coding &amp; Hackathon</div>
+            <div class="member-name">CHEWIN N</div>
+            <div class="member-meta"><span>CSE (AI&amp;ML)</span></div>
+          </div>
+
+          <!-- Member 7 -->
+          <div class="member-photo-card"
+            style="padding:1rem 1.25rem; display:flex; flex-direction:column; align-items:center; gap:0.4rem;">
+            <div class="member-role-badge" style="font-size:0.5rem; letter-spacing:1px;">🗣️ Communication &amp;
+              Aptitude</div>
+            <div class="member-name">MOSES R</div>
+            <div class="member-meta"><span>CSE (AI&amp;ML)</span></div>
+          </div>
+
+          <!-- Member 8 -->
+          <div class="member-photo-card"
+            style="padding:1rem 1.25rem; display:flex; flex-direction:column; align-items:center; gap:0.4rem;">
+            <div class="member-role-badge" style="font-size:0.5rem; letter-spacing:1px;">💼 Technical Skills for
+              Interview</div>
+            <div class="member-name">LUCKSHANYA S J</div>
+            <div class="member-meta"><span>CSE (AI&amp;ML)</span></div>
+          </div>
+
+          <!-- Member 9 -->
+          <div class="member-photo-card"
+            style="padding:1rem 1.25rem; display:flex; flex-direction:column; align-items:center; gap:0.4rem;">
+            <div class="member-role-badge" style="font-size:0.5rem; letter-spacing:1px;">🚀 Entrepreneur &amp; Higher
+              Studies</div>
+            <div class="member-name">MAHATHI KARTHIK K</div>
+            <div class="member-meta"><span>CSE (AI&amp;ML)</span></div>
+          </div>
+
+          <!-- Member 10 -->
+          <div class="member-photo-card"
+            style="padding:1rem 1.25rem; display:flex; flex-direction:column; align-items:center; gap:0.4rem;">
+            <div class="member-role-badge" style="font-size:0.5rem; letter-spacing:1px;">🏭 Industry Connect &amp;
+              Internship</div>
+            <div class="member-name">HARIJITH P</div>
+            <div class="member-meta"><span>CSE (AI&amp;ML)</span></div>
+          </div>
+
+        </div><!-- /association members -->
+
+        <!-- CONTACT -->
+        <div class="register-section fade-up"
+          style="margin-top:3rem; background:linear-gradient(135deg,rgba(13,27,75,0.6),rgba(5,10,31,0.8));">
+          <h3>📬 Get In Touch</h3>
+          <p style="color:var(--text-secondary); margin-bottom:1.5rem;">
+            Reach out to the Department of CSE (AIML), PSNA CET for admissions, events, and collaborations.
+          </p>
+          <div style="display:flex; flex-wrap:wrap; gap:1.5rem; justify-content:center; font-size:0.9rem;">
+            <div>📧 <a href="mailto:aiml@psnacet.edu.in" style="color:var(--accent);">aiml@psnacet.edu.in</a></div>
+            <div>📞 <span style="color:var(--text-secondary);">+91 451 250 0001</span></div>
+            <div>🌐 <a href="https://www.psnacet.edu.in" target="_blank"
+                style="color:var(--accent);">www.psnacet.edu.in</a></div>
+            <div>📍 <span style="color:var(--text-secondary);">Dindigul – Palani Road, Dindigul – 624 622</span></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div><!-- /page-about -->
+
+  <!-- Scroll Top -->
+  <button class="scroll-top" id="scrollTopBtn">↑</button>
+
+  <!-- ================================================================
+     FOOTER
+     ================================================================ -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo" style="margin-bottom:1rem;">
+          <img src="assets/images/logo.png" alt="PSNA CET Logo"
+            style="height:48px; width:auto; max-width:110px; object-fit:contain; border-radius:6px; filter:drop-shadow(0 0 6px rgba(245,197,24,0.3));" />
+          <div class="nav-logo-text">
+            <div class="college">PSNA COLLEGE OF ENGINEERING AND TECHNOLOGY</div>
+            <div class="dept">DEPARTMENT OF CSE(AI&ML)</div>
+          </div>
+        </div>
+        <p>Building the intelligent leaders of tomorrow through cutting-edge curriculum, research, and innovation at
+          Dindigul's premier engineering institution.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#" data-page="home" onclick="showPage('home');return false;">🏠 Home</a></li>
+          <li><a href="#" data-page="events" onclick="showPage('events');return false;">🎯 Events</a></li>
+          <li><a href="#" data-page="news" onclick="showPage('news');return false;">📰 News</a></li>
+          <li><a href="#" data-page="about" onclick="showPage('about');return false;">🔬 About</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Department</h4>
+        <ul>
+          <li><a href="#" onclick="showPage('about');return false;">Faculty</a></li>
+          <li><a href="#" onclick="showPage('about');return false;">HOD Message</a></li>
+          <li><a href="#" onclick="showPage('about');return false;">Associations</a></li>
+          <li><a href="#" onclick="showPage('events');return false;">ZYNEX 2K26</a></li>
+          <li><a href="https://www.psnacet.edu.in" target="_blank">College Website ↗</a></li>
+        </ul>
+      </div>
+      <div class="footer-col footer-contact">
+        <h4>Contact</h4>
+        <span>📍 <strong>Address:</strong><br />Dindigul – Palani Road,<br />Dindigul – 624 622, Tamil Nadu</span>
+        <span>📧 <strong>Email:</strong><br /><a href="mailto:aiml@psnacet.edu.in"
+            style="color:var(--accent);">aiml@psnacet.edu.in</a></span>
+        <span>📞 <strong>Phone:</strong><br />+91 91xxxxxxxx</span>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2025 <span>PSNACET — DEPARTMENT OF CSE(AI&ML)</span>. All Rights Reserved.</div>
+    </div>
+  </footer>
+
+  <!-- ================================================================
+     SCRIPTS
+     ================================================================ -->
+  <script src="assets/js/main.js?v=2"></script>
+  <script>
+    // Expose showPage globally for onclick attributes
+    window.showPage = showPage;
+
+    // ===== SPLASH OVERLAY LOGIC =====
+    (function () {
+      const pctEl = document.getElementById('spPct');
+      const dotsEl = document.getElementById('spDots');
+      if (!pctEl) return;
+      let pct = 0;
+      const iv = setInterval(() => {
+        pct = Math.min(pct + Math.floor(Math.random() * 3 + 1), 100);
+        pctEl.textContent = pct + '%';
+        if (pct >= 100) { clearInterval(iv); pctEl.style.color = '#00d4ff'; }
+      }, 38);
+      let d = 0;
+      setInterval(() => { dotsEl.textContent = '.'.repeat((d++ % 3) + 1); }, 500);
+      // Remove overlay from DOM after animation ends so it doesn't block interaction
+      const overlay = document.getElementById('splashOverlay');
+      if (overlay) {
+        overlay.addEventListener('animationend', () => {
+          overlay.style.display = 'none';
+        });
+      }
+    })();
+  </script>
+
+</body>
+
+</html>
