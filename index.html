@@ -347,112 +347,257 @@
       }
     }
 
-    /* ===== SPLASH OVERLAY (first-load) ===== */
+    /* ===== SPLASH OVERLAY — 3D ROBOT RUNNING ===== */
     #splashOverlay {
       position: fixed;
       inset: 0;
       z-index: 9999;
-      background: #0a0e27;
+      background: radial-gradient(ellipse at 20% 60%, #0a1628 0%, #040b1a 55%, #000509 100%);
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      animation: splashFadeOut 0.7s ease 4s forwards;
+      overflow: hidden;
       pointer-events: all;
+      transition: opacity 0.9s ease, visibility 0.9s ease;
     }
 
-    @keyframes splashFadeOut {
-      to {
-        opacity: 0;
-        pointer-events: none;
-        visibility: hidden;
-      }
+    #splashOverlay.sp-hide {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
     }
 
-    .splash-grid-bg {
+    /* Starfield canvas */
+    #splashCanvas {
       position: absolute;
       inset: 0;
-      background-image:
-        linear-gradient(rgba(0, 212, 255, 0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 212, 255, 0.04) 1px, transparent 1px);
-      background-size: 50px 50px;
-      animation: splashGridMove 20s linear infinite;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
     }
 
-    @keyframes splashGridMove {
+    /* Moving perspective grid floor */
+    .sp-floor {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 38%;
+      background:
+        linear-gradient(rgba(0, 212, 255, 0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 212, 255, 0.07) 1px, transparent 1px);
+      background-size: 80px 40px;
+      background-position: center bottom;
+      transform: perspective(400px) rotateX(55deg);
+      transform-origin: bottom center;
+      animation: spFloorScroll 1.4s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes spFloorScroll {
       0% {
-        background-position: 0 0;
+        background-position: center 0;
       }
 
       100% {
-        background-position: 50px 50px;
+        background-position: center 40px;
       }
     }
 
-    .splash-scan {
+    /* Floor glow line */
+    .sp-horizon {
       position: absolute;
+      bottom: 37%;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent 0%, #00d4ff 30%, #F5C518 50%, #00d4ff 70%, transparent 100%);
+      box-shadow: 0 0 20px #00d4ff, 0 0 40px rgba(0, 212, 255, 0.4);
+      animation: spHorizonPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes spHorizonPulse {
+
+      0%,
+      100% {
+        opacity: 0.7;
+      }
+
+      50% {
+        opacity: 1;
+      }
+    }
+
+    /* Scan line */
+    .sp-scan {
+      position: absolute;
+      top: -3px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent 0%, rgba(0, 212, 255, 0.6) 50%, transparent 100%);
+      animation: spScanDown 3s linear infinite;
+      opacity: 0.5;
+    }
+
+    @keyframes spScanDown {
+      0% {
+        top: -3px;
+      }
+
+      100% {
+        top: 100%;
+      }
+    }
+
+    /* Corner brackets */
+    .sp-brk {
+      position: absolute;
+      width: clamp(36px, 6vw, 55px);
+      height: clamp(36px, 6vw, 55px);
+    }
+
+    .sp-brk::before,
+    .sp-brk::after {
+      content: '';
+      position: absolute;
+      background: #00d4ff;
+    }
+
+    .sp-brk-tl {
+      top: 14px;
+      left: 14px;
+    }
+
+    .sp-brk-tl::before {
       top: 0;
       left: 0;
       width: 100%;
       height: 2px;
-      background: linear-gradient(90deg, transparent, #00d4ff, transparent);
-      animation: splashScan 4s linear infinite;
-      opacity: 0.4;
     }
 
-    @keyframes splashScan {
-      0% {
-        top: 0;
-      }
-
-      100% {
-        top: 100vh;
-      }
+    .sp-brk-tl::after {
+      top: 0;
+      left: 0;
+      width: 2px;
+      height: 100%;
     }
 
-    .splash-corner {
-      position: absolute;
-      width: 55px;
-      height: 55px;
-      border-color: #F5C518;
-      opacity: 0.4;
+    .sp-brk-tr {
+      top: 14px;
+      right: 14px;
     }
 
-    .sp-tl {
-      top: 18px;
-      left: 18px;
-      border-top: 2px solid;
-      border-left: 2px solid;
+    .sp-brk-tr::before {
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
     }
 
-    .sp-tr {
-      top: 18px;
-      right: 18px;
-      border-top: 2px solid;
-      border-right: 2px solid;
+    .sp-brk-tr::after {
+      top: 0;
+      right: 0;
+      width: 2px;
+      height: 100%;
     }
 
-    .sp-bl {
-      bottom: 18px;
-      left: 18px;
-      border-bottom: 2px solid;
-      border-left: 2px solid;
+    .sp-brk-bl {
+      bottom: 14px;
+      left: 14px;
     }
 
-    .sp-br {
-      bottom: 18px;
-      right: 18px;
-      border-bottom: 2px solid;
-      border-right: 2px solid;
+    .sp-brk-bl::before {
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      top: auto;
     }
 
-    #splashOverlay .sp-robot {
+    .sp-brk-bl::after {
+      bottom: 0;
+      left: 0;
+      width: 2px;
+      height: 100%;
+      top: 0;
+    }
+
+    .sp-brk-br {
+      bottom: 14px;
+      right: 14px;
+    }
+
+    .sp-brk-br::before {
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      top: auto;
+    }
+
+    .sp-brk-br::after {
+      bottom: 0;
+      right: 0;
+      width: 2px;
+      height: 100%;
+      top: 0;
+    }
+
+    /* ===== MAIN LAYOUT ===== */
+    .sp-layout {
       position: relative;
-      z-index: 2;
-      animation: splashFloat 2.5s ease-in-out infinite;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(1.5rem, 5vw, 5rem);
+      width: 100%;
+      max-width: 1000px;
+      padding: 0 clamp(1rem, 4vw, 3rem);
     }
 
-    @keyframes splashFloat {
+    /* ===== ROBOT SIDE ===== */
+    .sp-robot-side {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+
+    /* 3D platform ring under robot */
+    .sp-robot-platform {
+      position: absolute;
+      bottom: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: clamp(120px, 22vw, 200px);
+      height: clamp(16px, 3vw, 28px);
+      background: radial-gradient(ellipse, rgba(0, 212, 255, 0.35) 0%, transparent 70%);
+      border-radius: 50%;
+      animation: spPlatformPulse 1s ease-in-out infinite alternate;
+    }
+
+    @keyframes spPlatformPulse {
+      from {
+        opacity: 0.5;
+        transform: translateX(-50%) scaleX(0.85);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(-50%) scaleX(1);
+      }
+    }
+
+    /* SVG robot wrapper — handles floating up/down */
+    .sp-robot-wrap {
+      animation: spRobotFloat 2.2s ease-in-out infinite;
+      filter: drop-shadow(0 0 18px rgba(0, 212, 255, 0.55)) drop-shadow(0 0 40px rgba(0, 212, 255, 0.2));
+    }
+
+    @keyframes spRobotFloat {
 
       0%,
       100% {
@@ -460,162 +605,860 @@
       }
 
       50% {
-        transform: translateY(-12px);
+        transform: translateY(-14px);
       }
     }
 
-    .sp-glow {
+    /* Energy trail behind robot */
+    .sp-energy-trail {
       position: absolute;
-      border-radius: 50%;
-      border: 2px solid #00d4ff;
+      left: -30px;
       top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      animation: spRingPulse 2s ease-in-out infinite;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      pointer-events: none;
     }
 
-    @keyframes spRingPulse {
-
-      0%,
-      100% {
-        box-shadow: 0 0 12px #00d4ff;
-        transform: translate(-50%, -50%) scale(1);
-      }
-
-      50% {
-        box-shadow: 0 0 35px #00d4ff, 0 0 70px rgba(0, 212, 255, 0.3);
-        transform: translate(-50%, -50%) scale(1.06);
-      }
+    .sp-trail-line {
+      height: 2px;
+      border-radius: 2px;
+      background: linear-gradient(90deg, transparent, #00d4ff);
+      animation: spTrailFlash 0.6s ease-in-out infinite alternate;
     }
 
-    .sp-title {
-      font-family: 'Orbitron', monospace;
-      font-weight: 900;
-      font-size: clamp(1.6rem, 5vw, 3rem);
-      background: linear-gradient(135deg, #F5C518 0%, #fff 45%, #00d4ff 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      letter-spacing: 2px;
-      animation: spTitlePulse 2s ease-in-out infinite alternate;
-      position: relative;
-      z-index: 2;
-      text-align: center;
+    .sp-trail-line:nth-child(1) {
+      width: 60px;
+      animation-delay: 0s;
+      opacity: 0.9;
     }
 
-    @keyframes spTitlePulse {
+    .sp-trail-line:nth-child(2) {
+      width: 90px;
+      animation-delay: 0.1s;
+      opacity: 0.7;
+      background: linear-gradient(90deg, transparent, #F5C518);
+    }
+
+    .sp-trail-line:nth-child(3) {
+      width: 50px;
+      animation-delay: 0.2s;
+      opacity: 0.6;
+    }
+
+    .sp-trail-line:nth-child(4) {
+      width: 75px;
+      animation-delay: 0.05s;
+      opacity: 0.5;
+      background: linear-gradient(90deg, transparent, #a855f7);
+    }
+
+    .sp-trail-line:nth-child(5) {
+      width: 40px;
+      animation-delay: 0.15s;
+      opacity: 0.4;
+    }
+
+    @keyframes spTrailFlash {
       from {
-        filter: drop-shadow(0 0 5px rgba(245, 197, 24, .4));
+        transform: scaleX(0.6);
+        opacity: 0.3;
       }
 
       to {
-        filter: drop-shadow(0 0 18px rgba(0, 212, 255, .8));
+        transform: scaleX(1);
+        opacity: 1;
       }
     }
 
-    .sp-badge {
-      display: inline-block;
-      background: linear-gradient(135deg, rgba(245, 197, 24, .15), rgba(0, 212, 255, .15));
-      border: 1px solid rgba(245, 197, 24, .4);
-      border-radius: 50px;
-      padding: .45rem 1.4rem;
+    /* Speed particles (small dots shooting left) */
+    .sp-speed-dots {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .sp-sdot {
+      position: absolute;
+      border-radius: 50%;
+      animation: spSdotFly linear infinite;
+    }
+
+    @keyframes spSdotFly {
+      0% {
+        transform: translateX(0) scaleX(1);
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateX(-300px) scaleX(3);
+        opacity: 0;
+      }
+    }
+
+    /* ===== RIGHT INFO PANEL ===== */
+    .sp-info-panel {
+      display: flex;
+      flex-direction: column;
+      gap: clamp(0.7rem, 1.8vw, 1.2rem);
+      max-width: min(420px, 90vw);
+    }
+
+    /* Logo + college name row */
+    .sp-college-row {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .sp-clogo {
+      height: clamp(44px, 10vw, 62px);
+      width: auto;
+      border-radius: 8px;
+      filter: drop-shadow(0 0 10px rgba(245, 197, 24, 0.6));
+      flex-shrink: 0;
+    }
+
+    .sp-cname-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .sp-cname {
       font-family: 'Rajdhani', sans-serif;
-      font-size: .95rem;
+      font-size: clamp(0.62rem, 1.5vw, 0.82rem);
+      font-weight: 700;
+      color: #cbd5e1;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      line-height: 1.3;
+    }
+
+    .sp-cdept {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(0.58rem, 1.3vw, 0.75rem);
+      font-weight: 900;
+      color: #00d4ff;
+      letter-spacing: 2px;
+    }
+
+    /* Big title */
+    .sp-big-title {
+      font-family: 'Orbitron', monospace;
+      font-weight: 900;
+      font-size: clamp(2rem, 7.5vw, 3.8rem);
+      line-height: 1.05;
+      background: linear-gradient(135deg, #F5C518 0%, #ffffff 40%, #00d4ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: spBigTitleGlow 2.5s ease-in-out infinite alternate;
+      letter-spacing: 1px;
+    }
+
+    @keyframes spBigTitleGlow {
+      from {
+        filter: drop-shadow(0 0 5px rgba(245, 197, 24, 0.4));
+      }
+
+      to {
+        filter: drop-shadow(0 0 25px rgba(0, 212, 255, 0.9));
+      }
+    }
+
+    /* Dept full name */
+    .sp-dept-full {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: clamp(0.8rem, 2vw, 1.05rem);
+      color: #94a3b8;
+      letter-spacing: clamp(2px, 1vw, 5px);
+      text-transform: uppercase;
+    }
+
+    /* ZYNEX badge */
+    .sp-zynex-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: linear-gradient(135deg, rgba(245, 197, 24, 0.15), rgba(0, 212, 255, 0.1));
+      border: 1px solid rgba(245, 197, 24, 0.45);
+      border-radius: 50px;
+      padding: clamp(0.35rem, 1vw, 0.55rem) clamp(0.9rem, 2.5vw, 1.5rem);
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(0.58rem, 1.4vw, 0.78rem);
+      font-weight: 800;
+      color: #F5C518;
+      letter-spacing: clamp(1px, 0.5vw, 3px);
+      animation: spZynexPulse 2s ease-in-out infinite;
+      align-self: flex-start;
+    }
+
+    @keyframes spZynexPulse {
+
+      0%,
+      100% {
+        box-shadow: 0 0 10px rgba(245, 197, 24, 0.2);
+      }
+
+      50% {
+        box-shadow: 0 0 28px rgba(245, 197, 24, 0.6), 0 0 56px rgba(0, 212, 255, 0.15);
+      }
+    }
+
+    .sp-zy-dot {
+      width: 7px;
+      height: 7px;
+      background: #F5C518;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #F5C518;
+      animation: spZyDotBlink 0.8s ease-in-out infinite alternate;
+    }
+
+    @keyframes spZyDotBlink {
+      from {
+        opacity: 0.4;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    /* Stats row */
+    .sp-stats-row {
+      display: flex;
+      gap: 0.9rem;
+      flex-wrap: wrap;
+    }
+
+    .sp-stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1px;
+      padding: 0.45rem 0.8rem;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(0, 212, 255, 0.15);
+      border-radius: 10px;
+    }
+
+    .sp-stat-val {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(0.85rem, 2vw, 1.1rem);
+      font-weight: 900;
+      color: #fff;
+    }
+
+    .sp-stat-lbl {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: clamp(0.52rem, 1.1vw, 0.62rem);
+      color: #64748b;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    /* Loading bar */
+    .sp-load-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .sp-load-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .sp-load-label {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(0.5rem, 1.1vw, 0.62rem);
+      color: #00d4ff;
+      letter-spacing: 2px;
+    }
+
+    .sp-load-speed {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(0.46rem, 1vw, 0.56rem);
+      color: #475569;
+      letter-spacing: 1px;
+    }
+
+    .sp-load-track {
+      width: 100%;
+      height: 7px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(0, 212, 255, 0.2);
+      border-radius: 50px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .sp-load-bar {
+      height: 100%;
+      border-radius: 50px;
+      background: linear-gradient(90deg, #3b82f6 0%, #00d4ff 50%, #F5C518 100%);
+      width: 0%;
+      transition: width 0.25s ease;
+      box-shadow: 0 0 10px #00d4ff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sp-load-bar::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 24px;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 50px;
+      filter: blur(5px);
+    }
+
+    .sp-load-foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .sp-pct {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(0.62rem, 1.4vw, 0.78rem);
+      color: #94a3b8;
+    }
+
+    .sp-status-msg {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: clamp(0.65rem, 1.4vw, 0.8rem);
+      color: #475569;
+      letter-spacing: 1px;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 640px) {
+      .sp-layout {
+        flex-direction: column;
+        gap: 1.2rem;
+        justify-content: center;
+        padding-top: 2rem;
+      }
+
+      .sp-robot-side {
+        order: -1;
+      }
+
+      .sp-info-panel {
+        align-items: center;
+        text-align: center;
+        max-width: 95vw;
+      }
+
+      .sp-college-row {
+        justify-content: center;
+      }
+
+      .sp-zynex-badge {
+        align-self: center;
+      }
+
+      .sp-stats-row {
+        justify-content: center;
+      }
+
+      .sp-energy-trail {
+        display: none;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .sp-big-title {
+        font-size: 1.8rem;
+      }
+
+      .sp-clogo {
+        height: 38px;
+      }
+    }
+
+    /* event register cards responsive overrides */
+
+    /* Orbit dots */
+    .sp-orbit-dot {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      top: -4px;
+      left: 50%;
+      margin-left: -4px;
+    }
+
+    .sp-orbit-dot-1 {
+      background: #00d4ff;
+      box-shadow: 0 0 10px #00d4ff, 0 0 20px #00d4ff;
+    }
+
+    .sp-orbit-dot-2 {
+      background: #F5C518;
+      box-shadow: 0 0 10px #F5C518, 0 0 20px #F5C518;
+      top: auto;
+      bottom: -4px;
+    }
+
+    .sp-orbit-dot-3 {
+      background: #a855f7;
+      box-shadow: 0 0 10px #a855f7;
+    }
+
+    /* Corner frames */
+    .sp-corner {
+      position: absolute;
+      width: clamp(40px, 7vw, 65px);
+      height: clamp(40px, 7vw, 65px);
+      opacity: 0.6;
+    }
+
+    .sp-corner::before,
+    .sp-corner::after {
+      content: '';
+      position: absolute;
+      background: #F5C518;
+    }
+
+    .sp-c-tl {
+      top: 16px;
+      left: 16px;
+    }
+
+    .sp-c-tl::before {
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+    }
+
+    .sp-c-tl::after {
+      top: 0;
+      left: 0;
+      width: 2px;
+      height: 100%;
+    }
+
+    .sp-c-tr {
+      top: 16px;
+      right: 16px;
+    }
+
+    .sp-c-tr::before {
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 2px;
+      left: 0;
+    }
+
+    .sp-c-tr::after {
+      top: 0;
+      right: 0;
+      width: 2px;
+      height: 100%;
+      left: auto;
+      right: 0;
+    }
+
+    .sp-c-bl {
+      bottom: 16px;
+      left: 16px;
+    }
+
+    .sp-c-bl::before {
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      top: auto;
+    }
+
+    .sp-c-bl::after {
+      bottom: 0;
+      left: 0;
+      width: 2px;
+      height: 100%;
+      top: 0;
+    }
+
+    .sp-c-br {
+      bottom: 16px;
+      right: 16px;
+    }
+
+    .sp-c-br::before {
+      bottom: 0;
+      right: 0;
+      width: 100%;
+      height: 2px;
+      top: auto;
+      left: 0;
+    }
+
+    .sp-c-br::after {
+      bottom: 0;
+      right: 0;
+      width: 2px;
+      height: 100%;
+      top: 0;
+      left: auto;
+      right: 0;
+    }
+
+    /* Floating hexagons */
+    .sp-hex {
+      position: absolute;
+      opacity: 0.06;
+      animation: spHexFloat linear infinite;
+      pointer-events: none;
+      font-size: 4rem;
+      color: #00d4ff;
+    }
+
+    @keyframes spHexFloat {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.04;
+      }
+
+      50% {
+        opacity: 0.10;
+      }
+
+      100% {
+        transform: translateY(-80px) rotate(180deg);
+        opacity: 0.04;
+      }
+    }
+
+    /* === GLASSMORPHISM CARD === */
+    .sp-card {
+      position: relative;
+      z-index: 10;
+      background: rgba(13, 25, 60, 0.55);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      border: 1px solid rgba(0, 212, 255, 0.22);
+      border-radius: clamp(16px, 3vw, 28px);
+      padding: clamp(1.5rem, 5vw, 3rem) clamp(1.2rem, 6vw, 3.5rem);
+      max-width: min(520px, 92vw);
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: clamp(0.8rem, 2vw, 1.4rem);
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+        0 24px 80px rgba(0, 0, 0, 0.6),
+        0 0 60px rgba(0, 212, 255, 0.08);
+      animation: spCardIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+
+    @keyframes spCardIn {
+      from {
+        opacity: 0;
+        transform: scale(0.88) translateY(24px);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    /* shimmer on card */
+    .sp-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, transparent 50%, rgba(0, 212, 255, 0.04) 100%);
+      pointer-events: none;
+    }
+
+    /* Logo row */
+    .sp-logo-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      justify-content: center;
+    }
+
+    .sp-logo-img {
+      height: clamp(42px, 10vw, 58px);
+      width: auto;
+      border-radius: 8px;
+      filter: drop-shadow(0 0 10px rgba(245, 197, 24, 0.5));
+    }
+
+    .sp-logo-divider {
+      width: 1px;
+      height: 38px;
+      background: linear-gradient(to bottom, transparent, rgba(0, 212, 255, 0.4), transparent);
+    }
+
+    .sp-logo-text-wrap {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sp-college-name {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: clamp(0.55rem, 1.2vw, 0.7rem);
+      color: #94a3b8;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      line-height: 1.3;
+    }
+
+    .sp-dept-name {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(0.58rem, 1.4vw, 0.78rem);
+      font-weight: 800;
+      color: #00d4ff;
+      letter-spacing: 1px;
+    }
+
+    /* Main title */
+    .sp-main-title {
+      font-family: 'Orbitron', monospace;
+      font-weight: 900;
+      font-size: clamp(1.8rem, 7vw, 3.2rem);
+      text-align: center;
+      background: linear-gradient(135deg, #F5C518 0%, #ffffff 42%, #00d4ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: clamp(1px, 0.5vw, 3px);
+      line-height: 1.1;
+      animation: spTitleGlow 2.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes spTitleGlow {
+      from {
+        filter: drop-shadow(0 0 4px rgba(245, 197, 24, 0.3));
+      }
+
+      to {
+        filter: drop-shadow(0 0 22px rgba(0, 212, 255, 0.85));
+      }
+    }
+
+    /* Subtitle */
+    .sp-subtitle {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: clamp(0.78rem, 2vw, 1rem);
+      color: #94a3b8;
+      letter-spacing: clamp(2px, 1vw, 4px);
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    /* Event badge */
+    .sp-event-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: linear-gradient(135deg, rgba(245, 197, 24, 0.12), rgba(0, 212, 255, 0.12));
+      border: 1px solid rgba(245, 197, 24, 0.4);
+      border-radius: 50px;
+      padding: clamp(0.35rem, 1vw, 0.5rem) clamp(0.9rem, 3vw, 1.6rem);
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(0.6rem, 1.5vw, 0.8rem);
       font-weight: 700;
       color: #F5C518;
-      letter-spacing: 3px;
-      animation: spBadgePulse 2s ease-in-out infinite;
-      position: relative;
-      z-index: 2;
+      letter-spacing: clamp(2px, 0.5vw, 4px);
+      animation: spBadgePulse 2.5s ease-in-out infinite;
       white-space: nowrap;
-      max-width: 90vw;
-    }
-
-    @media (max-width: 480px) {
-      .sp-badge {
-        font-size: 0.75rem;
-        padding: 0.4rem 1rem;
-        letter-spacing: 1px;
-      }
-
-      .sp-title {
-        font-size: 2rem;
-      }
+      max-width: 100%;
+      text-align: center;
     }
 
     @keyframes spBadgePulse {
 
       0%,
       100% {
-        box-shadow: 0 0 10px rgba(245, 197, 24, .2);
+        box-shadow: 0 0 8px rgba(245, 197, 24, 0.2);
       }
 
       50% {
-        box-shadow: 0 0 22px rgba(245, 197, 24, .5);
+        box-shadow: 0 0 24px rgba(245, 197, 24, 0.55), 0 0 48px rgba(0, 212, 255, 0.15);
       }
     }
 
+    /* Status chips row */
+    .sp-status-row {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .sp-chip {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(0.48rem, 1.1vw, 0.6rem);
+      letter-spacing: 1.5px;
+      padding: 0.22rem 0.7rem;
+      border-radius: 50px;
+      font-weight: 700;
+    }
+
+    .sp-chip-cyan {
+      background: rgba(0, 212, 255, 0.1);
+      border: 1px solid rgba(0, 212, 255, 0.3);
+      color: #00d4ff;
+    }
+
+    .sp-chip-gold {
+      background: rgba(245, 197, 24, 0.1);
+      border: 1px solid rgba(245, 197, 24, 0.3);
+      color: #F5C518;
+    }
+
+    .sp-chip-purple {
+      background: rgba(168, 85, 247, 0.1);
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      color: #a855f7;
+    }
+
+    /* Loading bar */
     .sp-bar-wrap {
-      width: min(400px, 85vw);
+      width: 100%;
       position: relative;
       z-index: 2;
-      text-align: center;
     }
 
     .sp-bar-header {
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
       margin-bottom: 0.5rem;
     }
 
     .sp-bar-label {
       font-family: 'Orbitron', monospace;
-      font-size: .65rem;
+      font-size: clamp(0.52rem, 1.2vw, 0.65rem);
       color: #00d4ff;
-      letter-spacing: 3px;
+      letter-spacing: 2px;
+    }
+
+    .sp-speed-info {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(0.48rem, 1.1vw, 0.58rem);
+      color: #64748b;
+      letter-spacing: 1px;
     }
 
     .sp-bar-bg {
-      background: rgba(255, 255, 255, .05);
-      border: 1px solid rgba(0, 212, 255, .2);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(0, 212, 255, 0.2);
       border-radius: 50px;
-      height: 6px;
+      height: 8px;
       overflow: hidden;
+      position: relative;
     }
 
     .sp-bar-fill {
       height: 100%;
       border-radius: 50px;
       background: linear-gradient(90deg, #3b82f6, #00d4ff, #F5C518);
-      animation: spFill 3.8s ease-in-out forwards;
-      box-shadow: 0 0 12px #00d4ff;
+      width: 0%;
+      transition: width 0.3s ease;
+      box-shadow: 0 0 12px #00d4ff, 0 0 24px rgba(0, 212, 255, 0.3);
+      position: relative;
     }
 
-    @keyframes spFill {
-      0% {
-        width: 0%
+    .sp-bar-fill::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 20px;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.4);
+      border-radius: 50px;
+      filter: blur(4px);
+      animation: spBarGlare 1.2s ease-in-out infinite alternate;
+    }
+
+    @keyframes spBarGlare {
+      from {
+        opacity: 0.5;
       }
 
-      60% {
-        width: 72%
+      to {
+        opacity: 1;
       }
+    }
 
-      90% {
-        width: 95%
-      }
-
-      100% {
-        width: 100%
-      }
+    .sp-bar-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0.45rem;
     }
 
     .sp-pct {
       font-family: 'Orbitron', monospace;
-      font-size: .75rem;
+      font-size: clamp(0.65rem, 1.5vw, 0.78rem);
       color: #64748b;
-      text-align: center;
-      margin-top: .5rem;
+    }
+
+    .sp-status-msg {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: clamp(0.7rem, 1.5vw, 0.82rem);
+      color: #475569;
+      letter-spacing: 1px;
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 420px) {
+      .sp-card {
+        gap: 0.65rem;
+      }
+
+      .sp-logo-row {
+        gap: 0.5rem;
+      }
+
+      .sp-logo-divider {
+        height: 28px;
+      }
+
+      .sp-orbit-1,
+      .sp-orbit-2,
+      .sp-orbit-3 {
+        display: none;
+      }
+
+      .sp-event-badge {
+        font-size: 0.58rem;
+        letter-spacing: 1.5px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .sp-logo-img {
+        height: 36px;
+      }
+
+      .sp-main-title {
+        font-size: 1.6rem;
+      }
     }
 
     /* event register cards responsive overrides */
@@ -1217,66 +2060,180 @@
 
 <body>
 
-  <!-- ========== SPLASH OVERLAY (first load) ========== -->
+  <!-- ========== SPLASH OVERLAY — 3D ROBOT RUNNING ========== -->
   <div id="splashOverlay" role="dialog" aria-label="Loading PSNA CET AIML Website">
-    <div class="splash-grid-bg"></div>
-    <div class="splash-scan"></div>
-    <div class="splash-corner sp-tl"></div>
-    <div class="splash-corner sp-tr"></div>
-    <div class="splash-corner sp-bl"></div>
-    <div class="splash-corner sp-br"></div>
-    <!-- Robot -->
-    <div style="position:relative; width:150px; height:150px;">
-      <div class="sp-glow" style="width:180px;height:180px;"></div>
-      <div class="sp-glow" style="width:230px;height:230px;animation-delay:.5s;opacity:.5;"></div>
-      <div class="sp-robot">
-        <svg viewBox="0 0 100 130" width="150" height="150" xmlns="http://www.w3.org/2000/svg">
-          <line x1="50" y1="8" x2="50" y2="18" stroke="#00d4ff" stroke-width="2" />
-          <circle cx="50" cy="6" r="3" fill="#F5C518">
-            <animate attributeName="opacity" values="1;0.2;1" dur="1.2s" repeatCount="indefinite" />
-          </circle>
-          <rect x="30" y="18" width="40" height="32" rx="8" fill="#1e3a5f" stroke="#00d4ff" stroke-width="1.5" />
-          <ellipse cx="42" cy="32" rx="6" ry="6" fill="#00d4ff" opacity="0.9">
-            <animate attributeName="rx" values="6;6;0.5;6" dur="3s" repeatCount="indefinite" />
-          </ellipse>
-          <ellipse cx="58" cy="32" rx="6" ry="6" fill="#00d4ff" opacity="0.9">
-            <animate attributeName="rx" values="6;6;0.5;6" dur="3s" repeatCount="indefinite" />
-          </ellipse>
-          <circle cx="42" cy="32" r="3" fill="#0a0e27" />
-          <circle cx="58" cy="32" r="3" fill="#0a0e27" />
-          <rect x="38" y="41" width="24" height="3" rx="1.5" fill="#F5C518" opacity="0.8" />
-          <rect x="45" y="50" width="10" height="6" fill="#152a47" />
-          <rect x="22" y="56" width="56" height="44" rx="8" fill="#152a47" stroke="#1e3a5f" stroke-width="1.5" />
-          <rect x="34" y="64" width="32" height="20" rx="4" fill="#0d1b4b" />
-          <rect x="38" y="68" width="8" height="4" rx="2" fill="#00d4ff" opacity="0.7">
-            <animate attributeName="opacity" values="0.7;1;0.7" dur="0.8s" repeatCount="indefinite" />
-          </rect>
-          <rect x="48" y="68" width="6" height="4" rx="2" fill="#F5C518" opacity="0.7" />
-          <rect x="55" y="68" width="7" height="4" rx="2" fill="#3b82f6" opacity="0.7" />
-          <rect x="7" y="58" width="14" height="32" rx="7" fill="#1e3a5f" stroke="#00d4ff" stroke-width="1" />
-          <rect x="79" y="58" width="14" height="32" rx="7" fill="#1e3a5f" stroke="#00d4ff" stroke-width="1" />
-          <rect x="30" y="100" width="16" height="24" rx="6" fill="#1e3a5f" />
-          <rect x="54" y="100" width="16" height="24" rx="6" fill="#1e3a5f" />
-        </svg>
+    <!-- Starfield canvas -->
+    <canvas id="splashCanvas"></canvas>
+    <!-- Floor & horizon -->
+    <div class="sp-floor"></div>
+    <div class="sp-horizon"></div>
+    <!-- Scan -->
+    <div class="sp-scan"></div>
+    <!-- Brackets -->
+    <div class="sp-brk sp-brk-tl"></div>
+    <div class="sp-brk sp-brk-tr"></div>
+    <div class="sp-brk sp-brk-bl"></div>
+    <div class="sp-brk sp-brk-br"></div>
+    <!-- Speed dots container -->
+    <div class="sp-speed-dots" id="spSpeedDots"></div>
+
+    <div class="sp-layout">
+      <!-- ===== LEFT: ROBOT ===== -->
+      <div class="sp-robot-side">
+        <!-- Energy trail -->
+        <div class="sp-energy-trail">
+          <div class="sp-trail-line"></div>
+          <div class="sp-trail-line"></div>
+          <div class="sp-trail-line"></div>
+          <div class="sp-trail-line"></div>
+          <div class="sp-trail-line"></div>
+        </div>
+        <!-- Robot SVG -->
+        <div class="sp-robot-wrap">
+          <svg id="spRobotSvg" viewBox="0 0 160 260" xmlns="http://www.w3.org/2000/svg" width="clamp(120px,22vw,200px)"
+            height="clamp(196px,36vw,328px)" style="width:clamp(120px,22vw,200px);height:auto;">
+
+            <!-- === HEAD === -->
+            <!-- Antenna -->
+            <line x1="80" y1="2" x2="80" y2="18" stroke="#00d4ff" stroke-width="2.5" stroke-linecap="round" />
+            <circle cx="80" cy="2" r="4" fill="#F5C518">
+              <animate attributeName="r" values="4;5.5;4" dur="1.1s" repeatCount="indefinite" />
+              <animate attributeName="fill" values="#F5C518;#fff;#F5C518" dur="1.1s" repeatCount="indefinite" />
+            </circle>
+            <!-- Head body -->
+            <rect x="54" y="18" width="52" height="38" rx="10" fill="#0f2744" stroke="#00d4ff" stroke-width="2" />
+            <!-- Head gloss -->
+            <rect x="56" y="20" width="20" height="8" rx="4" fill="rgba(255,255,255,0.07)" />
+            <!-- Eyes -->
+            <ellipse cx="69" cy="34" rx="8" ry="8" fill="#00d4ff">
+              <animate attributeName="ry" values="8;8;1;8;8" dur="3.5s" repeatCount="indefinite" />
+            </ellipse>
+            <ellipse cx="91" cy="34" rx="8" ry="8" fill="#00d4ff">
+              <animate attributeName="ry" values="8;8;1;8;8" dur="3.5s" begin="0.15s" repeatCount="indefinite" />
+            </ellipse>
+            <circle cx="69" cy="34" r="4" fill="#0a0e27" />
+            <circle cx="91" cy="34" r="4" fill="#0a0e27" />
+            <circle cx="71" cy="32" r="1.5" fill="rgba(255,255,255,0.6)" />
+            <circle cx="93" cy="32" r="1.5" fill="rgba(255,255,255,0.6)" />
+            <!-- Mouth LED strip -->
+            <rect x="64" y="47" width="32" height="4" rx="2" fill="#F5C518" opacity="0.85">
+              <animate attributeName="opacity" values="0.85;0.4;0.85" dur="0.9s" repeatCount="indefinite" />
+            </rect>
+
+            <!-- === NECK === -->
+            <rect x="72" y="56" width="16" height="8" rx="3" fill="#1e3a5f" />
+
+            <!-- === TORSO === -->
+            <rect x="42" y="64" width="76" height="58" rx="10" fill="#0f2744" stroke="#1e3a5f" stroke-width="1.5" />
+            <!-- Chest glow panel -->
+            <rect x="54" y="72" width="52" height="32" rx="6" fill="#071830" />
+            <!-- Arc reactor style circle -->
+            <circle cx="80" cy="88" r="13" fill="none" stroke="#00d4ff" stroke-width="2" opacity="0.5" />
+            <circle cx="80" cy="88" r="8" fill="#00d4ff" opacity="0.15">
+              <animate attributeName="r" values="8;11;8" dur="1.8s" repeatCount="indefinite" />
+              <animate attributeName="opacity" values="0.15;0.35;0.15" dur="1.8s" repeatCount="indefinite" />
+            </circle>
+            <circle cx="80" cy="88" r="4" fill="#00d4ff">
+              <animate attributeName="fill" values="#00d4ff;#F5C518;#00d4ff" dur="2s" repeatCount="indefinite" />
+            </circle>
+            <!-- Side LEDs -->
+            <rect x="44" y="78" width="8" height="4" rx="2" fill="#3b82f6">
+              <animate attributeName="opacity" values="1;0.3;1" dur="0.7s" repeatCount="indefinite" />
+            </rect>
+            <rect x="108" y="78" width="8" height="4" rx="2" fill="#a855f7">
+              <animate attributeName="opacity" values="1;0.3;1" dur="0.7s" begin="0.35s" repeatCount="indefinite" />
+            </rect>
+
+            <!-- === ARMS (animated running swing) === -->
+            <!-- Left arm -->
+            <g id="spArmL" style="transform-origin:42px 75px">
+              <animateTransform attributeName="transform" type="rotate" values="-35,42,75; 35,42,75; -35,42,75"
+                dur="0.55s" repeatCount="indefinite" />
+              <rect x="22" y="68" width="20" height="40" rx="10" fill="#1e3a5f" stroke="#00d4ff" stroke-width="1" />
+              <rect x="24" y="104" width="16" height="14" rx="8" fill="#0f2744" stroke="#00d4ff" stroke-width="1" />
+            </g>
+            <!-- Right arm -->
+            <g id="spArmR" style="transform-origin:118px 75px">
+              <animateTransform attributeName="transform" type="rotate" values="35,118,75; -35,118,75; 35,118,75"
+                dur="0.55s" repeatCount="indefinite" />
+              <rect x="118" y="68" width="20" height="40" rx="10" fill="#1e3a5f" stroke="#00d4ff" stroke-width="1" />
+              <rect x="120" y="104" width="16" height="14" rx="8" fill="#0f2744" stroke="#00d4ff" stroke-width="1" />
+            </g>
+
+            <!-- === WAIST === -->
+            <rect x="54" y="122" width="52" height="12" rx="5" fill="#0f2744" stroke="#1e3a5f" stroke-width="1" />
+
+            <!-- === LEGS (running cycle) === -->
+            <!-- Left leg -->
+            <g id="spLegL" style="transform-origin:65px 134px">
+              <animateTransform attributeName="transform" type="rotate" values="-28,65,134; 28,65,134; -28,65,134"
+                dur="0.55s" repeatCount="indefinite" />
+              <rect x="55" y="134" width="22" height="48" rx="8" fill="#1e3a5f" stroke="#00d4ff" stroke-width="1" />
+              <!-- Knee joint -->
+              <circle cx="66" cy="158" r="6" fill="#0f2744" stroke="#00d4ff" stroke-width="1" />
+              <!-- Shin -->
+              <rect x="55" y="158" width="22" height="38" rx="8" fill="#0f2744" stroke="#1e3a5f" stroke-width="1" />
+              <!-- Foot -->
+              <rect x="50" y="192" width="30" height="12" rx="6" fill="#1e3a5f" stroke="#00d4ff" stroke-width="1" />
+              <!-- Foot glow -->
+              <ellipse cx="65" cy="206" rx="16" ry="4" fill="rgba(0,212,255,0.25)">
+                <animate attributeName="opacity" values="0.8;0.2;0.8" dur="0.55s" repeatCount="indefinite" />
+              </ellipse>
+            </g>
+            <!-- Right leg -->
+            <g id="spLegR" style="transform-origin:95px 134px">
+              <animateTransform attributeName="transform" type="rotate" values="28,95,134; -28,95,134; 28,95,134"
+                dur="0.55s" repeatCount="indefinite" />
+              <rect x="83" y="134" width="22" height="48" rx="8" fill="#1e3a5f" stroke="#00d4ff" stroke-width="1" />
+              <circle cx="94" cy="158" r="6" fill="#0f2744" stroke="#00d4ff" stroke-width="1" />
+              <rect x="83" y="158" width="22" height="38" rx="8" fill="#0f2744" stroke="#1e3a5f" stroke-width="1" />
+              <rect x="78" y="192" width="30" height="12" rx="6" fill="#1e3a5f" stroke="#00d4ff" stroke-width="1" />
+              <ellipse cx="93" cy="206" rx="16" ry="4" fill="rgba(0,212,255,0.25)">
+                <animate attributeName="opacity" values="0.2;0.8;0.2" dur="0.55s" repeatCount="indefinite" />
+              </ellipse>
+            </g>
+
+            <!-- === BODY SHADOW / DEPTH LINES === -->
+            <line x1="58" y1="68" x2="58" y2="122" stroke="rgba(0,212,255,0.08)" stroke-width="4" />
+            <line x1="102" y1="68" x2="102" y2="122" stroke="rgba(0,212,255,0.08)" stroke-width="4" />
+          </svg>
+        </div>
+        <!-- Shadow platform -->
+        <div class="sp-robot-platform"></div>
       </div>
-    </div>
-    <!-- Text -->
-    <div class="sp-title">PSNA CET</div>
-    <div
-      style="font-family:'Rajdhani',sans-serif; font-size:1rem; color:#94a3b8; letter-spacing:3px; text-transform:uppercase; position:relative;z-index:2; text-align:center;">
-      Dept. of CSE • AI &amp; ML</div>
-    <div class="sp-badge">✦ ARTIFICIAL INTELLIGENCE &amp; MACHINE LEARNING ✦</div>
-    <!-- Loading bar -->
-    <div class="sp-bar-wrap">
-      <div class="sp-bar-header">
-        <div class="sp-bar-label">INITIALIZING SYSTEM<span id="spDots"></span></div>
+
+      <!-- ===== RIGHT: INFO ===== -->
+      <div class="sp-info-panel">
+        <!-- College row -->
+        <div class="sp-college-row">
+          <img src="assets/images/logo.png" alt="PSNA CET" class="sp-clogo" loading="eager" />
+          <div class="sp-cname-wrap">
+            <span class="sp-cname">PSNA College of Engineering<br>&amp; Technology</span>
+            <span class="sp-cdept">EST. 1984 · DINDIGUL</span>
+          </div>
+        </div>
+        <!-- Big title -->
+        <div class="sp-big-title">PSNACET</div>
+        <!-- Dept -->
+        <div class="sp-dept-full">Dept. of CSE(AI &amp; ML)</div>
+        <!-- Loading bar -->
+        <div class="sp-load-wrap">
+          <div class="sp-load-head">
+            <div class="sp-load-label">LOADING<span id="spDots"></span></div>
+            <div class="sp-load-speed" id="spSpeedInfo">DETECTING…</div>
+          </div>
+          <div class="sp-load-track">
+            <div class="sp-load-bar" id="spBarFill"></div>
+          </div>
+          <div class="sp-load-foot">
+            <div class="sp-pct" id="spPct">0%</div>
+            <div class="sp-status-msg" id="spStatusMsg">LOADING ASSETS</div>
+          </div>
+        </div>
       </div>
-      <div class="sp-bar-bg">
-        <div class="sp-bar-fill"></div>
-      </div>
-      <div class="sp-pct" id="spPct">0%</div>
     </div>
   </div>
+
 
   <!-- ========== BACKGROUND ========== -->
   <div class="bg-grid"></div>
@@ -1922,8 +2879,8 @@
         'IntelliTalks(Paper Presentation)': {
           teamSize: '3 Members',
           duration: '21.04.2026 | 2 Hours',
-          venue: 'G2 HALL, PSNACET INDIGUL',
-          description: 'Teams present innovative AI/ML projects that solve real-world problems. Judges evaluate novelty, technical depth, presentation quality, and practical impact. The project must be your own original work.',
+          venue: 'G2 HALL, PSNACET-DINDIGUL',
+          description: 'The Paper Presentation event provides a platform for students to showcase their knowledge, research, and innovative ideas effectively.It encourages participants to explore domain-specific concepts and present them with clarity and confidence.The event enhances analytical thinking, creativity, and communication skills.',
           rules: [
             'Each team should consist of MAX 3 members.',
             'Participants are free to choose any topic relevant to their domain under an open theme.',
@@ -1941,7 +2898,7 @@
         'TranscodeX': {
           teamSize: '1 Member',
           duration: '21.04.2026 | 1 hour',
-          venue: '303 CLASS ROOM , ATHENAEUM BLOCK , PSNA COLLEGE OF ENGINEERING AND TECHNOLOGY, DINDIGUL',
+          venue: '303 CLASS ROOM , ATHENAEUM BLOCK , PSNACET-DINDIGUL',
           description: 'A timed coding competition where participants convert or write code. Any form of malpractice is strictly prohibited.',
           rules: [
             'This is an Individual (solo) event.',
@@ -1958,10 +2915,10 @@
         },
         'Code Combat': {
           emoji: '🧠',
-          teamSize: 'Individual',
+          teamSize: 'Max 2 Members',
           duration: '21.04.2026 | 1 hour ',
-          venue: '303 CLASS ROOM , ATHENUM BLOCK , PSNACET',
-          description: 'A test of predicting output, debugging, and logic building. Compete smart, think logically, and give your best! All the very best!',
+          venue: '303 CLASS ROOM , ATHENUM BLOCK , PSNACET-DINDIGUL',
+          description: 'Code Combat is an exciting technical event designed to test participants’ coding knowledge, logical thinking, and problem-solving skills. The event consists of three rounds—Output Prediction, Debugging, and Logic Building—challenging participants to analyze code, identify errors, and develop efficient solutions within a limited time. It provides a competitive platform for students to showcase their programming abilities and sharpen their analytical skills.',
           rules: [
             'The event consists of three rounds: Output Prediction, Debugging, Logic Building',
             'Each round will be conducted for 15 minutes.',
@@ -1997,7 +2954,7 @@
           emoji: '💡',
           teamSize: 'Max 3 Members',
           duration: '21.04.2026 | 2 hours',
-          venue: 'CM AUDITORIUM, PSNACET',
+          venue: 'CM AUDITORIUM, PSNACET-DINDIGUL',
           description: 'The Business Pitch Competition is a dynamic platform where students bring their startup ideas to life. Participants will work in teams to solve real-world problems with innovative and practical solutions. Each team will present their idea through a creative and impactful PPT. The event highlights innovation, feasibility, and strong communication skills. It inspires participants to think big, act smart, and showcase their ideas with confidence. This competition builds entrepreneurial mindset, creativity, and teamwork.',
           rules: [
             'Each team can have a maximum of three members.',
@@ -2032,8 +2989,8 @@
           emoji: '🕵️',
           teamSize: '2–3 Members',
           duration: '21.04.2026 | 12:30 PM - 1:30 PM',
-          venue: '303 CLASS ROOM , ATHENUM BLOCK , PSNACET',
-          description: 'Step into a world of puzzles, clues, and excitement with Mystery Matrix! Challenge your mind and race through thrilling rounds of tech trivia, quests, and mystery cases.',
+          venue: '303 CLASS ROOM , ATHENUM BLOCK , PSNACET-DINDIGUL',
+          description: '🧩 Mystery Matrix is an exciting multi-round event filled with puzzles, clues, and thrilling challenges.Put your logic, teamwork, and problem-solving skills to the test as you race through dynamic and engaging rounds.Think fast, move smart, and crack the mystery to emerge as the ultimate winner!',
           rules: [
             'Round 1: Tech Trivia Rush - Elimination round with tech questions, logical aptitude, and puzzles.',
             'Round 2: Quest & Conquer - Move across stations, complete tasks, and solve puzzles for clues.',
@@ -2117,11 +3074,11 @@
             <h3 style="font-family:'Orbitron',monospace; color:var(--gold); font-size:1rem; margin-bottom:0.5rem;">
               IMPORTANT ANNOUNCEMENT</h3>
             <p style="color:var(--text-secondary); font-size:0.9rem; line-height:1.7;">
-              ZYNEX 2K26 registration comming soon! All students from PSNACET OF AIML DEPARTMENT
+              ZYNEX 2K26 registration is open! All students from PSNACET OF AIML DEPARTMENT
               are invited to participate.
               The event will be held on <strong style="color:white;">APRIL 21, 2026</strong> at PSNA College of
               Engineering and Technology, Dindigul.
-              Registration fee: <strong style="color:var(--gold);">₹250/-</strong>
+              Registration fee: <strong style="color:var(--gold);">One Day Pass:₹250/-</strong>
             </p>
           </div>
         </div>
@@ -2184,7 +3141,7 @@
               <div class="about-visual-icon">🏛️</div>
               <div class="about-visual-text">
                 <h4>PSNA College of Engg. & Tech.</h4>
-                <p>Accredited by NAAC A++, NBA. Est. 1997. Dindigul, Tamil Nadu.</p>
+                <p>Accredited by NAAC A++, NBA. Est. 1984. Dindigul, Tamil Nadu.</p>
               </div>
             </div>
           </div>
@@ -2258,7 +3215,7 @@
           <div class="assoc-item">
             <div class="assoc-icon">⚙️</div>
             <div>
-              <div class="assoc-title">AIML Association (AIML)</div>
+              <div class="assoc-title">AIML Association (AI&ML)</div>
               <div class="assoc-desc">The official student association of the department. Organizes technical
                 workshops, hackathons, seminars, and the annual symposium ZYNEX 2K26.</div>
             </div>
@@ -2459,7 +3416,7 @@
 
         <!-- Joint Secretary -->
         <div class="member-photo-card officer-card">
-          <div class="member-role-badge">🤝 Joint Secretary</div>
+          <div class="member-role-badge">Joint Secretary</div>
           <div class="member-name">AKSHAYA B</div>
           <div class="member-meta">
             <span>B.E CSE (AI&amp;ML)</span>
@@ -2580,7 +3537,7 @@
         </p>
         <div style="display:flex; flex-wrap:wrap; gap:1.5rem; justify-content:center; font-size:0.9rem;">
           <div>📧 <a href="mailto:aiml@psnacet.edu.in" style="color:var(--accent);">aiml@psnacet.edu.in</a></div>
-          <div>📞 <span style="color:var(--text-secondary);">+91 451 250 0001</span></div>
+          <div>📞 <span style="color:var(--text-secondary);">+91 XXXXXXXXXX</span></div>
           <div>🌐 <a href="https://www.psnacet.edu.in" target="_blank"
               style="color:var(--accent);">www.psnacet.edu.in</a></div>
           <div>📍 <span style="color:var(--text-secondary);">Dindigul – Palani Road, Dindigul – 624 622</span></div>
@@ -2651,27 +3608,128 @@
     // Expose showPage globally for onclick attributes
     window.showPage = showPage;
 
-    // ===== SPLASH OVERLAY LOGIC =====
+    // ===== ROBOT SPLASH LOGIC =====
     (function () {
+      /* --- STARFIELD CANVAS --- */
+      const canvas = document.getElementById('splashCanvas');
+      if (canvas) {
+        const ctx = canvas.getContext('2d');
+        let W, H, stars = [], animId;
+        function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+        resize();
+        window.addEventListener('resize', resize);
+        const STAR_COUNT = Math.min(Math.floor(W * H / 3000), 200);
+        for (let i = 0; i < STAR_COUNT; i++) {
+          stars.push({
+            x: Math.random() * W, y: Math.random() * H,
+            r: Math.random() * 1.2 + 0.3,
+            sp: Math.random() * 1.5 + 0.3,
+            hue: Math.random() > 0.7 ? 195 : 220
+          });
+        }
+        function drawStars() {
+          ctx.clearRect(0, 0, W, H);
+          stars.forEach(s => {
+            s.x -= s.sp;
+            if (s.x < 0) { s.x = W; s.y = Math.random() * H; }
+            ctx.beginPath();
+            ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+            ctx.fillStyle = `hsla(${s.hue},100%,80%,0.7)`;
+            ctx.fill();
+          });
+          animId = requestAnimationFrame(drawStars);
+        }
+        drawStars();
+        window._stopSplashCanvas = () => cancelAnimationFrame(animId);
+      }
+
+      /* --- SPEED DOTS --- */
+      const dotContainer = document.getElementById('spSpeedDots');
+      if (dotContainer) {
+        const COLORS = ['#00d4ff', '#F5C518', '#a855f7', '#3b82f6'];
+        function spawnDot() {
+          const d = document.createElement('div');
+          d.className = 'sp-sdot';
+          const size = Math.random() * 4 + 2;
+          d.style.cssText = [
+            'width:' + size + 'px', 'height:' + size + 'px',
+            'left:' + (30 + Math.random() * 60) + '%',
+            'top:' + (20 + Math.random() * 60) + '%',
+            'background:' + COLORS[Math.floor(Math.random() * COLORS.length)],
+            'animation-duration:' + (Math.random() * 0.8 + 0.4) + 's',
+            'animation-delay:' + Math.random() * 0.3 + 's'
+          ].join(';');
+          dotContainer.appendChild(d);
+          setTimeout(() => d.remove(), 1400);
+        }
+        const dotIv = setInterval(spawnDot, 120);
+        window._stopDots = () => clearInterval(dotIv);
+      }
+
+      /* --- SPEED-AWARE LOADING BAR --- */
       const pctEl = document.getElementById('spPct');
       const dotsEl = document.getElementById('spDots');
+      const barFill = document.getElementById('spBarFill');
+      const speedInfo = document.getElementById('spSpeedInfo');
+      const statusMsg = document.getElementById('spStatusMsg');
       if (!pctEl) return;
-      let pct = 0;
-      const iv = setInterval(() => {
-        pct = Math.min(pct + Math.floor(Math.random() * 3 + 1), 100);
-        pctEl.textContent = pct + '%';
-        if (pct >= 100) { clearInterval(iv); pctEl.style.color = '#00d4ff'; }
-      }, 38);
-      let d = 0;
-      setInterval(() => { dotsEl.textContent = '.'.repeat((d++ % 3) + 1); }, 500);
-      // Remove overlay from DOM after animation ends so it doesn't block interaction
-      const overlay = document.getElementById('splashOverlay');
-      if (overlay) {
-        overlay.addEventListener('animationend', () => {
-          overlay.style.display = 'none';
-        });
+
+      const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+      let speedMbps = 10;
+      if (conn) {
+        if (conn.downlink) speedMbps = conn.downlink;
+        const tm = { 'slow-2g': 0.1, '2g': 0.5, '3g': 2, '4g': 10 };
+        if (conn.effectiveType) speedMbps = tm[conn.effectiveType] || speedMbps;
+        if (speedInfo) speedInfo.textContent =
+          speedMbps >= 5 ? speedMbps.toFixed(1) + ' MBPS ▲ FAST' :
+            speedMbps >= 1 ? speedMbps.toFixed(1) + ' MBPS' :
+              (speedMbps * 1000).toFixed(0) + ' KBPS ▼ SLOW';
+      } else {
+        if (speedInfo) speedInfo.textContent = 'DETECTING…';
+        const t0 = performance.now();
+        fetch('assets/images/logo.png?' + Date.now(), { cache: 'no-store', method: 'HEAD' })
+          .then(() => {
+            const ms = performance.now() - t0;
+            speedMbps = ms < 100 ? 10 : ms < 400 ? 3 : 0.8;
+            if (speedInfo) speedInfo.textContent = speedMbps >= 5 ? '≈' + speedMbps + ' MBPS ▲ FAST' : '≈' + ms.toFixed(0) + 'ms';
+          }).catch(() => { if (speedInfo) speedInfo.textContent = 'OFFLINE?'; });
       }
+
+      const durationMs = Math.max(1800, Math.min(5500, 5500 - speedMbps * 350));
+      const startTime = performance.now();
+      const stages = [[0, 'BOOTING SYSTEM'], [20, 'LOADING ASSETS'], [45, 'FETCHING MODULES'], [70, 'RENDERING UI'], [90, 'ALMOST READY'], [99, 'READY ✓']];
+
+      let d = 0;
+      const dotsIv = setInterval(() => { if (dotsEl) dotsEl.textContent = '.'.repeat((d++ % 3) + 1); }, 500);
+
+      function updateBar() {
+        const t = Math.min((performance.now() - startTime) / durationMs, 1);
+        const easedT = 1 - Math.pow(1 - t, 3);
+        const pct = Math.floor(easedT * 100);
+        if (barFill) barFill.style.width = pct + '%';
+        if (pctEl) { pctEl.textContent = pct + '%'; if (pct >= 100) pctEl.style.color = '#00d4ff'; }
+        if (statusMsg) {
+          for (let s = stages.length - 1; s >= 0; s--) {
+            if (pct >= stages[s][0]) { statusMsg.textContent = stages[s][1]; break; }
+          }
+        }
+        if (t < 1) requestAnimationFrame(updateBar);
+        else { clearInterval(dotsIv); setTimeout(hideSplash, 350); }
+      }
+      requestAnimationFrame(updateBar);
+
+      function hideSplash() {
+        const ov = document.getElementById('splashOverlay');
+        if (!ov) return;
+        ov.classList.add('sp-hide');
+        if (window._stopSplashCanvas) window._stopSplashCanvas();
+        if (window._stopDots) window._stopDots();
+        setTimeout(() => { ov.style.display = 'none'; }, 950);
+      }
+      setTimeout(hideSplash, 8000);
     })();
+
+
   </script>
 
 </body>
