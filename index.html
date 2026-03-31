@@ -2615,9 +2615,9 @@
           <div class="symposium-badge">⚡ ZYNEX 2K26 ⚡</div>
           <h3>Intelligence Redefined — Dindigul's Premier AI/ML Symposium</h3>
           <p style="margin-top:0.75rem;">
-            PSNA College of Engineering and Technology proudly presents its first-ever departmental symposium
-            by the B.E CSE (Artificial Intelligence and Machine Learning) department.
-            Compete, collaborate, and celebrate the spirit of technology!
+            Department of B.E CSE (Artificial Intelligence and Machine Learning) proudly presents first-ever
+            departmental symposium.
+            Let Compete, collaborate, and celebrate the spirit of technology!
           </p>
           <div style="display:flex; flex-wrap:wrap; gap:1.5rem; justify-content:center; margin-top:1.5rem;">
             <div style="text-align:center;">
@@ -2652,6 +2652,8 @@
                     Rules</button>
                   <a href="https://forms.gle/nYhxc3pnHxyseCHGA" target="_blank" class="btn-ev-register"
                     id="reg-tech-1">REGISTER</a>
+                  <a href="https://docs.google.com/presentation/d/1QlxtItfj3dm6arqYrjIehbNqcHoYvETw/edit?usp=drivesdk&ouid=101877059881218382289&rtpof=true&sd=true"
+                    target="_blank" class="btn-ev-register" id="reg-tech-7">PPT TEMPLATE</a>
                 </div>
               </div>
 
@@ -2689,9 +2691,6 @@
 
           <!-- NON-TECHNICAL EVENTS -->
           <div class="event-nontech event-nontech-col">
-            <div class="event-col-title nontech-title">
-              <span>🎭</span>Events
-            </div>
             <div class="event-list-cards">
 
               <div class="event-card">
@@ -2869,7 +2868,7 @@
       <a href="https://forms.google.com" target="_blank" class="modal-register-btn" id="modalRegisterBtn"
         style="display: none;">📋 REGISTER
         FOR THIS EVENT</a>
-      <p class="modal-price-note" id="modalPriceNote">💰 Entry Fee: ₹250</p>
+      <p class="modal-price-note" id="modalPriceNote"></p>
     </div>
   </div>
 
@@ -3016,20 +3015,18 @@
       const desc = document.getElementById('modalDescription');
       const rulesList = document.getElementById('modalRules');
       const regBtn = document.getElementById('modalRegisterBtn');
-      const priceNote = document.getElementById('modalPriceNote');
 
-      badge.textContent = type === 'tech' ? '⚙️ TECHNICAL EVENT' : '🎭 NON-TECHNICAL EVENT';
+      badge.textContent = type === 'tech' ? '⚙️ TECHNICAL EVENT' : 'TECHNICAL EVENT';
       badge.className = 'modal-event-badge ' + (type === 'tech' ? 'tech' : 'nontech');
       title.textContent = (data.emoji ? data.emoji + ' ' : '') + eventKey;
       infoGrid.innerHTML =
         '<div class="modal-info-chip"><div class="chip-label">👥 TEAM SIZE</div><div class="chip-value">' + data.teamSize + '</div></div>' +
         '<div class="modal-info-chip"><div class="chip-label">⏱ DURATION</div><div class="chip-value">' + data.duration + '</div></div>' +
-        '<div class="modal-info-chip"><div class="chip-label">📍 VENUE</div><div class="chip-value">' + data.venue + '</div></div>' +
-        '<div class="modal-info-chip"><div class="chip-label">💰 ENTRY FEE</div><div class="chip-value" style="color:#10b981;">₹250</div></div>';
+        '<div class="modal-info-chip"><div class="chip-label">📍 VENUE</div><div class="chip-value">' + data.venue + '</div></div>';
+
       desc.textContent = data.description;
       rulesList.innerHTML = data.rules.map(function (r) { return '<li>' + r + '</li>'; }).join('');
       regBtn.className = 'modal-register-btn ' + (type === 'nontech' ? 'nontech' : '');
-      priceNote.textContent = '💰 Entry Fee: ₹250';
       modal.classList.add('open');
       document.body.style.overflow = 'hidden';
     }
