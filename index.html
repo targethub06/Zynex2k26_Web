@@ -1926,84 +1926,7 @@
       box-shadow: 0 0 10px rgba(0, 212, 255, 0.25);
     }
 
-    /* FLOATING LIVE NEWS */
-    .floating-live-news {
-      position: fixed;
-      top: calc(var(--nav-h) + 2rem);
-      right: 2rem;
-      z-index: 99;
-      background: rgba(13, 27, 75, 0.7);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(245, 197, 24, 0.4);
-      border-radius: 12px;
-      padding: 0.8rem 1.2rem;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      cursor: pointer;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 15px rgba(245, 197, 24, 0.2);
-      transition: transform 0.3s, box-shadow 0.3s;
-      animation: floatNews 4s ease-in-out infinite;
-    }
-
-    .floating-live-news:hover {
-      transform: translateY(-5px) scale(1.02);
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(245, 197, 24, 0.4);
-      border-color: var(--gold);
-    }
-
-    .fln-pulse {
-      width: 40px;
-      height: 40px;
-      background: rgba(239, 68, 68, 0.1);
-      border-radius: 50%;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .fln-pulse::after {
-      content: '🚀';
-      font-size: 1.2rem;
-      position: absolute;
-    }
-
-    .fln-content {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .live-dot {
-      width: 8px;
-      height: 8px;
-      background-color: #ef4444;
-      border-radius: 50%;
-      box-shadow: 0 0 8px #ef4444;
-      animation: blink 1s infinite alternate;
-    }
-
-    @keyframes floatNews {
-
-      0%,
-      100% {
-        transform: translateY(0);
-      }
-
-      50% {
-        transform: translateY(-8px);
-      }
-    }
-
     @media (max-width: 768px) {
-      .floating-live-news {
-        top: calc(var(--nav-h) + 1rem);
-        bottom: auto;
-        right: 1rem;
-        left: 1rem;
-        justify-content: center;
-      }
 
       .ev-ob-grid {
         grid-template-columns: 1fr;
@@ -2054,6 +1977,931 @@
     .nav-links a.active .nav-icon {
       transform: scale(1.15);
       filter: drop-shadow(0 0 4px currentColor);
+    }
+
+    /* ===== LIVE NEWS POPUP MODAL ===== */
+    #liveNewsModal {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      background: rgba(5, 10, 31, 0.82);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+
+    #liveNewsModal.lnm-open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .lnm-box {
+      background: linear-gradient(145deg, #0a0e27 0%, #0d1b4b 100%);
+      border: 1px solid rgba(245, 197, 24, 0.5);
+      border-radius: 22px;
+      width: 100%;
+      max-width: 480px;
+      overflow: hidden;
+      position: relative;
+      box-shadow:
+        0 32px 80px rgba(0, 0, 0, 0.7),
+        0 0 60px rgba(245, 197, 24, 0.12),
+        0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+      transform: translateY(30px) scale(0.95);
+      transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    #liveNewsModal.lnm-open .lnm-box {
+      transform: translateY(0) scale(1);
+    }
+
+    /* animated rainbow top bar */
+    .lnm-box::before {
+      content: '';
+      display: block;
+      height: 4px;
+      background: linear-gradient(90deg, #ef4444, #F5C518, #00d4ff, #a855f7, #ef4444);
+      background-size: 300% 100%;
+      animation: lnmBar 3s linear infinite;
+    }
+
+    @keyframes lnmBar {
+      0% {
+        background-position: 0% 0%;
+      }
+
+      100% {
+        background-position: 300% 0%;
+      }
+    }
+
+    .lnm-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1.2rem 1.4rem 1rem;
+      border-bottom: 1px solid rgba(245, 197, 24, 0.15);
+    }
+
+    .lnm-live-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      border-radius: 50px;
+      padding: 0.22rem 0.75rem;
+      flex-shrink: 0;
+    }
+
+    .lnm-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #ef4444;
+      box-shadow: 0 0 10px #ef4444;
+      animation: blink 1s infinite alternate;
+    }
+
+    .lnm-live-text {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.6rem;
+      font-weight: 700;
+      color: #ef4444;
+      letter-spacing: 1.5px;
+    }
+
+    .lnm-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 1px;
+      flex: 1;
+    }
+
+    .lnm-close {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #64748b;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+
+    .lnm-close:hover {
+      background: rgba(239, 68, 68, 0.2);
+      border-color: rgba(239, 68, 68, 0.45);
+      color: #ef4444;
+    }
+
+    /* scrolling ticker inside popup */
+    .lnm-ticker {
+      overflow: hidden;
+      background: rgba(0, 212, 255, 0.05);
+      border-bottom: 1px solid rgba(0, 212, 255, 0.1);
+      padding: 0.32rem 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .lnm-ticker-label {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.52rem;
+      font-weight: 700;
+      color: #00d4ff;
+      letter-spacing: 1.5px;
+      padding: 0 1rem;
+      flex-shrink: 0;
+      border-right: 1px solid rgba(0, 212, 255, 0.2);
+    }
+
+    .lnm-ticker-inner {
+      overflow: hidden;
+      flex: 1;
+      padding: 0 0.5rem;
+    }
+
+    .lnm-ticker-text {
+      white-space: nowrap;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.75rem;
+      color: #94a3b8;
+      animation: lnmTicker 20s linear infinite;
+    }
+
+    .lnm-ticker-text b {
+      color: #00d4ff;
+    }
+
+    @keyframes lnmTicker {
+      from {
+        transform: translateX(100%);
+      }
+
+      to {
+        transform: translateX(-100%);
+      }
+    }
+
+    /* news cards */
+    .lnm-items {
+      padding: 0.6rem 0;
+    }
+
+    .lnm-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+      padding: 0.9rem 1.4rem;
+      cursor: pointer;
+      transition: background 0.2s;
+      position: relative;
+      text-decoration: none;
+    }
+
+    .lnm-item::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: transparent;
+      border-radius: 0 4px 4px 0;
+      transition: background 0.2s;
+    }
+
+    .lnm-item:hover {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .lnm-item.gold:hover::after {
+      background: #F5C518;
+    }
+
+    .lnm-item.cyan:hover::after {
+      background: #00d4ff;
+    }
+
+    .lnm-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+
+    .lnm-icon.gold {
+      background: rgba(245, 197, 24, 0.1);
+      border: 1px solid rgba(245, 197, 24, 0.25);
+    }
+
+    .lnm-icon.cyan {
+      background: rgba(0, 212, 255, 0.1);
+      border: 1px solid rgba(0, 212, 255, 0.25);
+    }
+
+    .lnm-body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .lnm-tag {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.52rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      padding: 0.12rem 0.6rem;
+      border-radius: 50px;
+      display: inline-block;
+      margin-bottom: 0.3rem;
+    }
+
+    .lnm-tag.gold {
+      color: #F5C518;
+      background: rgba(245, 197, 24, 0.1);
+      border: 1px solid rgba(245, 197, 24, 0.25);
+    }
+
+    .lnm-tag.cyan {
+      color: #00d4ff;
+      background: rgba(0, 212, 255, 0.1);
+      border: 1px solid rgba(0, 212, 255, 0.25);
+    }
+
+    .lnm-item-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #e2e8f0;
+      line-height: 1.3;
+      margin-bottom: 0.18rem;
+    }
+
+    .lnm-item-sub {
+      font-size: 0.75rem;
+      color: #64748b;
+      line-height: 1.45;
+    }
+
+    .lnm-arrow {
+      font-size: 1.1rem;
+      color: #475569;
+      align-self: center;
+      flex-shrink: 0;
+      transition: transform 0.2s, color 0.2s;
+    }
+
+    .lnm-item:hover .lnm-arrow {
+      transform: translateX(4px);
+      color: #00d4ff;
+    }
+
+    .lnm-item.gold:hover .lnm-arrow {
+      color: #F5C518;
+    }
+
+    .lnm-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(245, 197, 24, 0.12), transparent);
+      margin: 0 1.4rem;
+    }
+
+    .lnm-footer {
+      padding: 0.85rem 1.4rem 1.1rem;
+      border-top: 1px solid rgba(245, 197, 24, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .lnm-footer-note {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.72rem;
+      color: #475569;
+    }
+
+    .lnm-footer-note span {
+      color: #F5C518;
+    }
+
+    .lnm-dismiss-btn {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: #0a0e27;
+      background: linear-gradient(90deg, #F5C518, #ffd700);
+      border: none;
+      border-radius: 50px;
+      padding: 0.42rem 1.1rem;
+      cursor: pointer;
+      transition: all 0.25s;
+      box-shadow: 0 4px 14px rgba(245, 197, 24, 0.35);
+      white-space: nowrap;
+    }
+
+    .lnm-dismiss-btn:hover {
+      box-shadow: 0 6px 22px rgba(245, 197, 24, 0.55);
+      transform: translateY(-1px);
+    }
+
+    @media (max-width: 520px) {
+      .lnm-box {
+        border-radius: 16px;
+      }
+
+      .lnm-item {
+        padding: 0.8rem 1rem;
+      }
+
+      .lnm-footer {
+        padding: 0.75rem 1rem 0.9rem;
+      }
+    }
+
+    /* ===== FLOATING LIVE NEWS WIDGET (always-on) ===== */
+    #floatingNews {
+      position: fixed;
+      bottom: 1.6rem;
+      right: 1.5rem;
+      z-index: 9500;
+      width: clamp(270px, 26vw, 340px);
+      border-radius: 18px;
+      overflow: hidden;
+      background: linear-gradient(145deg, rgba(8, 12, 35, 0.96) 0%, rgba(13, 27, 75, 0.93) 100%);
+      border: 1px solid rgba(245, 197, 24, 0.45);
+      box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.65),
+        0 0 30px rgba(245, 197, 24, 0.12),
+        0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+        box-shadow 0.35s ease,
+        opacity 0.35s ease;
+      animation: fnFloat 5s ease-in-out infinite;
+    }
+
+    #floatingNews.fn-collapsed .fn-body {
+      display: none;
+    }
+
+    #floatingNews.fn-hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(20px) scale(0.9);
+    }
+
+    #floatingNews::before {
+      content: '';
+      display: block;
+      height: 3px;
+      background: linear-gradient(90deg, #ef4444, #F5C518, #00d4ff, #a855f7, #ef4444);
+      background-size: 300% 100%;
+      animation: lnmBar 3s linear infinite;
+    }
+
+    @keyframes fnFloat {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-7px);
+      }
+    }
+
+    /* header */
+    .fn-header {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.65rem 0.9rem;
+      cursor: pointer;
+      user-select: none;
+      border-bottom: 1px solid rgba(245, 197, 24, 0.15);
+      background: rgba(245, 197, 24, 0.03);
+    }
+
+    .fn-live-badge {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      border-radius: 50px;
+      padding: 0.18rem 0.6rem;
+      flex-shrink: 0;
+    }
+
+    .fn-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #ef4444;
+      box-shadow: 0 0 8px #ef4444;
+      animation: blink 1s infinite alternate;
+    }
+
+    .fn-live-label {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.55rem;
+      font-weight: 700;
+      color: #ef4444;
+      letter-spacing: 1.5px;
+    }
+
+    .fn-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.62rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.8px;
+      flex: 1;
+    }
+
+    .fn-toggle {
+      font-size: 0.7rem;
+      color: #64748b;
+      transition: transform 0.3s;
+      flex-shrink: 0;
+    }
+
+    #floatingNews.fn-collapsed .fn-toggle {
+      transform: rotate(180deg);
+    }
+
+    .fn-x {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #64748b;
+      font-size: 0.68rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+
+    .fn-x:hover {
+      background: rgba(239, 68, 68, 0.2);
+      border-color: rgba(239, 68, 68, 0.4);
+      color: #ef4444;
+    }
+
+    /* body */
+    .fn-body {
+      animation: none;
+    }
+
+    /* ticker */
+    .fn-ticker {
+      overflow: hidden;
+      background: rgba(0, 212, 255, 0.04);
+      border-bottom: 1px solid rgba(0, 212, 255, 0.1);
+      padding: 0.28rem 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .fn-ticker-tag {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.48rem;
+      font-weight: 700;
+      color: #00d4ff;
+      letter-spacing: 1.5px;
+      padding: 0 0.75rem;
+      flex-shrink: 0;
+      border-right: 1px solid rgba(0, 212, 255, 0.2);
+    }
+
+    .fn-ticker-inner {
+      overflow: hidden;
+      flex: 1;
+      padding: 0 0.5rem;
+    }
+
+    .fn-ticker-text {
+      white-space: nowrap;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.7rem;
+      color: #94a3b8;
+      animation: lnmTicker 22s linear infinite;
+    }
+
+    .fn-ticker-text b {
+      color: #00d4ff;
+    }
+
+    /* news rows */
+    .fn-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      padding: 0.65rem 0.9rem;
+      cursor: pointer;
+      transition: background 0.2s;
+      position: relative;
+      text-decoration: none;
+    }
+
+    .fn-item::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: transparent;
+      transition: background 0.2s;
+    }
+
+    .fn-item:hover {
+      background: rgba(255, 255, 255, 0.025);
+    }
+
+    .fn-item.gold:hover::before {
+      background: #F5C518;
+    }
+
+    .fn-item.cyan:hover::before {
+      background: #00d4ff;
+    }
+
+    .fn-ico {
+      width: 32px;
+      height: 32px;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+      flex-shrink: 0;
+    }
+
+    .fn-ico.gold {
+      background: rgba(245, 197, 24, 0.1);
+      border: 1px solid rgba(245, 197, 24, 0.22);
+    }
+
+    .fn-ico.cyan {
+      background: rgba(0, 212, 255, 0.1);
+      border: 1px solid rgba(0, 212, 255, 0.22);
+    }
+
+    .fn-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .fn-tag {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.47rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      padding: 0.1rem 0.5rem;
+      border-radius: 50px;
+      display: inline-block;
+      margin-bottom: 0.22rem;
+    }
+
+    .fn-tag.gold {
+      color: #F5C518;
+      background: rgba(245, 197, 24, 0.1);
+      border: 1px solid rgba(245, 197, 24, 0.22);
+    }
+
+    .fn-tag.cyan {
+      color: #00d4ff;
+      background: rgba(0, 212, 255, 0.1);
+      border: 1px solid rgba(0, 212, 255, 0.22);
+    }
+
+    .fn-item-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #e2e8f0;
+      line-height: 1.3;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .fn-item-sub {
+      font-size: 0.64rem;
+      color: #64748b;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .fn-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(245, 197, 24, 0.12), transparent);
+      margin: 0 0.9rem;
+    }
+
+    /* footer */
+    .fn-footer {
+      padding: 0.55rem 0.9rem 0.7rem;
+      border-top: 1px solid rgba(245, 197, 24, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .fn-footer-text {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.64rem;
+      color: #475569;
+    }
+
+    .fn-cta {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.48rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: #0a0e27;
+      background: linear-gradient(90deg, #F5C518, #ffd700);
+      border: none;
+      border-radius: 50px;
+      padding: 0.32rem 0.8rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+      box-shadow: 0 4px 12px rgba(245, 197, 24, 0.3);
+    }
+
+    .fn-cta:hover {
+      box-shadow: 0 6px 20px rgba(245, 197, 24, 0.5);
+      transform: translateY(-1px);
+    }
+
+    @media (max-width: 768px) {
+      #floatingNews {
+        bottom: 1rem;
+        right: 0.75rem;
+        left: 0.75rem;
+        width: auto;
+      }
+    }
+
+    /* ===== EVENTS PAGE — PAYMENT BANNER ===== */
+    .ev-pay-banner {
+      margin: 2.5rem 0;
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+      background: linear-gradient(135deg,
+          rgba(0, 212, 255, 0.08) 0%,
+          rgba(13, 27, 75, 0.7) 40%,
+          rgba(245, 197, 24, 0.08) 100%);
+      border: 1px solid rgba(0, 212, 255, 0.3);
+      box-shadow: 0 0 40px rgba(0, 212, 255, 0.08), 0 12px 40px rgba(0, 0, 0, 0.4);
+      padding: 2.2rem 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.2rem;
+      text-align: center;
+    }
+
+    .ev-pay-banner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(0, 212, 255, 0.06) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 50%, rgba(245, 197, 24, 0.06) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .ev-pay-banner::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #00d4ff, #F5C518, #a855f7, #00d4ff);
+      background-size: 300% 100%;
+      animation: lnmBar 3s linear infinite;
+    }
+
+    .ev-pay-label {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      color: #00d4ff;
+      background: rgba(0, 212, 255, 0.1);
+      border: 1px solid rgba(0, 212, 255, 0.25);
+      border-radius: 50px;
+      padding: 0.3rem 1rem;
+      display: inline-block;
+    }
+
+    .ev-pay-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.7rem;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.2;
+    }
+
+    .ev-pay-title span {
+      color: #F5C518;
+    }
+
+    .ev-pay-sub {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      max-width: 460px;
+      line-height: 1.6;
+    }
+
+    .ev-pay-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: 'Orbitron', monospace;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: #0a0e27;
+      background: linear-gradient(135deg, #00d4ff, #3b82f6);
+      border: none;
+      border-radius: 50px;
+      padding: 0.9rem 2rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s;
+      box-shadow: 0 0 24px rgba(0, 212, 255, 0.35);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ev-pay-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .ev-pay-btn:hover {
+      box-shadow: 0 0 40px rgba(0, 212, 255, 0.55);
+      transform: translateY(-3px) scale(1.03);
+    }
+
+    .ev-pay-btn:hover::before {
+      opacity: 1;
+    }
+
+    .ev-pay-note {
+      font-size: 0.72rem;
+      color: #475569;
+    }
+
+    .ev-pay-note a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    /* ===== COUNTDOWN TIMER ===== */
+    .cd-wrapper {
+      display: flex;
+      gap: clamp(0.5rem, 1.5vw, 1rem);
+      justify-content: center;
+      margin-top: 1rem;
+      z-index: 20;
+    }
+
+    .cd-box {
+      background: rgba(13, 27, 75, 0.4);
+      border: 1px solid rgba(0, 212, 255, 0.3);
+      border-radius: 8px;
+      padding: clamp(0.4rem, 1vw, 0.6rem);
+      min-width: clamp(50px, 6vw, 70px);
+      text-align: center;
+      backdrop-filter: blur(4px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .cd-val {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      font-weight: 700;
+      color: #00d4ff;
+      line-height: 1.1;
+      text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+    }
+
+    .cd-lbl {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: clamp(0.55rem, 1vw, 0.7rem);
+      font-weight: 600;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 0.2rem;
+    }
+
+    /* ===== ALWAYS DISPLAYING TIMER ===== */
+    .floating-timer {
+      position: fixed;
+      bottom: 2rem;
+      left: 1.5rem;
+      z-index: 9400;
+      background: rgba(13, 27, 75, 0.75);
+      border: 1px solid rgba(0, 212, 255, 0.4);
+      border-radius: 12px;
+      padding: 0.75rem 1rem;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 15px rgba(0, 212, 255, 0.15);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .floating-timer-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: #F5C518;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .floating-timer-title .blink-dot {
+      width: 6px;
+      height: 6px;
+      background-color: #F5C518;
+      border-radius: 50%;
+      animation: blink 1.5s infinite;
+    }
+
+    .floating-timer .cd-wrapper {
+      margin-top: 0;
+      gap: 0.4rem;
+    }
+
+    .floating-timer .cd-box {
+      min-width: 45px;
+      padding: 0.3rem;
+      background: rgba(5, 10, 31, 0.6);
+    }
+
+    .floating-timer .cd-val {
+      font-size: 1.1rem;
+    }
+
+    .floating-timer .cd-lbl {
+      font-size: 0.55rem;
+    }
+
+    @media (max-width: 768px) {
+      .floating-timer {
+        top: calc(var(--nav-h) + 0.75rem);
+        bottom: auto;
+        left: auto;
+        right: 0.75rem;
+        padding: 0.5rem;
+        transform: scale(0.85);
+        transform-origin: top right;
+      }
     }
   </style>
 </head>
@@ -2216,6 +3064,27 @@
         <div class="sp-big-title">PSNACET</div>
         <!-- Dept -->
         <div class="sp-dept-full">Dept. of CSE(AI &amp; ML)</div>
+
+        <!-- Countdown in Splash -->
+        <div class="cd-wrapper">
+          <div class="cd-box">
+            <div class="cd-val" id="sp-cd-days">00</div>
+            <div class="cd-lbl">Days</div>
+          </div>
+          <div class="cd-box">
+            <div class="cd-val" id="sp-cd-hours">00</div>
+            <div class="cd-lbl">Hours</div>
+          </div>
+          <div class="cd-box">
+            <div class="cd-val" id="sp-cd-mins">00</div>
+            <div class="cd-lbl">Mins</div>
+          </div>
+          <div class="cd-box">
+            <div class="cd-val" id="sp-cd-secs">00</div>
+            <div class="cd-lbl">Secs</div>
+          </div>
+        </div>
+
         <!-- Loading bar -->
         <div class="sp-load-wrap">
           <div class="sp-load-head">
@@ -2312,18 +3181,82 @@
      ================================================================ -->
   <div class="page active" id="page-home">
 
-    <!-- FLOATING LIVE NEWS SECTION -->
-    <div class="floating-live-news" onclick="showPage('events')">
-      <div class="fln-pulse"></div>
-      <div class="fln-content">
-        <span
-          style="color:#ef4444; font-weight:bold; font-size:0.75rem; letter-spacing:1px; display:flex; align-items:center; gap:6px;">
-          <span class="live-dot"></span> LIVE NEWS
-        </span>
-        <span
-          style="font-family:'Orbitron',monospace; color:var(--gold); font-size:0.95rem; margin-top:2px; font-weight:700; letter-spacing:0.5px;">
-          ZYNEX 2K26 <span style="color:#fff;">COMING SOON</span>
-        </span>
+    <!-- ===== FLOATING LIVE NEWS WIDGET (always visible) ===== -->
+    <div id="floatingNews">
+      <!-- rainbow top bar via ::before -->
+
+      <!-- Header (click to collapse/expand) -->
+      <div class="fn-header" onclick="toggleFloatingNews()">
+        <div class="fn-live-badge">
+          <span class="fn-dot"></span>
+          <span class="fn-live-label">LIVE</span>
+        </div>
+        <span class="fn-title">📡 ZYNEX 2K26 NEWS</span>
+        <span class="fn-toggle">▲</span>
+        <span class="fn-x" title="Dismiss"
+          onclick="event.stopPropagation(); document.getElementById('floatingNews').classList.add('fn-hidden');">✕</span>
+      </div>
+
+      <!-- Collapsible body -->
+      <div class="fn-body">
+
+        <!-- Scrolling ticker -->
+        <div class="fn-ticker">
+          <span class="fn-ticker-tag">BREAKING</span>
+          <div class="fn-ticker-inner">
+            <span class="fn-ticker-text">🔥 ZYNEX 2K26 — First Symposium of CSE(AI&amp;ML) Dept &nbsp;•&nbsp;
+              <b>Registration Openning Soon!</b> &nbsp;•&nbsp;Stay tuned!</span>
+          </div>
+        </div>
+
+        <!-- News 1 — Coming Soon → Events tab -->
+        <a class="fn-item gold" href="#" onclick="showPage('events'); return false;">
+          <div class="fn-ico gold">🚀</div>
+          <div class="fn-info">
+            <span class="fn-tag gold">ANNOUNCE</span>
+            <div class="fn-item-title">ZYNEX 2K26 — Coming Soon!</div>
+            <div class="fn-item-sub">Tap to explore all events →</div>
+          </div>
+        </a>
+
+        <div class="fn-divider"></div>
+
+        <!-- News 2 — Payment link → Google Form -->
+        <a class="fn-item cyan" href="YOUR_GOOGLE_FORM_LINK_HERE" id="fnPayLink" target="_blank"
+          rel="noopener noreferrer">
+          <div class="fn-ico cyan">💳</div>
+          <div class="fn-info">
+            <span class="fn-tag cyan">PAYMENT</span>
+            <div class="fn-item-title">Payment Link will be Updated Soon!</div>
+          </div>
+        </a>
+
+      </div><!-- /fn-body -->
+    </div>
+    <!-- ===== END FLOATING NEWS WIDGET ===== -->
+
+    <!-- ===== ALWAYS ON TIMER ===== -->
+    <div id="floatingTimer" class="floating-timer">
+      <div class="floating-timer-title">
+        <div class="blink-dot"></div> ZYNEX 2K26
+      </div>
+      <div class="cd-wrapper">
+        <div class="cd-box">
+          <div class="cd-val" id="ft-cd-days">00</div>
+          <div class="cd-lbl">Days</div>
+        </div>
+        <div class="cd-box">
+          <div class="cd-val" id="ft-cd-hours">00</div>
+          <div class="cd-lbl">Hours</div>
+        </div>
+        <div class="cd-box">
+          <div class="cd-val" id="ft-cd-mins">00</div>
+          <div class="cd-lbl">Mins</div>
+        </div>
+        <div class="cd-box">
+          <div class="cd-val" id="ft-cd-secs">00</div>
+          <div class="cd-lbl">Secs</div>
+        </div>
       </div>
     </div>
 
@@ -2372,6 +3305,27 @@
               <p class="hero-subtitle">Department of CSE (AI&ML) — Symposium</p>
               <p class="hero-desc">Compete in technical & non-technical events, win exciting prizes, and connect with AI
                 enthusiasts at Dindigul's premier tech fest.</p>
+
+              <!-- Countdown in Home Page -->
+              <div class="cd-wrapper" style="margin-bottom: 1.5rem;">
+                <div class="cd-box">
+                  <div class="cd-val" id="hm-cd-days">00</div>
+                  <div class="cd-lbl">Days</div>
+                </div>
+                <div class="cd-box">
+                  <div class="cd-val" id="hm-cd-hours">00</div>
+                  <div class="cd-lbl">Hours</div>
+                </div>
+                <div class="cd-box">
+                  <div class="cd-val" id="hm-cd-mins">00</div>
+                  <div class="cd-lbl">Mins</div>
+                </div>
+                <div class="cd-box">
+                  <div class="cd-val" id="hm-cd-secs">00</div>
+                  <div class="cd-lbl">Secs</div>
+                </div>
+              </div>
+
               <div class="hero-btns">
                 <a href="#" class="btn-primary" data-nav-to="events">🏆 View Events</a>
               </div>
@@ -2799,6 +3753,22 @@
         </div>
         <!-- END WHAT YOU WIN HIGHLIGHTS -->
 
+        <!-- PAYMENT LINK BANNER -->
+        <div class="ev-pay-banner fade-up" id="evPayBanner">
+          <span class="ev-pay-label">💳 PAYMENT</span>
+          <div class="ev-pay-title">Payment Link will be Updated Soon!<br><span></span></div>
+          <p class="ev-pay-sub">
+            Complete your Payment to confirm your registration!
+          </p>
+          <a class="ev-pay-btn" href="#YOUR_GOOGLE_FORM_LINK_HERE" id="evPayBtn" target="_blank"
+            rel="noopener noreferrer">
+            💳 Payment Link will be Updated Soon!
+          </a>
+          <p class="ev-pay-note">Having trouble? Contact <a href="tel:+919344886379">Registration Coordinator: +91 93448
+              86379</a></p>
+        </div>
+        <!-- END PAYMENT BANNER -->
+
         <!-- STUDENT COORDINATORS / OB ON EVENTS PAGE -->
         <div class="ev-ob-section fade-up">
           <div class="section-header" style="margin-bottom:0;">
@@ -2872,6 +3842,50 @@
   </div>
 
   <script>
+      // ===== LIVE NEWS POPUP MODAL =====
+      (function () {
+        // Show the modal 1.2 s after page load (feels natural)
+        setTimeout(function () {
+          var modal = document.getElementById('liveNewsModal');
+          if (modal) modal.classList.add('lnm-open');
+        }, 1200);
+      })();
+
+    function closeLiveNewsModal() {
+      var modal = document.getElementById('liveNewsModal');
+      if (modal) modal.classList.remove('lnm-open');
+    }
+
+    // Close on backdrop click (outside .lnm-box)
+    document.addEventListener('DOMContentLoaded', function () {
+      var modal = document.getElementById('liveNewsModal');
+      if (!modal) return;
+      modal.addEventListener('click', function (e) {
+        if (!document.getElementById('lnmBox').contains(e.target)) {
+          closeLiveNewsModal();
+        }
+      });
+    });
+
+    // ===== FLOATING LIVE NEWS WIDGET =====
+    function toggleFloatingNews() {
+      var widget = document.getElementById('floatingNews');
+      if (widget) widget.classList.toggle('fn-collapsed');
+    }
+
+    // ===== PAYMENT LINK HELPER =====
+    // Replace the URL below with your Google Form link to update all buttons at once
+    (function () {
+      var PAYMENT_LINK = 'YOUR_GOOGLE_FORM_LINK_HERE';
+      // Only update if a real link has been set
+      if (PAYMENT_LINK === 'YOUR_GOOGLE_FORM_LINK_HERE') return;
+      var ids = ['lnmNews2', 'fnPayLink', 'evPayBtn'];
+      ids.forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el) el.href = PAYMENT_LINK;
+      });
+    })();
+
     // ===== EVENT DATA =====
     const eventData = {
       tech: {
@@ -3755,7 +4769,54 @@
       setTimeout(hideSplash, 8000);
     })();
 
+    // ===== COUNTDOWN LOGIC =====
+    (function () {
+      const targetDate = new Date("April 21, 2026 09:00:00").getTime();
 
+      function updateCountdown() {
+        const now = new Date().getTime();
+        const distance = targetDate - now;
+
+        if (distance < 0) {
+          document.querySelectorAll('.cd-val').forEach(el => el.textContent = '00');
+          return;
+        }
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const secs = Math.floor((distance % (1000 * 60)) / 1000);
+
+        const format = (val) => val < 10 ? '0' + val : val;
+
+        const spDays = document.getElementById('sp-cd-days');
+        if (spDays) {
+          spDays.textContent = format(days);
+          document.getElementById('sp-cd-hours').textContent = format(hours);
+          document.getElementById('sp-cd-mins').textContent = format(mins);
+          document.getElementById('sp-cd-secs').textContent = format(secs);
+        }
+
+        const hmDays = document.getElementById('hm-cd-days');
+        if (hmDays) {
+          hmDays.textContent = format(days);
+          document.getElementById('hm-cd-hours').textContent = format(hours);
+          document.getElementById('hm-cd-mins').textContent = format(mins);
+          document.getElementById('hm-cd-secs').textContent = format(secs);
+        }
+
+        const ftDays = document.getElementById('ft-cd-days');
+        if (ftDays) {
+          ftDays.textContent = format(days);
+          document.getElementById('ft-cd-hours').textContent = format(hours);
+          document.getElementById('ft-cd-mins').textContent = format(mins);
+          document.getElementById('ft-cd-secs').textContent = format(secs);
+        }
+      }
+
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+    })();
   </script>
 
 </body>
