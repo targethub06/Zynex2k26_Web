@@ -2834,73 +2834,112 @@
       margin-top: 0.2rem;
     }
 
-    /* ===== ALWAYS DISPLAYING TIMER ===== */
+    /* ===== ALWAYS DISPLAYING TIMER (now in header) ===== */
     .floating-timer {
-      position: fixed;
-      bottom: 2rem;
-      left: 1.5rem;
-      z-index: 9400;
-      background: rgba(13, 27, 75, 0.75);
-      border: 1px solid rgba(0, 212, 255, 0.4);
-      border-radius: 12px;
-      padding: 0.75rem 1rem;
-      backdrop-filter: blur(12px);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 15px rgba(0, 212, 255, 0.15);
+      display: none;
+      /* hidden — timer moved to navbar */
+    }
+
+    /* ===== NAV COUNTDOWN TIMER ===== */
+    .nav-countdown {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(13, 27, 75, 0.6);
+      border: 1px solid rgba(0, 212, 255, 0.3);
+      border-radius: 10px;
+      padding: 0.35rem 0.75rem;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 0 12px rgba(0, 212, 255, 0.12);
+      flex-shrink: 0;
+    }
+
+    .nav-countdown-label {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.52rem;
+      font-weight: 700;
+      color: #F5C518;
+      letter-spacing: 1.5px;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .nav-countdown-label .blink-dot {
+      width: 5px;
+      height: 5px;
+      background: #F5C518;
+      border-radius: 50%;
+      animation: blink 1.5s infinite;
+      flex-shrink: 0;
+    }
+
+    .nav-cd-boxes {
+      display: flex;
+      gap: 0.3rem;
+      align-items: center;
+    }
+
+    .nav-cd-unit {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.5rem;
-      transition: all 0.3s ease;
+      background: rgba(5, 10, 31, 0.55);
+      border: 1px solid rgba(0, 212, 255, 0.2);
+      border-radius: 6px;
+      padding: 0.18rem 0.35rem;
+      min-width: 32px;
     }
 
-    .floating-timer-title {
+    .nav-cd-val {
       font-family: 'Orbitron', monospace;
-      font-size: 0.65rem;
+      font-size: 0.8rem;
       font-weight: 700;
-      color: #F5C518;
-      letter-spacing: 2px;
+      color: #00d4ff;
+      line-height: 1.1;
+      text-shadow: 0 0 8px rgba(0, 212, 255, 0.5);
+    }
+
+    .nav-cd-lbl {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.42rem;
+      color: #64748b;
       text-transform: uppercase;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
+      letter-spacing: 0.8px;
     }
 
-    .floating-timer-title .blink-dot {
-      width: 6px;
-      height: 6px;
-      background-color: #F5C518;
-      border-radius: 50%;
-      animation: blink 1.5s infinite;
+    .nav-cd-sep {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.8rem;
+      color: rgba(0, 212, 255, 0.4);
+      line-height: 1;
+      margin-bottom: 0.5rem;
     }
 
-    .floating-timer .cd-wrapper {
-      margin-top: 0;
-      gap: 0.4rem;
+    @media (max-width: 900px) {
+      .nav-countdown-label span:not(.blink-dot) {
+        display: none;
+      }
     }
 
-    .floating-timer .cd-box {
-      min-width: 45px;
-      padding: 0.3rem;
-      background: rgba(5, 10, 31, 0.6);
-    }
+    @media (max-width: 640px) {
+      .nav-countdown {
+        padding: 0.25rem 0.5rem;
+        gap: 0.35rem;
+      }
 
-    .floating-timer .cd-val {
-      font-size: 1.1rem;
-    }
+      .nav-cd-unit {
+        min-width: 26px;
+        padding: 0.12rem 0.25rem;
+      }
 
-    .floating-timer .cd-lbl {
-      font-size: 0.55rem;
-    }
+      .nav-cd-val {
+        font-size: 0.68rem;
+      }
 
-    @media (max-width: 768px) {
-      .floating-timer {
-        top: calc(var(--nav-h) + 0.75rem);
-        bottom: auto;
-        left: auto;
-        right: 0.75rem;
-        padding: 0.5rem;
-        transform: scale(0.85);
-        transform-origin: top right;
+      .nav-cd-lbl {
+        font-size: 0.36rem;
       }
     }
   </style>
@@ -3162,6 +3201,36 @@
           About
         </a></li>
     </ul>
+
+    <!-- ===== HEADER COUNTDOWN TIMER ===== -->
+    <div class="nav-countdown" id="navCountdown" title="Countdown to ZYNEX 2K26">
+      <div class="nav-countdown-label">
+        <div class="blink-dot"></div>
+        <span>ZYNEX 2K26</span>
+      </div>
+      <div class="nav-cd-boxes">
+        <div class="nav-cd-unit">
+          <div class="nav-cd-val" id="nav-cd-days">00</div>
+          <div class="nav-cd-lbl">Days</div>
+        </div>
+        <div class="nav-cd-sep">:</div>
+        <div class="nav-cd-unit">
+          <div class="nav-cd-val" id="nav-cd-hours">00</div>
+          <div class="nav-cd-lbl">Hrs</div>
+        </div>
+        <div class="nav-cd-sep">:</div>
+        <div class="nav-cd-unit">
+          <div class="nav-cd-val" id="nav-cd-mins">00</div>
+          <div class="nav-cd-lbl">Min</div>
+        </div>
+        <div class="nav-cd-sep">:</div>
+        <div class="nav-cd-unit">
+          <div class="nav-cd-val" id="nav-cd-secs">00</div>
+          <div class="nav-cd-lbl">Sec</div>
+        </div>
+      </div>
+    </div>
+
     <!-- Hamburger -->
     <button class="nav-hamburger" id="hamburger" aria-label="Toggle Menu">
       <span></span><span></span><span></span>
@@ -3172,7 +3241,8 @@
   <div class="news-ticker-bar" style="margin-top:var(--nav-h);">
     <div class="ticker-label">📢 LIVE</div>
     <div class="ticker-content" id="newsTicker">
-      <div class="ticker-item">🎉 <span>ZYNEX 2K26</span> — First-ever Symposium of CSE(AI&ML) Dept. Registration is Open now!</div>
+      <div class="ticker-item">🎉 <span>ZYNEX 2K26</span> — First-ever Symposium of CSE(AI&ML) Dept. Registration is
+        Open now!</div>
     </div>
   </div>
 
@@ -3603,10 +3673,10 @@
                 <div class="event-card-actions">
                   <button class="btn-ev-about" onclick="openEventModal('tech','IntelliTalks(Paper Presentation)')">ℹ️
                     Rules</button>
-                  <a href="https://forms.gle/nYhxc3pnHxyseCHGA" target="_blank" class="btn-ev-register"
-                    id="reg-tech-1">REGISTER</a>
+                  <a href="https://forms.gle/nYhxc3pnHxyseCHGA" target="_blank" rel="noopener noreferrer"
+                    class="btn-ev-register" id="reg-tech-1">REGISTER</a>
                   <a href="https://docs.google.com/presentation/d/1QlxtItfj3dm6arqYrjIehbNqcHoYvETw/edit?usp=drivesdk&ouid=101877059881218382289&rtpof=true&sd=true"
-                    target="_blank" class="btn-ev-register" id="reg-tech-7">PPT TEMPLATE</a>
+                    target="_blank" rel="noopener noreferrer" class="btn-ev-register" id="reg-tech-ppt">PPT TEMPLATE</a>
                 </div>
               </div>
 
@@ -3614,8 +3684,8 @@
                 <span class="event-card-name">TransCodeX(Code Conversion)</span>
                 <div class="event-card-actions">
                   <button class="btn-ev-about" onclick="openEventModal('tech','TranscodeX')">ℹ️ Rules</button>
-                  <a href="https://forms.gle/mVqQ14YyLC6BMFNc7" target="_blank" class="btn-ev-register"
-                    id="reg-tech-2">REGISTER</a>
+                  <a href="https://forms.gle/mVqQ14YyLC6BMFNc7" target="_blank" rel="noopener noreferrer"
+                    class="btn-ev-register" id="reg-tech-2">REGISTER</a>
                 </div>
               </div>
 
@@ -3623,8 +3693,8 @@
                 <span class="event-card-name">Code Combat(Coding Competition)</span>
                 <div class="event-card-actions">
                   <button class="btn-ev-about" onclick="openEventModal('tech','Code Combat')">ℹ️ Rules</button>
-                  <a href="https://forms.gle/MBRr1p5Qpmk9ZusdA" target="_blank" class="btn-ev-register"
-                    id="reg-tech-3">REGISTER</a>
+                  <a href="https://forms.gle/MBRr1p5Qpmk9ZusdA" target="_blank" rel="noopener noreferrer"
+                    class="btn-ev-register" id="reg-tech-3">REGISTER</a>
                 </div>
               </div>
 
@@ -3633,8 +3703,8 @@
                 <div class="event-card-actions">
                   <button class="btn-ev-about" onclick="openEventModal('tech','Vibe2Build')">ℹ️
                     About</button>
-                  <a href="https://forms.gle/NbMQhC5UYpQcrqEq5" target="_blank" class="btn-ev-register"
-                    id="reg-tech-4">REGISTER</a>
+                  <a href="https://forms.gle/NbMQhC5UYpQcrqEq5" target="_blank" rel="noopener noreferrer"
+                    class="btn-ev-register" id="reg-tech-4">REGISTER</a>
                 </div>
               </div>
 
@@ -3650,8 +3720,8 @@
                 <span class="event-card-name">Idea Ignition (Pitch to Business)</span>
                 <div class="event-card-actions">
                   <button class="btn-ev-about" onclick="openEventModal('tech','Idea Ignition')">ℹ️ Rules</button>
-                  <a href="https://forms.gle/jiMnStpc9fx1fT2s7" target="_blank" class="btn-ev-register"
-                    id="reg-tech-5">REGISTER</a>
+                  <a href="https://forms.gle/jiMnStpc9fx1fT2s7" target="_blank" rel="noopener noreferrer"
+                    class="btn-ev-register" id="reg-tech-5">REGISTER</a>
                 </div>
               </div>
 
@@ -3659,8 +3729,8 @@
                 <span class="event-card-name">Mock Interview</span>
                 <div class="event-card-actions">
                   <button class="btn-ev-about" onclick="openEventModal('tech','Mock Interview')">ℹ️ Rules</button>
-                  <a href="https://forms.gle/qkUtmzh3SzNeozhz8" target="_blank" class="btn-ev-register"
-                    id="reg-tech-6">REGISTER</a>
+                  <a href="https://forms.gle/qkUtmzh3SzNeozhz8" target="_blank" rel="noopener noreferrer"
+                    class="btn-ev-register" id="reg-tech-6">REGISTER</a>
                 </div>
               </div>
 
@@ -3668,8 +3738,8 @@
                 <span class="event-card-name">Mystery Matrix (Escape Room)</span>
                 <div class="event-card-actions">
                   <button class="btn-ev-about" onclick="openEventModal('tech','Mystery Matrix')">ℹ️ Rules</button>
-                  <a href="https://forms.gle/cDxuNz7Kgk6eWbzb8" target="_blank" class="btn-ev-register"
-                    id="reg-tech-7">REGISTER</a>
+                  <a href="https://forms.gle/cDxuNz7Kgk6eWbzb8" target="_blank" rel="noopener noreferrer"
+                    class="btn-ev-register" id="reg-tech-mystery">REGISTER</a>
                 </div>
               </div>
 
@@ -3753,19 +3823,20 @@
         </div>
         <!-- END WHAT YOU WIN HIGHLIGHTS -->
 
-        <!-- PAYMENT LINK BANNER -->
+        <!-- REGISTER HERE -->
         <div class="ev-pay-banner fade-up" id="evPayBanner">
-          <span class="ev-pay-label">💳 PAYMENT</span>
-          <div class="ev-pay-title">Payment Link will be Updated Soon!<br><span></span></div>
+          <span class="ev-pay-label">REGISTER HERE</span>
+          <div class="ev-pay-title">REGISTERATION LINK FOR EXTERNAL PARTICIPANTS<br><span></span></div>
           <p class="ev-pay-sub">
-            Complete your Payment to confirm your registration!
+            REGISTER NOW!!
           </p>
-          <a class="ev-pay-btn" href="#YOUR_GOOGLE_FORM_LINK_HERE" id="evPayBtn" target="_blank"
-            rel="noopener noreferrer">
-            💳 Payment Link will be Updated Soon!
+          <a class="ev-pay-btn"
+            href="https://docs.google.com/forms/d/e/1FAIpQLScjHTaM0xGU73y_7A6_GgEoebRi8-z-enQeCqMb9GYy0GWFDw/viewform?usp=sharing&ouid=114490420433556839615"
+            id="evPayBtn" target="_blank" rel="noopener noreferrer">
+            REGISTER HERE
           </a>
           <p class="ev-pay-note">Having trouble? Contact <a href="tel:+919344886379">Registration Coordinator: +91 93448
-              86379</a></p>
+              86379|+91 6381611575 | +91 6374991745</a></p>
         </div>
         <!-- END PAYMENT BANNER -->
 
@@ -4810,6 +4881,15 @@
           document.getElementById('ft-cd-hours').textContent = format(hours);
           document.getElementById('ft-cd-mins').textContent = format(mins);
           document.getElementById('ft-cd-secs').textContent = format(secs);
+        }
+
+        // Nav header timer
+        const navDays = document.getElementById('nav-cd-days');
+        if (navDays) {
+          navDays.textContent = format(days);
+          document.getElementById('nav-cd-hours').textContent = format(hours);
+          document.getElementById('nav-cd-mins').textContent = format(mins);
+          document.getElementById('nav-cd-secs').textContent = format(secs);
         }
       }
 
